@@ -309,7 +309,7 @@ yargs(hideBin(process.argv))
   )
   .command(
     "config <cmd> [options]",
-    "Manage configuration for this CLI.",
+    false,
     (yargs) => {
       yargs
         .strictCommands()
