@@ -73,7 +73,7 @@ should be by default).
 https://www.drupal.org/docs/core-modules-and-themes/core-modules/jsonapi-module/api-overview
 
 Once you've ensured that it's working, you will need to determine the URL which
-Content Publisher CLI can use to get the initial results page of posts (e.g.
+Content Publisher client can use to get the initial results page of posts (e.g.
 https://example.com/jsonapi/node/article). But please note that the exact URL
 will depend on which resource type(s) you want to import.
 

@@ -11,7 +11,7 @@ const logout = async () => {
     await deleteAuthDetails();
     await deleteGoogleAuthDetails();
     spinner.succeed(
-      "Successfully logged you out from Content Publisher client!",
+      "Successfully logged you out from the Content Publisher client!",
     );
   } catch (e) {
     spinner.fail();

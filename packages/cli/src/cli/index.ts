@@ -264,7 +264,7 @@ yargs(hideBin(process.argv))
   )
   .command(
     "token <cmd> [options]",
-    "Manage tokens for a Content Publisher collections.",
+    "Manage tokens for the Content Publisher.",
     (yargs) => {
       yargs
         .strictCommands()
@@ -351,7 +351,7 @@ yargs(hideBin(process.argv))
   )
   .command(
     "site <cmd> [options]",
-    "Manage collections for a Content Publisher.",
+    "Manage collections for the Content Publisher.",
     (yargs) => {
       yargs
         .strictCommands()
@@ -762,7 +762,7 @@ yargs(hideBin(process.argv))
   )
   .command(
     "document <cmd> [options]",
-    "Manage documents for a Content Publisher.",
+    "Manage documents for the Content Publisher.",
     (yargs) => {
       yargs
         .strictCommands()
@@ -926,7 +926,7 @@ yargs(hideBin(process.argv))
   )
   .command(
     "login",
-    "Logs you in you to Content Publisher client.",
+    "Logs you in you to the Content Publisher client.",
     () => {
       // noop
     },
@@ -934,7 +934,7 @@ yargs(hideBin(process.argv))
   )
   .command(
     "logout",
-    "Logs you out you from Content Publisher client.",
+    "Logs you out you from the Content Publisher client.",
     () => {
       // noop
     },
