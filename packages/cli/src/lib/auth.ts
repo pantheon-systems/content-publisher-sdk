@@ -185,6 +185,7 @@ export class Auth0Provider extends BaseAuthProvider {
           spinner.succeed(
             `You are successfully logged in as ${tokenPayload[AUTH0_PCC_CONTEXT_KEY].email}`,
           );
+          resolve();
         } catch (e) {
           spinner.fail();
           reject(e);

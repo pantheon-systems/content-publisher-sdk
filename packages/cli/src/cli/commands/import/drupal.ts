@@ -97,7 +97,7 @@ export const importFromDrupal = errorHandler<DrupalImportParams>(
 
     const folder = await createFolder(
       drive,
-      `PCC Import from Drupal on ${new Date().toLocaleDateString()} unique id: ${randomUUID()}`,
+      `Content Publisher Import from Drupal on ${new Date().toLocaleDateString()} unique id: ${randomUUID()}`,
     );
 
     if (!folder?.id) {
@@ -174,7 +174,7 @@ export const importFromDrupal = errorHandler<DrupalImportParams>(
           throw new Error(`Failed to create file for ${post.attributes.title}`);
         }
 
-        // Add it to the PCC site.
+        // Add it to the Content Publisher site.
         await AddOnApiHelper.getDocumentWithGoogle(
           fileId,
           site.accessorAccount,
