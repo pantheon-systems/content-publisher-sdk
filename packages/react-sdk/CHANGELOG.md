@@ -1,5 +1,16 @@
 # @pantheon-systems/pcc-react-sdk
 
+## 5.0.1
+
+### Patch Changes
+
+- 40af988: - The `status` endpoint returns richer diagnostics to help with
+  debugging issues.
+  - The `status` endpoint response also now includes a `platform` section with
+    framework specific diagnostics.
+- Updated dependencies [40af988]
+  - @pantheon-systems/pcc-sdk-core@5.0.1
+
 ## 5.0.0
 
 ### Major Changes

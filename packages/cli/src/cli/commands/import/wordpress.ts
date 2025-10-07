@@ -139,7 +139,7 @@ export const importFromWordPress = errorHandler<WordPressImportParams>(
     const drive = getAuthedDrive(tokens);
     const folder = await createFolder(
       drive,
-      `PCC Import from WordPress on ${new Date().toLocaleDateString()} unique id: ${randomUUID()}`,
+      `Content Publisher Import from WordPress on ${new Date().toLocaleDateString()} unique id: ${randomUUID()}`,
     );
 
     if (!folder?.id) {
@@ -211,7 +211,7 @@ export const importFromWordPress = errorHandler<WordPressImportParams>(
           throw new Error(`Failed to create file for ${post.title.rendered}`);
         }
 
-        // Add it to the PCC site.
+        // Add it to the Content Publisher site.
         await AddOnApiHelper.getDocumentWithGoogle(
           fileId,
           site.accessorAccount,

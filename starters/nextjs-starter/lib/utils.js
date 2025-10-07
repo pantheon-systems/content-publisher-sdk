@@ -38,7 +38,7 @@ export function getSeoMetadata(article) {
     .map((url) => ({ url }));
   const description = article.metadata?.description
     ? String(article.metadata?.description)
-    : "Article hosted using Pantheon Content Cloud";
+    : "Article hosted using Pantheon Content Publisher";
 
   const authors = [];
 

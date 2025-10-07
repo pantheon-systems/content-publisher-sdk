@@ -1,9 +1,9 @@
 # React
 
 <div align="center">
-	<h1>Pantheon Content Cloud SDK for React </h1>
+	<h1>Pantheon Content Publisher SDK for React </h1>
 	<p>
-		<b>A simple and easy to use React client for the Pantheon Content Cloud API</b>
+		<b>A simple and easy to use React client for the Pantheon Content Publisher API</b>
 	</p>
 	<br>
 </div>
@@ -39,14 +39,15 @@ function App() {
 ## Usage
 
 We provide a set of helpers in the form of API helpers, React hooks and React
-helper components to get you up and running with the Pantheon Content Cloud API.
+helper components to get you up and running with the Pantheon Content Publisher
+API.
 
 ### React Components
 
 #### Article Renderer
 
 The `<ArticleRenderer />` component will render the article received from
-Content Cloud by converting the raw article data into React elements you can
+Content Publisher by converting the raw article data into React elements you can
 style and render in your app.
 
 ```javascript
@@ -127,8 +128,8 @@ function Articles() {
 
 ### API Helpers
 
-These helpers are used to fetch data from the Pantheon Content Cloud API outside
-of the React component lifecycle.
+These helpers are used to fetch data from the Pantheon Content Publisher API
+outside of the React component lifecycle.
 
 They are useful for fetching data in server-side rendered applications or in
 other contexts where React hooks cannot be used.

@@ -77,7 +77,7 @@ class PCCArticle extends HTMLElement {
       ) {
         console.warn(
           `This preview page is no longer connected to the document (updates to the document will not be displayed until this is reconnected).
-To reconnect, navigate to the document and click the 'PREVIEW' button in the Content Cloud add-on.
+To reconnect, navigate to the document and click the 'PREVIEW' button in the Content Publisher add-on.
 
 If you did not mean to preview this document, set the 'publishing-level' attribute on 'pcc-article' to 'PRODUCTION' to view the latest published version.`,
         );

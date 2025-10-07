@@ -1,17 +1,17 @@
 # Browser
 
 <div align="center">
-	<h1>Pantheon Content Cloud SDK for Browsers</h1>
+	<h1>Pantheon Content Publisher SDK for Browsers</h1>
 	<p>
-		<b>A simple and easy to use browser client for the Pantheon Content Cloud API</b>
+		<b>A simple and easy to use browser client for the Pantheon Content Publisher API</b>
 	</p>
 	<br>
 </div>
 
 ## Requirements
 
-1. A published Pantheon Content Cloud article
-2. A Pantheon Content Cloud Token. Obtain one from the [PCC CLI](https://github.com/pantheon-systems/pantheon-content-cloud-sdk/tree/main/packages/cli#readme).
+1. A published Pantheon Content Publisher article
+2. A Pantheon Content Publisher Token. Obtain one from the [PCC CLI](https://github.com/pantheon-systems/content-publisher-sdk/tree/main/packages/cli#readme).
 
 ## Usage
 

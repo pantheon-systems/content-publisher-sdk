@@ -1,8 +1,8 @@
 {
   "name": "@pantheon-systems/pcc-react-sdk",
   "author": "@pantheon-systems",
-  "description": "Pantheon Content Cloud React SDK",
-  "version": "5.0.0",
+  "description": "Pantheon Content Publisher React SDK",
+  "version": "5.0.1",
   "license": "MIT",
   "keywords": [
     "pcc",
@@ -10,10 +10,10 @@
     "sdk",
     "pantheon"
   ],
-  "homepage": "https://github.com/pantheon-systems/pantheon-content-cloud-sdk/tree/main/nextjs-starter#readme",
+  "homepage": "https://github.com/pantheon-systems/content-publisher-sdk/tree/main/nextjs-starter#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pantheon-systems/pantheon-content-cloud-sdk"
+    "url": "https://github.com/pantheon-systems/content-publisher-sdk"
   },
   "scripts": {
     "dev": "tsup --watch",

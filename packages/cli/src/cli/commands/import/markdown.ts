@@ -83,7 +83,7 @@ export const importFromMarkdown = errorHandler<MarkdownImportParams>(
       exit(1);
     }
 
-    // Create PCC document
+    // Create Content Publisher document
     await AddOnApiHelper.getDocumentWithGoogle(
       fileId,
       site.accessorAccount,
@@ -102,13 +102,13 @@ export const importFromMarkdown = errorHandler<MarkdownImportParams>(
       title,
     );
 
-    // Publish PCC document
+    // Publish Content Publisher document
     if (publish) {
       await AddOnApiHelper.publishDocument(fileId, site.accessorAccount);
     }
     spinner.succeed(
       `Successfully created document at below path${
-        publish ? " and published it on the PCC." : ":"
+        publish ? " and published it on the Content Publisher." : ":"
       }`,
     );
     logger.log(chalk.green(fileUrl, "\n"));

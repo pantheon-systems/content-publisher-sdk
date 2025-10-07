@@ -16,13 +16,13 @@ const { siteId, token, apiKey, pccHost } = document.currentScript
 // Validate required arguments
 if (!siteId) {
   throw new Error(
-    "Missing Pantheon Content Cloud site ID. Provide it as a data-site-id attribute on the script tag.",
+    "Missing Pantheon Content Publisher site ID. Provide it as a data-site-id attribute on the script tag.",
   );
 }
 
 if (!token && !apiKey) {
   throw new Error(
-    "Missing Pantheon Content Cloud Token. Provide it as a data-token attribute on the script tag.",
+    "Missing Pantheon Content Publisher Token. Provide it as a data-token attribute on the script tag.",
   );
 }
 

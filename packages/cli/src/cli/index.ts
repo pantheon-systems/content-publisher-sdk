@@ -193,7 +193,7 @@ yargs(hideBin(process.argv))
 
       if (args.template === "vue" || args.template === "gatsby") {
         throw new Error(
-          `The ${args.template} starter kit is no longer supported or maintained. You may manually reference the deprecated source code for it in our github repo (https://github.com/pantheon-systems/pantheon-content-cloud-sdk/tree/main/starters).`,
+          `The ${args.template} starter kit is no longer supported or maintained. You may manually reference the deprecated source code for it in our github repo (https://github.com/pantheon-systems/content-publisher-sdk/tree/main/starters).`,
         );
       }
 
@@ -264,7 +264,7 @@ yargs(hideBin(process.argv))
   )
   .command(
     "token <cmd> [options]",
-    "Manage tokens for a PCC project.",
+    "Manage tokens for the Content Publisher.",
     (yargs) => {
       yargs
         .strictCommands()
@@ -309,7 +309,7 @@ yargs(hideBin(process.argv))
   )
   .command(
     "config <cmd> [options]",
-    "Manage configuration for this CLI.",
+    false,
     (yargs) => {
       yargs
         .strictCommands()
@@ -351,7 +351,7 @@ yargs(hideBin(process.argv))
   )
   .command(
     "site <cmd> [options]",
-    "Manage sites for a PCC project.",
+    "Manage collections for the Content Publisher.",
     (yargs) => {
       yargs
         .strictCommands()
@@ -477,7 +477,7 @@ yargs(hideBin(process.argv))
             yargs
               .command(
                 "push [options]",
-                "Retrieve the schema from the provided target URL and use that for the PCC site's component schema.",
+                "Retrieve the schema from the provided target URL and use that for the Content Publisher collection's component schema.",
                 (yargs) => {
                   yargs.option("siteId", {
                     describe: "Site id",
@@ -504,7 +504,7 @@ yargs(hideBin(process.argv))
               )
               .command(
                 "print [options]",
-                "Print the schema that PCC knows about.",
+                "Print the schema that Content Publisher knows about.",
                 (yargs) => {
                   yargs.option("siteId", {
                     describe: "Site id",
@@ -519,7 +519,7 @@ yargs(hideBin(process.argv))
               )
               .command(
                 "remove [options]",
-                "Use this command to stop using the pushed schema and revert back to real-time schema requests from PCC.",
+                "Use this command to stop using the pushed schema and revert back to real-time schema requests from the Content Publisher.",
                 (yargs) => {
                   yargs.option("siteId", {
                     describe: "Site id",
@@ -762,7 +762,7 @@ yargs(hideBin(process.argv))
   )
   .command(
     "document <cmd> [options]",
-    "Manage documents for a PCC Project.",
+    "Manage documents for the Content Publisher.",
     (yargs) => {
       yargs
         .strictCommands()
@@ -876,7 +876,7 @@ yargs(hideBin(process.argv))
         )
         .command(
           "markdown <filePath> <siteId>",
-          "Import given markdown file into a new Google Drive folder and connects them to a target PCC site",
+          "Import given markdown file into a new Google Drive folder and connects them to a target Content Publisher collection",
           (yargs) => {
             yargs
               .strictCommands()
@@ -926,7 +926,7 @@ yargs(hideBin(process.argv))
   )
   .command(
     "login",
-    "Logs you in you to PCC client.",
+    "Logs you in you to the Content Publisher client.",
     () => {
       // noop
     },
@@ -934,7 +934,7 @@ yargs(hideBin(process.argv))
   )
   .command(
     "logout",
-    "Logs you out you from PCC client.",
+    "Logs you out you from the Content Publisher client.",
     () => {
       // noop
     },

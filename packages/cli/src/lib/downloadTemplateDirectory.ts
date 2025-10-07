@@ -6,7 +6,7 @@ import { Octokit } from "octokit";
 const octokit = new Octokit();
 
 const owner = "pantheon-systems";
-const repo = "pantheon-content-cloud-sdk";
+const repo = "content-publisher-sdk";
 
 interface File {
   path: string;

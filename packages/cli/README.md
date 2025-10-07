@@ -1,9 +1,9 @@
 # CLI
 
 <div align="center">
-	<h1>PCC Toolkit</h1>
+	<h1>Content Publisher Toolkit</h1>
 	<p>
-		<b>Pantheon Content Cloud toolkit for setting up projects.</b>
+		<b>Content Publisher toolkit for setting up projects.</b>
 	</p>
 	<br>
 </div>
@@ -30,9 +30,6 @@ $ pcc login
 
 # Create project with nextjs template
 $ pcc init new_proj
-
-# Create project with gatsby template
-$ pcc init new_proj --template=gatsby
 
 # Create project using pnpm package manager
 $ pcc init new_proj --use-pnpm
@@ -76,14 +73,14 @@ should be by default).
 https://www.drupal.org/docs/core-modules-and-themes/core-modules/jsonapi-module/api-overview
 
 Once you've ensured that it's working, you will need to determine the URL which
-PCC can use to get the initial results page of posts (e.g.
+Content Publisher client can use to get the initial results page of posts (e.g.
 https://example.com/jsonapi/node/article). But please note that the exact URL
 will depend on which resource type(s) you want to import.
 
 The second and last piece of information you will need before proceeding to
-import, is the id of the PCC site which the posts should be imported into. Posts
-are NOT going to be published automatically after importing, but they will be
-automatically connected to the site id provided.
+import, is the id of the Content Publisher collection which the posts should be
+imported into. Posts are NOT going to be published automatically after
+importing, but they will be automatically connected to the site id provided.
 
 With this information, you can now run the import command.
 

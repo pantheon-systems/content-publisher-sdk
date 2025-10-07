@@ -4,6 +4,7 @@ import { dirname, join } from "path";
 import url, { fileURLToPath } from "url";
 import { parseJwt } from "@pantheon-systems/pcc-sdk-core";
 import axios from "axios";
+import chalk from "chalk";
 import { OAuth2Client } from "google-auth-library";
 import nunjucks from "nunjucks";
 import open from "open";
@@ -32,23 +33,12 @@ export interface PersistedTokens {
 }
 
 abstract class BaseAuthProvider {
-  abstract generateToken(code: string): Promise<PersistedTokens>;
   abstract refreshToken(refreshToken: string): Promise<PersistedTokens>;
   abstract getTokens(email?: string): Promise<PersistedTokens | null>;
   abstract login(email?: string): Promise<void>;
 }
 
 export class Auth0Provider extends BaseAuthProvider {
-  async generateToken(code: string): Promise<PersistedTokens> {
-    const resp = await axios.post(
-      `${(await getApiConfig()).AUTH0_ENDPOINT}/token`,
-      {
-        code: code,
-      },
-    );
-    return resp.data as PersistedTokens;
-  }
-
   async refreshToken(refreshToken: string): Promise<PersistedTokens> {
     const auth0Config = await AddOnApiHelper.getAuth0Config();
     const url = `${auth0Config.issuerBaseUrl}/oauth/token`;
@@ -110,62 +100,92 @@ export class Auth0Provider extends BaseAuthProvider {
           }
 
           const auth0Config = await AddOnApiHelper.getAuth0Config();
-          const authorizeUrl = `${auth0Config.issuerBaseUrl}/authorize?${queryString.stringify(
+
+          const deviceResp = await axios.post(
+            `${auth0Config.issuerBaseUrl}/oauth/device/code`,
             {
-              response_type: "code",
               client_id: auth0Config.clientId,
-              redirect_uri: auth0Config.redirectUri,
               scope: [
                 ...DEFAULT_AUTH0_SCOPES,
                 ...DEFAULT_AUTH0_API_SCOPES,
               ].join(" "),
               audience: auth0Config.audience,
             },
-          )}`;
+          );
 
-          const server = http.createServer(async (req, res) => {
+          const {
+            device_code,
+            verification_uri: verificationUri,
+            user_code: userCode,
+            verification_uri_complete: verificationUriComplete,
+            interval,
+          } = deviceResp.data;
+
+          // Optionally auto-open browser
+          if (verificationUriComplete) {
+            await open(verificationUriComplete);
+          }
+
+          spinner.stop();
+
+          console.log(
+            chalk.yellow(
+              "\n\nPlease open the following link in your browser (if not already opened):",
+            ),
+          );
+          console.log(
+            chalk.yellow(
+              "👉 ",
+              chalk.bold(verificationUriComplete || verificationUri),
+            ),
+          );
+          console.log(
+            chalk.yellow(
+              "\nWhen prompted, enter this code to confirm your login:",
+            ),
+          );
+          console.log(chalk.yellow("🔑 ", chalk.bold(userCode)), "\n\n");
+
+          spinner.start("Waiting for you to complete login in the browser...");
+          let credentials: PersistedTokens;
+          // eslint-disable-next-line no-constant-condition
+          while (true) {
             try {
-              if (!req.url) {
-                throw new Error("No URL path provided");
+              const resp = await axios.post(
+                `${auth0Config.issuerBaseUrl}/oauth/token`,
+                queryString.stringify({
+                  grant_type: "urn:ietf:params:oauth:grant-type:device_code",
+                  device_code,
+                  client_id: auth0Config.clientId,
+                }),
+                {
+                  headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                  },
+                },
+              );
+              credentials = resp.data as PersistedTokens;
+              break;
+            } catch (err) {
+              if (
+                (err as { response: { data: { error: string } } }).response
+                  ?.data?.error === "authorization_pending"
+              ) {
+                // still waiting
+                await new Promise((r) => setTimeout(r, (interval || 5) * 1000));
+                continue;
+              } else {
+                throw err;
               }
-
-              if (req.url.indexOf("/auth/callback") > -1) {
-                const qs = new url.URL(req.url, "http://localhost:3030")
-                  .searchParams;
-                const code = qs.get("code");
-                const currDir = dirname(fileURLToPath(import.meta.url));
-                const content = readFileSync(
-                  join(currDir, "../templates/loginSuccess.html"),
-                );
-                const credentials = await this.generateToken(code as string);
-                const tokenPayload = parseJwt(
-                  credentials.access_token as string,
-                );
-                await LocalStorage.persistAuthDetails(credentials);
-
-                res.end(
-                  nunjucks.renderString(content.toString(), {
-                    email: tokenPayload[AUTH0_PCC_CONTEXT_KEY].email,
-                  }),
-                );
-                server.destroy();
-
-                spinner.succeed(
-                  `You are successfully logged in as ${tokenPayload[AUTH0_PCC_CONTEXT_KEY].email}`,
-                );
-                resolve();
-              }
-            } catch (e) {
-              spinner.fail();
-              reject(e);
             }
-          });
+          }
 
-          destroyer(server);
-
-          server.listen(3030, () => {
-            open(authorizeUrl, { wait: true }).then((cp) => cp.kill());
-          });
+          const tokenPayload = parseJwt(credentials.access_token as string);
+          await LocalStorage.persistAuthDetails(credentials);
+          spinner.succeed(
+            `You are successfully logged in as ${tokenPayload[AUTH0_PCC_CONTEXT_KEY].email}`,
+          );
+          resolve();
         } catch (e) {
           spinner.fail();
           reject(e);

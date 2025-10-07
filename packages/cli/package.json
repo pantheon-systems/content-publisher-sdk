@@ -1,8 +1,8 @@
 {
   "name": "@pantheon-systems/pcc-cli",
   "author": "@pantheon-systems",
-  "description": "Pantheon Content Cloud CLI",
-  "version": "5.0.0",
+  "description": "Pantheon Content Publisher CLI",
+  "version": "5.0.1",
   "type": "module",
   "license": "MIT",
   "keywords": [

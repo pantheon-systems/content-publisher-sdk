@@ -95,15 +95,15 @@ export class PantheonClient {
     }
 
     if (!this.host) {
-      throw new Error("Missing Pantheon Content Cloud host");
+      throw new Error("Missing Pantheon Content Publisher host");
     }
 
     if (!this.siteId) {
-      throw new Error("Missing Pantheon Content Cloud site ID");
+      throw new Error("Missing Pantheon Content Publisher site ID");
     }
 
     if (!this.apiKey) {
-      throw new Error("Missing Pantheon Content Cloud Token");
+      throw new Error("Missing Pantheon Content Publisher Token");
     }
 
     const wsLink =

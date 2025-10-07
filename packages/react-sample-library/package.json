@@ -1,8 +1,8 @@
 {
   "name": "@pantheon-systems/pcc-react-sample-library",
   "author": "@pantheon-systems",
-  "description": "Pantheon Content Cloud Sample Component Library for React",
-  "version": "5.0.0",
+  "description": "Pantheon Content Publisher Sample Component Library for React",
+  "version": "5.0.1",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

@@ -4,11 +4,11 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: pantheon-content-cloud-sdk
+  name: content-publisher-sdk
   description: An SDK to provide a comprehensive set of APIs and tools to facilitate the development of a pcc site using various supported starters
   annotations:
     pantheon.io/service-catalog/subdir: /
-    github.com/project-slug: pantheon-systems/pantheon-content-cloud-sdk
+    github.com/project-slug: pantheon-systems/content-publisher-sdk
     github.com/team-slug: pantheon-systems/pcc
 spec:
   type: library

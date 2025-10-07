@@ -35,7 +35,7 @@ export default function ExamplesPageTemplate() {
             <li tabIndex={-1} className="pointer-events-none opacity-30">
               <Link href="/examples/auth-api">API Authorization</Link> -
               confirms that Next.js is able to make authenticated requests to
-              Pantheon Content Cloud&apos;s API.
+              Pantheon Content Publisher&apos;s API.
             </li>
             <li tabIndex={-1} className="pointer-events-none opacity-30">
               <Link href="/examples/pagination">Pagination</Link> - a paginated

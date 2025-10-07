@@ -1,5 +1,13 @@
 # @pantheon-systems/pcc-vue-sdk
 
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [40af988]
+  - @pantheon-systems/pcc-react-sdk@5.0.1
+  - @pantheon-systems/pcc-sdk-core@5.0.1
+
 ## 5.0.0
 
 ### Minor Changes
