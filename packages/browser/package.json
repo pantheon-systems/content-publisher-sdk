@@ -15,10 +15,10 @@
     "lint:fix": "eslint . --fix && prettier --write ."
   },
   "devDependencies": {
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-pcc-custom": "workspace:*",
-    "tsup": "^8.2.4",
-    "typescript": "^5.5.4"
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
   },
   "dependencies": {
     "@pantheon-systems/pcc-sdk-core": "workspace:*"

@@ -52,17 +52,17 @@
     "node": ">=18.0.0"
   },
   "devDependencies": {
-    "@types/markdown-it": "^13.0.7",
-    "@types/node": "^20.11.21",
+    "@types/markdown-it": "^13.0.9",
+    "@types/node": "^20.19.13",
     "esbuild-plugin-globals": "^0.2.0",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-pcc-custom": "workspace:*",
-    "h3": "^1.11.1",
-    "sass": "^1.71.1",
-    "tsup": "^8.2.4",
-    "typescript": "^5.5.4",
+    "h3": "^1.15.4",
+    "sass": "^1.92.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2",
     "unplugin-vue": "^4.5.2",
-    "vite": "^6.1.1",
+    "vite": "^6.3.6",
     "vue": "3.4.27",
     "vue-3": "npm:vue@^3.4.27"
   },
@@ -76,21 +76,21 @@
     }
   },
   "dependencies": {
-    "@apollo/client": "^3.10.3",
-    "@pantheon-systems/pcc-sdk-core": "3.0.0",
+    "@apollo/client": "^3.14.0",
+    "@pantheon-systems/pcc-sdk-core": "workspace:*",
     "@vue/apollo-composable": "4.0.0-beta.12",
     "floating-vue": "^5.2.2",
-    "graphql": "^16.8.1",
-    "hast-util-to-jsx-runtime": "^2.3.0",
-    "html-url-attributes": "^3.0.0",
+    "graphql": "^16.11.0",
+    "hast-util-to-jsx-runtime": "^2.3.6",
+    "html-url-attributes": "^3.0.1",
     "query-string": "^8.2.0",
     "rehype-raw": "^6.1.1",
     "remark-heading-id": "^1.0.1",
     "remark-parse": "^11.0.0",
-    "remark-rehype": "^11.1.0",
-    "unified": "^11.0.4",
+    "remark-rehype": "^11.1.2",
+    "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0",
-    "vue-demi": "^0.14.7"
+    "vue-demi": "^0.14.10"
   },
   "sideEffects": false
 }
