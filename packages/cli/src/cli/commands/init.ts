@@ -31,7 +31,7 @@ const ESLINT_CONFIG = {
 };
 
 /**
- * Handles initializing projects for PCC
+ * Handles initializing projects for Content Publisher
  */
 const init = async ({
   dirName,
