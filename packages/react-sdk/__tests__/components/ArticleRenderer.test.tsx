@@ -6,6 +6,7 @@ import { Article } from "@pantheon-systems/pcc-sdk-core/types";
 import { render } from "@testing-library/react";
 import { ArticleRenderer, getArticleTitle } from "../../src/components";
 import articleTabbedContent from "../data/article-tabbed-content.json";
+import articleWithDoubleCaptions from "../data/article-with-double-captions.json";
 import articleWithImageMarkdown from "../data/article-with-image-markdown.json";
 import articleWithImageTree from "../data/article-with-image-tree.json";
 import article from "../data/article.json";
@@ -131,5 +132,12 @@ describe("<ArticleRenderer />", () => {
       ),
     ).toBe(false);
     expect(container.firstChild).toMatchSnapshot();
+  });
+
+  it("should not render double captions", () => {
+    const { container } = render(
+      <ArticleRenderer article={articleWithDoubleCaptions as Article} />,
+    );
+    expect(container.innerHTML.match("TEST CAPTION")?.length).toEqual(1);
   });
 });
