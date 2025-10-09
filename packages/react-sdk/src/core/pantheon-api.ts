@@ -8,7 +8,7 @@ import type { NextRequest } from "next/server";
 import packageJson from "../../package.json";
 
 export interface AppRouterContext {
-  params: Promise<{ command: string[] }>;
+  params: Promise<{ command: string[] } & { [key: string]: string | string[] }>;
 }
 
 type Handler = {
