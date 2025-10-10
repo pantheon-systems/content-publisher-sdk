@@ -83,7 +83,9 @@ describe("Pages routing", () => {
     // Assert the API handler was called with the correct cookies
     expect(apiHandlerMock).toHaveBeenCalledWith(
       {
-        query: {},
+        query: {
+          command: undefined,
+        },
         cookies: {
           session: "123",
           grant: "test",
@@ -197,7 +199,6 @@ describe("App routing", () => {
     const params = {
       params: Promise.resolve({
         testParam: "123",
-        command: ["test"],
       }),
     } satisfies AppRouterContext;
 
@@ -228,7 +229,6 @@ describe("App routing", () => {
     const params = {
       params: Promise.resolve({
         testParam: "123",
-        command: [] as string[],
       }),
     } satisfies AppRouterContext;
 
@@ -239,6 +239,7 @@ describe("App routing", () => {
       {
         query: {
           testParam: "123",
+          command: undefined,
         },
         cookies: {
           session: "123",
@@ -255,9 +256,7 @@ describe("App routing", () => {
 
     const request = new NextRequest("http://localhost:3000/");
     const params = {
-      params: Promise.resolve({
-        command: [] as string[],
-      }),
+      params: Promise.resolve({}),
     } satisfies AppRouterContext;
 
     // When the API handler is called, it calls res.json with the response data
@@ -276,9 +275,7 @@ describe("App routing", () => {
   it("should return redirect responses correctly", async () => {
     const request = new NextRequest("http://localhost:3000/");
     const params = {
-      params: Promise.resolve({
-        command: [] as string[],
-      }),
+      params: Promise.resolve({}),
     } satisfies AppRouterContext;
 
     // When the API handler is called, it calls res.redirect with the status and path
@@ -300,9 +297,7 @@ describe("App routing", () => {
 
     const request = new NextRequest("http://localhost:3000/");
     const params = {
-      params: Promise.resolve({
-        command: [] as string[],
-      }),
+      params: Promise.resolve({}),
     } satisfies AppRouterContext;
 
     // When the API handler is called, it sets a header and then calls res.json with the response data
@@ -324,11 +319,7 @@ describe("App routing", () => {
 
   it("adds platform diagnostics for status requests", async () => {
     const request = new NextRequest("http://localhost:3000/?command=status");
-    const params = {
-      params: Promise.resolve({
-        command: [] as string[],
-      }),
-    } satisfies AppRouterContext;
+    const params = { params: Promise.resolve({}) } satisfies AppRouterContext;
 
     const apiResponse = await NextPantheonAPI()(request, params);
 

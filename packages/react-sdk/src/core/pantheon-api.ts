@@ -7,7 +7,11 @@ import type { NextRequest } from "next/server";
 import packageJson from "../../package.json";
 
 export interface AppRouterContext {
-  params: Promise<{ command: string[] } & { [key: string]: string | string[] }>;
+  params: Promise<
+    { command?: string | string[] } & {
+      [key: string]: string | string[] | undefined;
+    }
+  >;
 }
 
 type Handler = {
@@ -52,10 +56,13 @@ export function NextPantheonAPI(options?: PantheonAPIOptions) {
     }
 
     // App router
-    const context = res as { params: Promise<{ command: string[] }> };
+    const context = res as { params: Promise<{ command: string | string[] }> };
     const nextReq = req as NextRequest;
     const params = await context.params;
-    const command = params.command?.[0];
+    const command =
+      params.command != null && Array.isArray(params.command)
+        ? params.command[0]
+        : params.command || nextReq.nextUrl.searchParams.get("command") || undefined;
 
     // Handle status requests here
     if (command === "status" && typeof api.buildStatus === "function") {
@@ -81,7 +88,8 @@ export function NextPantheonAPI(options?: PantheonAPIOptions) {
       {
         query: {
           ...Object.fromEntries(nextReq.nextUrl.searchParams),
-          command: params.command,
+          ...params,
+          command,
         },
         cookies: cookiesToObj(nextReq.cookies),
       },
@@ -108,7 +116,7 @@ export function NextPantheonAPI(options?: PantheonAPIOptions) {
 }
 
 function isPagesRouterResponse(
-  res: { params: Promise<{ command: string[] }> } | NextApiResponse,
+  res: { params: Promise<{ command?: string | string[] }> } | NextApiResponse,
 ): res is NextApiResponse {
   // We can differentiate between app router vs pages api
   // by checking for params
