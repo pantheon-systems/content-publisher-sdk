@@ -6,16 +6,22 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import type { NextRequest } from "next/server";
 import packageJson from "../../package.json";
 
-export interface AppRouterParams {
-  params: Promise<Record<string, string>>;
-  headers?: Promise<null>;
+export interface AppRouterContext {
+  params: Promise<
+    { command?: string | string[] } & {
+      [key: string]: string | string[] | undefined;
+    }
+  >;
 }
 
 type Handler = {
   // In Pages routing, req and res are NextApiRequest and NextApiResponse
   (req: NextApiRequest, res: NextApiResponse): Promise<unknown>;
-  // In App routing, req is NextRequest and the second argument is AppRouterParams
-  (req: NextRequest, res: AppRouterParams): Promise<void | Response>;
+  // App Router has a slightly different approach.
+  (
+    request: NextRequest,
+    context: AppRouterContext,
+  ): void | Response | Promise<void | Response>;
 };
 
 export function NextPantheonAPI(options?: PantheonAPIOptions) {
@@ -50,9 +56,15 @@ export function NextPantheonAPI(options?: PantheonAPIOptions) {
     }
 
     // App router
-    const appRouterParams = res as AppRouterParams;
+    const context = res as { params: Promise<{ command: string | string[] }> };
     const nextReq = req as NextRequest;
-    const command = nextReq.nextUrl.searchParams.get("command")?.split("/")[0];
+    const params = await context.params;
+    const command =
+      params.command != null && Array.isArray(params.command)
+        ? params.command[0]
+        : params.command ||
+          nextReq.nextUrl.searchParams.get("command") ||
+          undefined;
 
     // Handle status requests here
     if (command === "status" && typeof api.buildStatus === "function") {
@@ -69,31 +81,33 @@ export function NextPantheonAPI(options?: PantheonAPIOptions) {
     }
 
     // Non-status flows: pass through to core
-    const headers = new Headers({
-      ...((await appRouterParams.headers) || {}),
+    const responseHeaders = new Headers();
+    nextReq.headers.forEach((value, key) => {
+      responseHeaders.set(key, value);
     });
 
     return (await api.handler(
       {
         query: {
           ...Object.fromEntries(nextReq.nextUrl.searchParams),
-          ...(await appRouterParams.params),
+          ...params,
+          command,
         },
         cookies: cookiesToObj(nextReq.cookies),
       },
       {
-        getHeader: (key) => headers.get(key) || "",
-        setHeader: (key, value) => headers.set(key, value.toString()),
+        getHeader: (key) => responseHeaders.get(key) || "",
+        setHeader: (key, value) => responseHeaders.set(key, value.toString()),
         redirect: (status, path) => {
-          headers.set("Location", path);
+          responseHeaders.set("Location", path);
           return new Response(null, {
             status,
-            headers,
+            headers: responseHeaders,
           });
         },
         json: (data) => {
           return Response.json(data, {
-            headers,
+            headers: responseHeaders,
           });
         },
       },
@@ -104,7 +118,7 @@ export function NextPantheonAPI(options?: PantheonAPIOptions) {
 }
 
 function isPagesRouterResponse(
-  res: AppRouterParams | NextApiResponse,
+  res: { params: Promise<{ command?: string | string[] }> } | NextApiResponse,
 ): res is NextApiResponse {
   // We can differentiate between app router vs pages api
   // by checking for params
