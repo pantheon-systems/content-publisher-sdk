@@ -62,7 +62,9 @@ export function NextPantheonAPI(options?: PantheonAPIOptions) {
     const command =
       params.command != null && Array.isArray(params.command)
         ? params.command[0]
-        : params.command || nextReq.nextUrl.searchParams.get("command") || undefined;
+        : params.command ||
+          nextReq.nextUrl.searchParams.get("command") ||
+          undefined;
 
     // Handle status requests here
     if (command === "status" && typeof api.buildStatus === "function") {
