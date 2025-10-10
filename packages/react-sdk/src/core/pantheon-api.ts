@@ -3,7 +3,6 @@ import {
   PantheonAPIOptions,
 } from "@pantheon-systems/pcc-sdk-core";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { headers } from "next/headers";
 import type { NextRequest } from "next/server";
 import packageJson from "../../package.json";
 
@@ -73,8 +72,9 @@ export function NextPantheonAPI(options?: PantheonAPIOptions) {
     }
 
     // Non-status flows: pass through to core
-    const responseHeaders = new Headers({
-      ...((await headers()) || {}),
+    const responseHeaders = new Headers();
+    nextReq.headers.forEach((value, key) => {
+      responseHeaders.set(key, value);
     });
 
     return (await api.handler(
