@@ -11,11 +11,11 @@ import articleWithImageTree from "../data/article-with-image-tree.json";
 import article from "../data/article.json";
 
 // Global setup to catch React key warnings
-let globalKeyWarnings: string[] = [];
+const globalKeyWarnings: string[] = [];
 const originalConsoleError = console.error;
 
 beforeAll(() => {
-  console.error = (...args: any[]) => {
+  console.error = (...args: unknown[]) => {
     const message = args[0];
     if (
       typeof message === "string" &&
