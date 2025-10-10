@@ -171,7 +171,7 @@ const PantheonTreeRenderer = ({
           .join(" "),
       }),
     },
-    nodeChildren.length ? nodeChildren : undefined,
+    ...(nodeChildren.length ? nodeChildren : []),
   );
 };
 
