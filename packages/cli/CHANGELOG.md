@@ -1,5 +1,12 @@
 # @pantheon-systems/pcc-cli
 
+## 5.0.2-beta.0
+
+### Patch Changes
+
+- Fixed issues related to login and updated messaging
+  - @pantheon-systems/pcc-sdk-core@5.0.2-beta.0
+
 ## 5.0.1
 
 ### Patch Changes

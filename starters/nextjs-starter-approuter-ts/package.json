@@ -25,7 +25,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@pantheon-systems/pcc-react-sdk": "~5.0.1",
+    "@pantheon-systems/pcc-react-sdk": "~5.0.2-beta.0",
     "@radix-ui/react-popover": "^1.1.1",
     "@tailwindcss/typography": "0.5.10",
     "@types/node": "^20.11.21",
