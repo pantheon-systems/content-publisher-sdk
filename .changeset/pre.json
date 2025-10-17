@@ -15,6 +15,8 @@
     "@pantheon-systems/next-pcc-starter-ts": "1.0.0"
   },
   "changesets": [
-    "mighty-cities-bake"
+    "full-wolves-wonder",
+    "mighty-cities-bake",
+    "petite-steaks-do"
   ]
 }
