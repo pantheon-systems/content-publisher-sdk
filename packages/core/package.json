@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.10.3",
-    "axios": "^1.12.2",
+    "axios": "1.12.2",
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "graphql-ws": "^5.15.0",
