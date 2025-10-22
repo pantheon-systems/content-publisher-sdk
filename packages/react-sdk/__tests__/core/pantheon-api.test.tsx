@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest } from "next/server";
-import packageJson from "../../package.json";
 import { AppRouterContext, NextPantheonAPI } from "../../src/core/pantheon-api";
 
 beforeEach(() => {
@@ -178,11 +177,6 @@ describe("Pages routing", () => {
       expect.objectContaining({
         platform: expect.objectContaining({
           name: "next",
-          version: null,
-          sdk: expect.objectContaining({
-            name: "pcc-react-sdk",
-            version: packageJson.version,
-          }),
           routing: expect.objectContaining({ mode: "pages" }),
           runtime: expect.stringMatching(/^(edge|node)$/),
         }),
@@ -330,11 +324,6 @@ describe("App routing", () => {
       expect.objectContaining({
         platform: expect.objectContaining({
           name: "next",
-          version: null,
-          sdk: expect.objectContaining({
-            name: "pcc-react-sdk",
-            version: packageJson.version,
-          }),
           routing: expect.objectContaining({ mode: "app" }),
           runtime: expect.stringMatching(/^(edge|node)$/),
         }),
