@@ -38,18 +38,47 @@ export function sh(
   displayOutput = false,
   cwd?: string,
 ) {
-  return new Promise(function (resolve, reject) {
-    const pr = spawn(cmd, args, {
-      stdio: displayOutput ? "inherit" : undefined,
-      shell: true,
-      ...(cwd && { cwd }),
-    });
+  return new Promise<{ stdout: string; stderr: string; code: number }>(
+    function (resolve, reject) {
+      let stdout = "";
+      let stderr = "";
 
-    pr.on("exit", (code) => {
-      if (code === 0) resolve(0);
-      else reject(`Exited with code: ${code}`);
-    });
-  });
+      const pr = spawn(cmd, args, {
+        stdio: displayOutput ? "pipe" : undefined,
+        shell: true,
+        ...(cwd && { cwd }),
+      });
+
+      pr.stdout?.on("data", (data) => {
+        const text = data.toString();
+        stdout += text;
+        if (displayOutput) {
+          console.log(text);
+        }
+      });
+
+      pr.stderr?.on("data", (data) => {
+        const text = data.toString();
+        stderr += text;
+        if (displayOutput) {
+          console.error(text);
+        }
+      });
+
+      pr.on("exit", (code) => {
+        if (code === 0) {
+          resolve({ stdout, stderr, code });
+        } else {
+          console.error({ stdout, stderr });
+          reject(
+            displayOutput
+              ? stderr || `Exited with code: ${code}`
+              : `Exited with code: ${code}`,
+          );
+        }
+      });
+    },
+  );
 }
 
 export function toKebabCase(s: string) {
