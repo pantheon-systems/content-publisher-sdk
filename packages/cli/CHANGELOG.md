@@ -1,5 +1,11 @@
 # @pantheon-systems/pcc-cli
 
+## 5.1.1
+
+### Patch Changes
+
+- @pantheon-systems/pcc-sdk-core@5.1.1
+
 ## 5.1.0
 
 ### Minor Changes
