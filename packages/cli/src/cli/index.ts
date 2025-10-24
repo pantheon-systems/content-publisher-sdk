@@ -173,6 +173,12 @@ yargs(hideBin(process.argv))
           type: "string",
           demandOption: false,
         })
+        .option("appRouter", {
+          describe: "Use App Router for the project.",
+          type: "boolean",
+          demandOption: false,
+          default: false,
+        })
         .example(formatExamples(INIT_EXAMPLES));
     },
     async (args) => {
