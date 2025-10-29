@@ -1,5 +1,17 @@
 # @pantheon-systems/pcc-cli
 
+## 5.1.0
+
+### Minor Changes
+
+- 39b1689: Support Nextjs 15.5+
+
+### Patch Changes
+
+- 0dc15ea: Fixed issues related to login and updated messaging
+- Updated dependencies [39b1689]
+  - @pantheon-systems/pcc-sdk-core@5.1.0
+
 ## 5.1.0-beta.1
 
 ### Minor Changes

@@ -4,7 +4,6 @@ import {
 } from "@pantheon-systems/pcc-sdk-core";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { NextRequest } from "next/server";
-import packageJson from "../../package.json";
 
 export interface AppRouterContext {
   params: Promise<
@@ -39,11 +38,7 @@ export function NextPantheonAPI(options?: PantheonAPIOptions) {
         const level =
           nextReq.query.level?.toString() === "debug" ? "debug" : "basic";
         const coreStatus = api.buildStatus(level);
-        const platform = buildPlatformDiagnostics(
-          level,
-          "pages",
-          packageJson.version,
-        );
+        const platform = buildPlatformDiagnostics(level, "pages");
         const payload = { ...coreStatus, platform };
         return void nextRes.json(payload);
       }
@@ -71,11 +66,7 @@ export function NextPantheonAPI(options?: PantheonAPIOptions) {
       const levelParam = nextReq.nextUrl.searchParams.get("level");
       const level = levelParam === "debug" ? "debug" : "basic";
       const coreStatus = api.buildStatus(level);
-      const platform = buildPlatformDiagnostics(
-        level,
-        "app",
-        packageJson.version,
-      );
+      const platform = buildPlatformDiagnostics(level, "app");
       const payload = { ...coreStatus, platform };
       return Response.json(payload);
     }
@@ -140,7 +131,6 @@ function cookiesToObj(cookies: NextRequest["cookies"]) {
 function buildPlatformDiagnostics(
   _level: "basic" | "debug",
   routingMode: "app" | "pages",
-  reactSdkVersion: string | null,
 ) {
   const runtime =
     typeof (globalThis as unknown as { EdgeRuntime?: unknown }).EdgeRuntime !==
@@ -150,8 +140,6 @@ function buildPlatformDiagnostics(
 
   const base = {
     name: "next",
-    version: null as string | null,
-    sdk: { name: "pcc-react-sdk", version: reactSdkVersion },
     routing: { mode: routingMode },
     runtime,
   };
