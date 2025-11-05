@@ -82,7 +82,6 @@ export function NextPantheonAPI(options?: PantheonAPIOptions) {
         query: {
           ...Object.fromEntries(nextReq.nextUrl.searchParams),
           ...params,
-          command,
         },
         cookies: cookiesToObj(nextReq.cookies),
       },
