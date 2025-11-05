@@ -1,5 +1,12 @@
 # @pantheon-systems/pcc-react-sdk
 
+## 5.1.1-beta.0
+
+### Patch Changes
+
+- 28c7e14: Remove version info from status endpoint.
+  - @pantheon-systems/pcc-sdk-core@5.1.1-beta.0
+
 ## 5.1.0
 
 ### Minor Changes
