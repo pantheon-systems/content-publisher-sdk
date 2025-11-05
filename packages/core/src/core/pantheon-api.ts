@@ -177,7 +177,7 @@ export const PantheonAPI = (givenOptions?: PantheonAPIOptions) => {
       return await res.redirect(302, options?.notFoundPath || "/404");
     }
 
-    const command = Array.isArray(commandInput)
+    const currentCommand = Array.isArray(commandInput)
       ? commandInput
       : typeof commandInput === "string"
         ? commandInput.split("/")
@@ -216,7 +216,7 @@ export const PantheonAPI = (givenOptions?: PantheonAPIOptions) => {
       }
     }
 
-    switch (command[0]) {
+    switch (currentCommand[0]) {
       case "status": {
         const levelParam = Array.isArray(req.query.level)
           ? req.query.level[0]
@@ -226,7 +226,7 @@ export const PantheonAPI = (givenOptions?: PantheonAPIOptions) => {
       }
 
       case "document": {
-        const parsedArticleId = command[1];
+        const parsedArticleId = currentCommand[1];
 
         const client = options.getPantheonClient({
           pccGrant: pccGrant ? pccGrant.toString() : undefined,
@@ -270,7 +270,7 @@ export const PantheonAPI = (givenOptions?: PantheonAPIOptions) => {
       }
 
       case "component_schema": {
-        const componentFilter = command[1];
+        const componentFilter = currentCommand[1];
 
         if (options?.smartComponentMap == null) {
           return await res.redirect(302, options.notFoundPath);
@@ -285,8 +285,8 @@ export const PantheonAPI = (givenOptions?: PantheonAPIOptions) => {
       }
 
       case "component": {
-        if (options?.componentPreviewPath && command[1] != null) {
-          const previewPath = options.componentPreviewPath(command[1]);
+        if (options?.componentPreviewPath && currentCommand[1] != null) {
+          const previewPath = options.componentPreviewPath(currentCommand[1]);
           const pathParts = previewPath.split("?");
           const query = queryString.parse(pathParts[1] || "");
 
@@ -303,8 +303,8 @@ export const PantheonAPI = (givenOptions?: PantheonAPIOptions) => {
       }
 
       case "metadata_group": {
-        const groupIdentifier = command[1];
-        const objectId = command[2];
+        const groupIdentifier = currentCommand[1];
+        const objectId = currentCommand[2];
 
         if (options.metadataGroups == null) {
           return res.json({
