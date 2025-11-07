@@ -1,5 +1,13 @@
 # @pantheon-systems/pcc-cli
 
+## 5.1.1
+
+### Patch Changes
+
+- 2bab8bf: Show --appRouter in possible flags for init command.
+- Updated dependencies [302023e]
+  - @pantheon-systems/pcc-sdk-core@5.1.1
+
 ## 5.1.1-beta.1
 
 ### Patch Changes
