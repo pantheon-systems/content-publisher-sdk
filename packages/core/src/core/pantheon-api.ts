@@ -1,5 +1,4 @@
 import queryString from "query-string";
-import packageJson from "../../package.json";
 import {
   getArticleBySlugOrId,
   getArticleURLFromSite,
@@ -109,7 +108,6 @@ export interface PantheonAPIOptions {
 export interface PantheonAPIStatus {
   timestamp: string;
   level: "basic" | "debug";
-  version: string;
   siteId: string;
   smartComponents: boolean;
   smartComponentsCount: number | null;
@@ -148,7 +146,6 @@ export const PantheonAPI = (givenOptions?: PantheonAPIOptions) => {
     return {
       timestamp,
       level,
-      version: packageJson.version,
       siteId: options.getSiteId(),
       smartComponents: Boolean(options?.smartComponentMap),
       smartComponentsCount: options?.smartComponentMap

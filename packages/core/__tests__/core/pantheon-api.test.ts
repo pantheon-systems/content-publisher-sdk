@@ -251,6 +251,15 @@ describe("Command Handling", () => {
         }),
       );
     });
+
+    it("does not return SDK version in status endpoint response", async () => {
+      const api = PantheonAPI();
+
+      await api.handler(request, mockResponse);
+
+      const jsonCall = mockResponse.json.mock.calls[0]?.[0];
+      expect(jsonCall).not.toHaveProperty("version");
+    });
   });
 
   describe("Command: document", () => {
@@ -546,7 +555,6 @@ describe("Status builder", () => {
       expect.objectContaining({
         level: "basic",
         timestamp: expect.any(String),
-        version: expect.any(String),
         smartComponents: expect.any(Boolean),
         smartComponentPreview: expect.any(Boolean),
         resolvePathConfigured: expect.any(Boolean),
