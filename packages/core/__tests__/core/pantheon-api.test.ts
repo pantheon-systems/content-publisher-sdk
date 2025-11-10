@@ -259,6 +259,7 @@ describe("Command Handling", () => {
 
       const jsonCall = mockResponse.json.mock.calls[0]?.[0];
       expect(jsonCall).not.toHaveProperty("version");
+      expect(jsonCall).not.toHaveProperty("platform");
     });
   });
 
