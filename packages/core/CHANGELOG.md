@@ -1,5 +1,13 @@
 # @pantheon-systems/pcc-sdk-core
 
+## 5.1.1-beta.1
+
+### Patch Changes
+
+- 302023e: Fixed 404 redirect issue with document preview and publish
+
+## 5.1.1-beta.0
+
 ## 5.1.0
 
 ### Minor Changes

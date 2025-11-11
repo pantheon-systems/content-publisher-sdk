@@ -330,4 +330,44 @@ describe("App routing", () => {
       }),
     );
   });
+
+  it("passes the full command array from params to the core handler (no truncation)", async () => {
+    const request = new NextRequest("http://localhost:3000/");
+    const params = {
+      params: Promise.resolve({ command: ["document", "my-slug"] }),
+    } satisfies AppRouterContext;
+
+    await NextPantheonAPI()(request, params);
+
+    expect(apiHandlerMock).toHaveBeenCalledWith(
+      {
+        query: expect.objectContaining({ command: ["document", "my-slug"] }),
+        cookies: {},
+      },
+      expect.any(Object),
+    );
+  });
+
+  it("passes full command plus publishingLevel and versionId from query to core", async () => {
+    const request = new NextRequest(
+      "http://localhost:3000/?publishingLevel=preview&versionId=abc",
+    );
+    const params = {
+      params: Promise.resolve({ command: ["document", "slug"] }),
+    } satisfies AppRouterContext;
+
+    await NextPantheonAPI()(request, params);
+
+    expect(apiHandlerMock).toHaveBeenCalledWith(
+      {
+        query: expect.objectContaining({
+          command: ["document", "slug"],
+          publishingLevel: "preview",
+          versionId: "abc",
+        }),
+        cookies: {},
+      },
+      expect.any(Object),
+    );
+  });
 });
