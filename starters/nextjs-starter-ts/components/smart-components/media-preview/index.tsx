@@ -1,3 +1,5 @@
+"use client";
+
 import { getPreviewComponentFromURL, SUPPORTED_PROVIDERS } from "./providers";
 
 interface Props {

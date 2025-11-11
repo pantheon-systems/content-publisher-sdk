@@ -11,12 +11,12 @@ test("loads youtube component", async ({ page }) => {
   // Click the get started link.
   await expect(
     page.locator(
-      "iframe[src*='https://fast.wistia.net/embed/iframe/9mz11isa6g']",
+      "iframe[src*='https://www.youtube.com/embed/gId4Yb5Qevk?feature=oembed']",
     ),
   ).toBeVisible();
 });
 
-test("loads unsupported media preview", async ({ page }) => {
+test("no data provided", async ({ page }) => {
   await page.goto("/component-preview/MEDIA_PREVIEW?attrs=e30=%3D%3D");
 
   // Wait for the page to fully load
@@ -24,7 +24,7 @@ test("loads unsupported media preview", async ({ page }) => {
 
   // Click the get started link.
   await expect(
-    page.locator("img").and(page.getByAltText("Unsupported Media Preview URL")),
+    page.getByText("Paste the URL you want to embed on the right 👉"),
   ).toBeVisible();
   await expect(page.locator("iframe")).not.toBeVisible();
 });
