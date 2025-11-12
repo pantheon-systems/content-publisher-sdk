@@ -22,7 +22,7 @@ overrides:
   axios: ^1.12.2
   image-size: 1.2.1
 
-pnpmfileChecksum: dwsml3ncnigkmiwvwlkoqsfuki
+pnpmfileChecksum: sha256-4MsH1g26NkA4ElRATPgUw4yyCde2YSF6pkEsB+NKNFM=
 
 importers:
 
