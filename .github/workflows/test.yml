@@ -93,7 +93,11 @@ jobs:
           echo "::add-mask::$PCC_SITE_ID"
           echo "::add-mask::$PCC_TOKEN"
 
-          TEST_DIR=$(mktemp -d)
+          # Get a unique temp directory name without creating it (init command requires directory to not exist)
+          TEST_DIR=$(mktemp -u)
+          # Clean up directory if it exists from a previous failed run
+          rm -rf "$TEST_DIR"
+
           node packages/cli/dist/index.js init $TEST_DIR --template=nextjs --use-pnpm --non-interactive --ts --site-id="$PCC_SITE_ID" --git-ref="${{ github.sha }}"
           cd $TEST_DIR
 
