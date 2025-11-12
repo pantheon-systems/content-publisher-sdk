@@ -55,3 +55,56 @@ jobs:
 
       - name: Test
         run: pnpm test
+
+  test-pcc-init:
+    name: Test pcc init with pnpm
+    runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      PCC_SITE_ID: ${{ secrets.PCC_SITE_ID }}
+      PCC_TOKEN: ${{ secrets.PCC_TOKEN }}
+      IS_CICD: true
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build All Packages
+        run: pnpm build
+
+      - name: Build CLI for testing
+        run: pnpm --filter '*cli*' build:test
+
+      - name: Test pcc init with pnpm
+        run: |
+          # Explicitly mask secrets to prevent accidental exposure in logs
+          echo "::add-mask::$PCC_SITE_ID"
+          echo "::add-mask::$PCC_TOKEN"
+
+          TEST_DIR=$(mktemp -d)
+          node packages/cli/dist/index.js init $TEST_DIR --template=nextjs --use-pnpm --non-interactive --ts --site-id="$PCC_SITE_ID" --git-ref="${{ github.sha }}"
+          cd $TEST_DIR
+
+          # Write PCC_TOKEN to .env.local file (using printf to avoid shell expansion in logs)
+          printf "PCC_TOKEN=%s\n" "$PCC_TOKEN" >> .env.local
+
+          # Verify packages are installed
+          if [ ! -d "node_modules" ]; then
+            echo "Error: node_modules directory not found"
+            exit 1
+          fi
+
+          # Build the project to verify it works
+          pnpm build
