@@ -13,7 +13,7 @@ export const SUPPORTED_PROVIDERS = [
 ];
 
 export function getPreviewComponentFromURL(url) {
-  if (!url) return null;
+  if (!url || url.trim() === "") return null;
 
   try {
     let urlWithProtocol = url;
@@ -68,25 +68,19 @@ function VimeoPreview({ url }) {
 
   return (
     <div className="responsive-iframe-container">
-      <iframe
-        src={embedUrl}
-        className="rounded-2xl responsive-iframe"
-      />
+      <iframe src={embedUrl} className="responsive-iframe rounded-2xl" />
     </div>
   );
 }
 
 function DailyMotionPreview({ url }) {
   const embedUrl = `https://www.dailymotion.com/embed/video/${extractVideoId(
-    url
+    url,
   )}`;
 
   return (
     <div className="responsive-iframe-container">
-      <iframe
-        src={embedUrl}
-        className="rounded-2xl responsive-iframe"
-      />
+      <iframe src={embedUrl} className="responsive-iframe rounded-2xl" />
     </div>
   );
 }
@@ -96,7 +90,7 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 function YoutubePreview({ url }) {
   const { data, error, isLoading } = useSWR(
     `/api/utils/oembed?url=${encodeURIComponent(url)}&type=youtube`,
-    fetcher
+    fetcher,
   );
 
   if (error) return <div>Error loading Youtube preview</div>;
@@ -114,7 +108,7 @@ function YoutubePreview({ url }) {
   return (
     <div
       dangerouslySetInnerHTML={{ __html: html }}
-        className="responsive-iframe-container [&>iframe]:rounded-2xl"
+      className="responsive-iframe-container [&>iframe]:rounded-2xl"
     />
   );
 }
@@ -125,7 +119,7 @@ function TwitterPreview({ url }) {
 
   const { data, error, isLoading } = useSWR(
     `/api/utils/oembed?url=${encodeURIComponent(twitterURL)}&type=twitter`,
-    fetcher
+    fetcher,
   );
 
   if (error) return <div>Error loading Twitter preview</div>;
@@ -149,7 +143,7 @@ function LoomPreview({ url }) {
       <iframe
         src={`https://www.loom.com/embed/${extractVideoId(url)}`}
         allowFullScreen
-        className="rounded-2xl responsive-iframe"
+        className="responsive-iframe rounded-2xl"
       ></iframe>
     </div>
   );
@@ -161,7 +155,7 @@ function GenericIframe({ url }) {
       <iframe
         src={url}
         allowFullScreen
-        className="rounded-2xl responsive-iframe"
+        className="responsive-iframe rounded-2xl"
       ></iframe>
     </div>
   );
@@ -170,7 +164,7 @@ function GenericIframe({ url }) {
 function InstagramPreview({ url }) {
   const { data, error, isLoading } = useSWR(
     `/api/utils/oembed?url=${encodeURIComponent(url)}&type=instagram`,
-    fetcher
+    fetcher,
   );
 
   if (error) return <div>Error loading Instagram preview</div>;

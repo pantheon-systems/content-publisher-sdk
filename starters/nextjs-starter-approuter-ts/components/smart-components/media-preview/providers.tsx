@@ -19,7 +19,7 @@ interface EmbedProps {
 }
 
 export function getPreviewComponentFromURL(url: string) {
-  if (!url) return null;
+  if (!url || url.trim() === "") return null;
 
   try {
     let urlWithProtocol = url;
