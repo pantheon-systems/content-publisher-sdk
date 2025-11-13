@@ -65,20 +65,12 @@ jobs:
         package_manager:
           - flag: ""
             name: "npm (default)"
-            cache: "npm"
-            setup_action: ""
           - flag: "--use-npm"
             name: "npm"
-            cache: "npm"
-            setup_action: ""
           - flag: "--use-pnpm"
             name: "pnpm"
-            cache: "pnpm"
-            setup_action: "pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda"
           - flag: "--use-yarn"
             name: "yarn"
-            cache: "yarn"
-            setup_action: ""
         features:
           - flags: ""
             name: "default"
@@ -103,14 +95,16 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Setup PNPM
-        if: matrix.package_manager.setup_action != ''
-        uses: ${{ matrix.package_manager.setup_action }}
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda
 
       - name: Setup Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 20
-          cache: ${{ matrix.package_manager.cache }}
+          cache: "pnpm"
+
+      - name: Install yarn
+        run: npm install -g yarn
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
