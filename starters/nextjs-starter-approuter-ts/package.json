@@ -47,9 +47,9 @@
     "tailwind-merge": "2.6.0"
   },
   "devDependencies": {
-    "@playwright/test": "1.50.1",
+    "@playwright/test": "1.51.1",
     "@testing-library/react": "16.3.0",
-    "@vitejs/plugin-react": "4.2.1",
+    "@vitejs/plugin-react": "5.1.1",
     "autoprefixer": "10.4.17",
     "c8": "7.14.0",
     "eslint": "8.57.0",
