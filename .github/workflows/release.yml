@@ -67,9 +67,11 @@ jobs:
           fi
 
       - name: Tag release branch as 'stable'
-        if:
-          steps.changesets.outputs.published == 'true' &&
+        if: steps.changesets.outputs.published == 'true' &&
           steps.prerelease_check.outputs.is_prerelease == 'false'
         run: |
           git tag -a stable -f -m "Release v${{steps.prep_commit.outputs.NEW_VERSION}}"
           git push origin stable --force
+          # Also update the 'latest' tag to the new version - For backwards compatibility with older versions of the CLI
+          git tag -a latest -f -m "Release v${{steps.prep_commit.outputs.NEW_VERSION}}"
+          git push origin latest --force
