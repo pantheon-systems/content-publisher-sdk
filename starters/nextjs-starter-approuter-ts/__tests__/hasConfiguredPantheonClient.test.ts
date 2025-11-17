@@ -1,4 +1,3 @@
-import { Site } from "@pantheon-systems/pcc-react-sdk/server";
 import { pantheonAPIOptions } from "../app/api/pantheoncloud/[...command]/api-options";
 
 describe("hasConfiguredPantheonClient", () => {
@@ -7,7 +6,7 @@ describe("hasConfiguredPantheonClient", () => {
   });
 
   it("Resolve document by article id", () => {
-    const site: Site = {
+    const site = {
       id: "123",
       name: "test",
       url: "https://test.com",
@@ -18,13 +17,13 @@ describe("hasConfiguredPantheonClient", () => {
         active: [],
       },
     };
-    expect(pantheonAPIOptions.resolvePath!({ id: "123" }, site)).toBe(
+    expect(pantheonAPIOptions.resolvePath({ id: "123" }, site)).toBe(
       "/articles/123",
     );
   });
 
   it("Resolve document by article slug in production publishing level", () => {
-    const site: Site = {
+    const site = {
       id: "123",
       name: "test",
       url: "https://test.com",
@@ -36,7 +35,7 @@ describe("hasConfiguredPantheonClient", () => {
       },
     };
     expect(
-      pantheonAPIOptions.resolvePath!(
+      pantheonAPIOptions.resolvePath(
         { id: "123", slug: "foo-bar-slug", publishingLevel: "PRODUCTION" },
         site,
       ),
