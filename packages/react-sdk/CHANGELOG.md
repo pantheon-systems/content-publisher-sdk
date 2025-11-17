@@ -1,5 +1,14 @@
 # @pantheon-systems/pcc-react-sdk
 
+## 5.1.1
+
+### Patch Changes
+
+- 302023e: Fixed 404 redirect issue with document preview and publish
+- 28c7e14: Remove version info from status endpoint.
+- Updated dependencies [302023e]
+  - @pantheon-systems/pcc-sdk-core@5.1.1
+
 ## 5.1.1-beta.1
 
 ### Patch Changes
