@@ -5,6 +5,16 @@ import { HomepageArticleGrid } from "../components/grid";
 import Layout from "../components/layout";
 import { Button } from "../components/ui/button";
 
+// ISR with a short lifetime results in new content appearing pretty quickly.
+// Without this setting (or something similar) this page
+// renders statically with a long s-maxage
+// (cache-control: s-maxage=31536000)
+// With this "revalidate" value, the cache control header changes to
+// cache-control: s-maxage=5, stale-while-revalidate=31535995
+// See https://github.com/pantheon-systems/documentation/issues/9777
+// for more detail/discussion.
+export const revalidate = 5;
+
 export default async function Home() {
   // Fetch the articles and site in parallel
   const [{ data: articles }, site] = await Promise.all([
