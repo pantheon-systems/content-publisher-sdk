@@ -17,7 +17,7 @@ interface EmbedProps {
 }
 
 export function getPreviewComponentFromURL(url: string) {
-  if (!url) return null;
+  if (!url || url.trim() === "") return null;
 
   try {
     let urlWithProtocol = url;
@@ -72,10 +72,7 @@ function VimeoPreview({ url }: EmbedProps) {
 
   return (
     <div className="responsive-iframe-container">
-      <iframe
-        src={embedUrl}
-        className="rounded-2xl responsive-iframe"
-      />
+      <iframe src={embedUrl} className="responsive-iframe rounded-2xl" />
     </div>
   );
 }
@@ -87,10 +84,7 @@ function DailyMotionPreview({ url }: EmbedProps) {
 
   return (
     <div className="responsive-iframe-container">
-      <iframe
-        src={embedUrl}
-        className="rounded-2xl responsive-iframe"
-      />
+      <iframe src={embedUrl} className="responsive-iframe rounded-2xl" />
     </div>
   );
 }
@@ -160,7 +154,7 @@ function LoomPreview({ url }: EmbedProps) {
       <iframe
         src={`https://www.loom.com/embed/${extractVideoId(url)}`}
         allowFullScreen
-        className="rounded-2xl responsive-iframe"
+        className="responsive-iframe rounded-2xl"
       ></iframe>
     </div>
   );
@@ -172,7 +166,7 @@ function GenericIframe({ url }: EmbedProps) {
       <iframe
         src={url}
         allowFullScreen
-        className="rounded-2xl responsive-iframe"
+        className="responsive-iframe rounded-2xl"
       ></iframe>
     </div>
   );
