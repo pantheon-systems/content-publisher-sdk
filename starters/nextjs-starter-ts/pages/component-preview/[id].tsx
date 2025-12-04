@@ -21,7 +21,7 @@ export default function SmartComponentPreview() {
     <div>
       {SmartComponent ? (
         <div>
-          <SmartComponent {...decodedAttrs} />
+          <SmartComponent isSmartComponentPreview {...decodedAttrs} />
         </div>
       ) : (
         <div>Component not found</div>
