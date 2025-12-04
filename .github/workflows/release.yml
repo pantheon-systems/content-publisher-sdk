@@ -40,7 +40,12 @@ jobs:
       - name: Prep commit message
         id: prep_commit
         run: |
-          NEW_VERSION=$(pnpm changeset status --output=release.json && jq -r '.releases[0].newVersion' release.json && rm release.json)
+          NEW_VERSION=$(pnpm changeset status --output=release.json && jq -r '.releases[0].newVersion // empty' release.json || true)
+          rm -f release.json
+          if [ -z "$NEW_VERSION" ] || [ "$NEW_VERSION" = "null" ]; then
+            # Fallback to the core package version if the new version is not found
+            NEW_VERSION=$(jq -r '.version' packages/core/package.json)
+          fi
           echo "NEW_VERSION=$NEW_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Create Release Pull Request or Publish
@@ -67,9 +72,12 @@ jobs:
           fi
 
       - name: Tag release branch as 'stable'
-        if:
-          steps.changesets.outputs.published == 'true' &&
+        if: steps.changesets.outputs.published == 'true' &&
           steps.prerelease_check.outputs.is_prerelease == 'false'
         run: |
-          git tag -a stable -f -m "Release v${{steps.prep_commit.outputs.NEW_VERSION}}"
+          VERSION=$(echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -r '.[0].version')
+          git tag -a stable -f -m "Release v$VERSION"
           git push origin stable --force
+          # Also update the 'latest' tag to the new version - For backwards compatibility with older versions of the CLI
+          git tag -a latest -f -m "Release v${{steps.prep_commit.outputs.NEW_VERSION}}"
+          git push origin latest --force
