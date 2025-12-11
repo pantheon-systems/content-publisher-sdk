@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest } from "next/server";
-import packageJson from "../../package.json";
-import { AppRouterParams, NextPantheonAPI } from "../../src/core/pantheon-api";
+import { AppRouterContext, NextPantheonAPI } from "../../src/core/pantheon-api";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -83,7 +82,9 @@ describe("Pages routing", () => {
     // Assert the API handler was called with the correct cookies
     expect(apiHandlerMock).toHaveBeenCalledWith(
       {
-        query: {},
+        query: {
+          command: undefined,
+        },
         cookies: {
           session: "123",
           grant: "test",
@@ -176,11 +177,6 @@ describe("Pages routing", () => {
       expect.objectContaining({
         platform: expect.objectContaining({
           name: "next",
-          version: null,
-          sdk: expect.objectContaining({
-            name: "pcc-react-sdk",
-            version: packageJson.version,
-          }),
           routing: expect.objectContaining({ mode: "pages" }),
           runtime: expect.stringMatching(/^(edge|node)$/),
         }),
@@ -198,7 +194,7 @@ describe("App routing", () => {
       params: Promise.resolve({
         testParam: "123",
       }),
-    } satisfies AppRouterParams;
+    } satisfies AppRouterContext;
 
     await NextPantheonAPI()(request, params);
 
@@ -228,7 +224,7 @@ describe("App routing", () => {
       params: Promise.resolve({
         testParam: "123",
       }),
-    } satisfies AppRouterParams;
+    } satisfies AppRouterContext;
 
     await NextPantheonAPI()(request, params);
 
@@ -237,6 +233,7 @@ describe("App routing", () => {
       {
         query: {
           testParam: "123",
+          command: undefined,
         },
         cookies: {
           session: "123",
@@ -254,7 +251,7 @@ describe("App routing", () => {
     const request = new NextRequest("http://localhost:3000/");
     const params = {
       params: Promise.resolve({}),
-    } satisfies AppRouterParams;
+    } satisfies AppRouterContext;
 
     // When the API handler is called, it calls res.json with the response data
     apiHandlerMock.mockImplementationOnce(async (req, res) => {
@@ -273,7 +270,7 @@ describe("App routing", () => {
     const request = new NextRequest("http://localhost:3000/");
     const params = {
       params: Promise.resolve({}),
-    } satisfies AppRouterParams;
+    } satisfies AppRouterContext;
 
     // When the API handler is called, it calls res.redirect with the status and path
     apiHandlerMock.mockImplementationOnce(async (req, res) => {
@@ -295,7 +292,7 @@ describe("App routing", () => {
     const request = new NextRequest("http://localhost:3000/");
     const params = {
       params: Promise.resolve({}),
-    } satisfies AppRouterParams;
+    } satisfies AppRouterContext;
 
     // When the API handler is called, it sets a header and then calls res.json with the response data
     apiHandlerMock.mockImplementationOnce(async (req, res) => {
@@ -316,7 +313,7 @@ describe("App routing", () => {
 
   it("adds platform diagnostics for status requests", async () => {
     const request = new NextRequest("http://localhost:3000/?command=status");
-    const params = { params: Promise.resolve({}) } satisfies AppRouterParams;
+    const params = { params: Promise.resolve({}) } satisfies AppRouterContext;
 
     const apiResponse = await NextPantheonAPI()(request, params);
 
@@ -327,15 +324,50 @@ describe("App routing", () => {
       expect.objectContaining({
         platform: expect.objectContaining({
           name: "next",
-          version: null,
-          sdk: expect.objectContaining({
-            name: "pcc-react-sdk",
-            version: packageJson.version,
-          }),
           routing: expect.objectContaining({ mode: "app" }),
           runtime: expect.stringMatching(/^(edge|node)$/),
         }),
       }),
+    );
+  });
+
+  it("passes the full command array from params to the core handler (no truncation)", async () => {
+    const request = new NextRequest("http://localhost:3000/");
+    const params = {
+      params: Promise.resolve({ command: ["document", "my-slug"] }),
+    } satisfies AppRouterContext;
+
+    await NextPantheonAPI()(request, params);
+
+    expect(apiHandlerMock).toHaveBeenCalledWith(
+      {
+        query: expect.objectContaining({ command: ["document", "my-slug"] }),
+        cookies: {},
+      },
+      expect.any(Object),
+    );
+  });
+
+  it("passes full command plus publishingLevel and versionId from query to core", async () => {
+    const request = new NextRequest(
+      "http://localhost:3000/?publishingLevel=preview&versionId=abc",
+    );
+    const params = {
+      params: Promise.resolve({ command: ["document", "slug"] }),
+    } satisfies AppRouterContext;
+
+    await NextPantheonAPI()(request, params);
+
+    expect(apiHandlerMock).toHaveBeenCalledWith(
+      {
+        query: expect.objectContaining({
+          command: ["document", "slug"],
+          publishingLevel: "preview",
+          versionId: "abc",
+        }),
+        cookies: {},
+      },
+      expect.any(Object),
     );
   });
 });

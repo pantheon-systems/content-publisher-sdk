@@ -2,7 +2,7 @@
   "name": "@pantheon-systems/pcc-sdk-core",
   "author": "@pantheon-systems",
   "description": "Pantheon Content Publisher SDK Core",
-  "version": "5.0.1",
+  "version": "5.1.1",
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.10.3",
-    "axios": "^1.7.6",
+    "axios": "^1.12.2",
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "graphql-ws": "^5.15.0",

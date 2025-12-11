@@ -1,5 +1,61 @@
 # @pantheon-systems/pcc-react-sdk
 
+## 5.1.1
+
+### Patch Changes
+
+- 302023e: Fixed 404 redirect issue with document preview and publish
+- 28c7e14: Remove version info from status endpoint.
+- Updated dependencies [302023e]
+  - @pantheon-systems/pcc-sdk-core@5.1.1
+
+## 5.1.1-beta.1
+
+### Patch Changes
+
+- 302023e: Fixed 404 redirect issue with document preview and publish
+- Updated dependencies [302023e]
+  - @pantheon-systems/pcc-sdk-core@5.1.1-beta.1
+
+## 5.1.1-beta.0
+
+### Patch Changes
+
+- 28c7e14: Remove version info from status endpoint.
+  - @pantheon-systems/pcc-sdk-core@5.1.1-beta.0
+
+## 5.1.0
+
+### Minor Changes
+
+- 39b1689: Support Nextjs 15.5+
+
+### Patch Changes
+
+- 362fe87: Fix PCC-2287 'each child in a list should have a unique key prop'
+  warning
+- Updated dependencies [39b1689]
+  - @pantheon-systems/pcc-sdk-core@5.1.0
+
+## 5.1.0-beta.1
+
+### Minor Changes
+
+- 39b1689: Support Nextjs 15.5+
+
+### Patch Changes
+
+- 362fe87: Fix PCC-2287 'each child in a list should have a unique key prop'
+  warning
+- Updated dependencies [39b1689]
+  - @pantheon-systems/pcc-sdk-core@5.1.0-beta.1
+
+## 5.0.2-beta.0
+
+### Patch Changes
+
+- @pantheon-systems/pcc-sdk-core@5.0.2-beta.0
+
 ## 5.0.1
 
 ### Patch Changes

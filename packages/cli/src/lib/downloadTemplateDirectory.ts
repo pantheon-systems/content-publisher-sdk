@@ -21,7 +21,7 @@ export async function downloadTemplateDirectory(
   directory: string,
   outputDirectory: string,
   printVerbose?: boolean,
-  gitRef = "latest",
+  gitRef?: string,
 ) {
   try {
     // Fetch files but ignore certain ones.
