@@ -173,17 +173,22 @@ const init = async ({
       ]);
 
       if (chooseSite) {
-        siteId = (
-          await inquirer.prompt({
-            type: "list",
-            name: "siteId",
-            choices: (await AddOnApiHelper.listSites({}))
-              .filter((x) => !x.__isPlayground)
-              .map((x) => `${x.url} (${x.id})`),
-          })
-        ).siteId
-          .split(" (")[1]
-          .replace(")", "");
+        const sites = await AddOnApiHelper.listSites({});
+        if (sites.length > 0) {
+          siteId = (
+            await inquirer.prompt({
+              type: "list",
+              name: "siteId",
+              choices: sites
+                .filter((x) => !x.__isPlayground)
+                .map((x) => `${x.url} (${x.id})`),
+            })
+          ).siteId
+            .split(" (")[1]
+            .replace(")", "");
+        } else {
+          new SpinnerLogger("", silentLogs).fail("No sites found.");
+        }
       }
     }
 
