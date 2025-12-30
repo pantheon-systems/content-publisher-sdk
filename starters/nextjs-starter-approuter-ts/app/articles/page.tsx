@@ -3,6 +3,8 @@ import ArticleList from "../../components/article-list";
 import Layout from "../../components/layout";
 import { PAGE_SIZE } from "../../constants";
 
+export const dynamic = "force-dynamic";
+
 async function fetchNextPages(cursor?: string | null | undefined) {
   "use server";
   const { data, cursor: newCursor } =
