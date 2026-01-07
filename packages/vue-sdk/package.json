@@ -52,6 +52,8 @@
     "node": ">=18.0.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^9.39.2",
     "@types/markdown-it": "^13.0.7",
     "@types/node": "^20.11.21",
     "esbuild-plugin-globals": "^0.2.0",

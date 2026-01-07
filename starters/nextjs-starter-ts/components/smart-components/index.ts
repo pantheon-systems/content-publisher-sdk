@@ -2,6 +2,7 @@ import {
   ServersideSmartComponentMap,
   SmartComponentMap,
 } from "@pantheon-systems/pcc-react-sdk/components";
+import React from "react";
 import { withSmartComponentErrorBoundary } from "./error-boundary";
 import LeadCapture from "./lead-capture";
 import MediaPreview from "./media-preview";
@@ -67,14 +68,20 @@ export const serverSmartComponentMap = {
 export const clientSmartComponentMap: SmartComponentMap = {
   MEDIA_PREVIEW: {
     ...serverSmartComponentMap.MEDIA_PREVIEW,
-    reactComponent: withSmartComponentErrorBoundary(MediaPreview),
+    reactComponent: withSmartComponentErrorBoundary(
+      MediaPreview as unknown as React.ComponentType<Record<string, unknown>>,
+    ) as (props: unknown) => React.JSX.Element,
   },
   LEAD_CAPTURE: {
     ...serverSmartComponentMap.LEAD_CAPTURE,
-    reactComponent: withSmartComponentErrorBoundary(LeadCapture),
+    reactComponent: withSmartComponentErrorBoundary(
+      LeadCapture as unknown as React.ComponentType<Record<string, unknown>>,
+    ) as (props: unknown) => React.JSX.Element,
   },
   TILE_NAVIGATION: {
     ...serverSmartComponentMap.TILE_NAVIGATION,
-    reactComponent: withSmartComponentErrorBoundary(TileNavigation),
+    reactComponent: withSmartComponentErrorBoundary(
+      TileNavigation as unknown as React.ComponentType<Record<string, unknown>>,
+    ) as (props: unknown) => React.JSX.Element,
   },
 };

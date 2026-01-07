@@ -12,7 +12,7 @@
     "dev": "next dev --turbopack -p 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "prettier": "prettier \"**/*.{js,jsx,md}\" --check --ignore-path .prettierignore",
     "prettier:fix": "prettier \"**/*.{js,jsx,,md}\" --write --ignore-path .prettierignore",
     "test": "vitest run",
