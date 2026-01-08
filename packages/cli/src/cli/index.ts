@@ -63,7 +63,6 @@ import { formatExamples } from "./examples";
 const INSIDE_TEST = process.env.NODE_ENV === "test";
 
 const configureMiddleware = (func: () => void) => {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   if (INSIDE_TEST) return () => {};
   return func;
 };

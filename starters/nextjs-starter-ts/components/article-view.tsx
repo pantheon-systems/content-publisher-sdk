@@ -20,11 +20,16 @@ const ELEMENT_STYLES_TO_OVERRIDE = [
   /height/,
 ];
 const overrideElementStyles = (tag: keyof HTMLElementTagNameMap) => {
-  function resultFunc({ children, id, style, ...attrs }: any) {
+  function resultFunc({
+    children,
+    id,
+    style,
+    ...attrs
+  }: React.HTMLAttributes<HTMLElement>) {
     const newStyles = { ...style };
     ELEMENT_STYLES_TO_OVERRIDE.forEach((s) => {
       Object.keys(newStyles).forEach((key) => {
-        if (s.test(key)) delete newStyles[key];
+        if (s.test(key)) delete newStyles[key as keyof typeof newStyles];
       });
     });
     return React.createElement(

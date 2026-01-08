@@ -19,8 +19,7 @@ export type ServersideSmartComponentMap = {
 
 export type SmartComponentMap = {
   [K in keyof CoreSmartComponentMap]: CoreSmartComponentMap[K] & {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    reactComponent: (props: any) => React.JSX.Element;
+    reactComponent: (props: unknown) => React.JSX.Element;
   };
 };
 
@@ -136,7 +135,7 @@ const ArticleRenderer = ({
     ) {
       return Array.isArray(unboxedContent)
         ? unboxedContent[0]?.documentTab
-        : (unboxedContent as TabTree<any>)?.documentTab;
+        : (unboxedContent as TabTree<unknown>)?.documentTab;
     }
 
     return content;

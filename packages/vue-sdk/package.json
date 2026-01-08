@@ -52,10 +52,12 @@
     "node": ">=18.0.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^9.39.2",
     "@types/markdown-it": "^13.0.7",
     "@types/node": "^20.11.21",
     "esbuild-plugin-globals": "^0.2.0",
-    "eslint": "^8.57.0",
+    "eslint": "^9.39.2",
     "eslint-config-pcc-custom": "workspace:*",
     "h3": "^1.11.1",
     "sass": "^1.71.1",

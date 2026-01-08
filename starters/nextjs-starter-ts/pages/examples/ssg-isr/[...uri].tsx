@@ -27,13 +27,16 @@ export default function ArticlePage({ article }: ArticlePageProps) {
       />
 
       <div className="prose mx-4 mt-16 text-black sm:mx-6 md:mx-auto">
-        <StaticArticleView article={article} tabId={searchParams.get("tabId")} />
+        <StaticArticleView
+          article={article}
+          tabId={searchParams.get("tabId")}
+        />
       </div>
     </Layout>
   );
 }
 
-export const getStaticProps: GetStaticProps<{}> = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (!params?.uri || !Array.isArray(params?.uri) || params?.uri.length === 0) {
     return {
       notFound: true,
@@ -64,7 +67,7 @@ export const getStaticProps: GetStaticProps<{}> = async ({ params }) => {
   }
 };
 
-export const getStaticPaths: GetStaticPaths = async (uri) => {
+export const getStaticPaths: GetStaticPaths = async () => {
   try {
     // Get all the published articles and sites in parallel
     const [publishedArticles, site] = await Promise.all([

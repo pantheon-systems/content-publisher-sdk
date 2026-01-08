@@ -10,3 +10,4 @@ tsup.config.*.mjs
 
 .turbo
 .DS_Store
+.pnpm-store/

@@ -8,7 +8,6 @@ import queryString from "query-string";
 import ArticleList from "../../../components/article-list";
 import Layout from "../../../components/layout";
 import { PAGE_SIZE } from "../../../constants";
-import { usePagination } from "../../../hooks/usePagination";
 
 async function fetchNextPages(cursor?: string | null | undefined) {
   const url = queryString.stringifyUrl({
@@ -40,17 +39,6 @@ export default function SSGISRExampleTemplate({
   cursor,
   site,
 }: Props) {
-  const {
-    data: currentArticles,
-    onPageChange,
-    fetching,
-    currentPage,
-  } = usePagination({
-    cursor,
-    initialArticles: articles,
-    pageSize: PAGE_SIZE,
-  });
-
   return (
     <Layout>
       <NextSeo

@@ -69,7 +69,7 @@ export async function axiosFetch(
       statusText: response.statusText,
       headers: fetchHeaders,
     });
-  } catch (error: any) {
-    throw new TypeError(error?.message || "Network request failed");
+  } catch (error: unknown) {
+    throw new TypeError((error as Error)?.message || "Network request failed");
   }
 }

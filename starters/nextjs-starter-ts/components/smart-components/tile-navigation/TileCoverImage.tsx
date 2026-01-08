@@ -4,12 +4,8 @@ interface TileCoverImageProps {
 }
 
 // Simple component for placeholder images
-function TileCoverImage({
-  imageSrc,
-  imageAltText,
-}: TileCoverImageProps) {
+function TileCoverImage({ imageSrc, imageAltText }: TileCoverImageProps) {
   return imageSrc != null ? (
-    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={imageSrc}
       alt={imageAltText}
@@ -21,4 +17,3 @@ function TileCoverImage({
 }
 
 export default TileCoverImage;
-  

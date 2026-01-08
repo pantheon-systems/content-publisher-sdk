@@ -1,4 +1,0 @@
-{
-  "extends": ["pcc-custom"],
-  "ignorePatterns": ["dist/*", "templates/*"]
-}

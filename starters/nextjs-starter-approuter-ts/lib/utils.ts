@@ -95,7 +95,12 @@ export function parseAsTabTree(
   if (!raw) return null;
 
   // If it looks like a TabTree array, then return it.
-  if (typeof raw === "object" && Array.isArray(raw) && ("children" in (raw[0] as TabTree<PantheonTree | string | undefined | null>))) return raw;
+  if (
+    typeof raw === "object" &&
+    Array.isArray(raw) &&
+    "children" in (raw[0] as TabTree<PantheonTree | string | undefined | null>)
+  )
+    return raw;
 
   // If it's not a string, then return null since we can't parse it anyways
   if (typeof raw !== "string") return null;
@@ -104,7 +109,7 @@ export function parseAsTabTree(
     return JSON.parse(raw) as TabTree<
       PantheonTree | string | undefined | null
     >[];
-  } catch (e) {
+  } catch {
     return null;
   }
 }
