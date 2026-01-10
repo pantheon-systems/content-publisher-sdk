@@ -3,7 +3,7 @@ import {
   ARTICLE_UPDATE_SUBSCRIPTION,
   getArticleBySlugOrId,
   PublishingLevel,
-} from "@pantheon-systems/pcc-sdk-core";
+} from "@pantheon-systems/cpub-sdk-core";
 import { RendererConfig, renderArticleToElement } from "./renderer";
 
 class PCCArticle extends HTMLElement {

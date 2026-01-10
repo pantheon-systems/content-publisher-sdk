@@ -1,10 +1,10 @@
-import { findTab } from "@pantheon-systems/pcc-sdk-core";
+import { findTab } from "@pantheon-systems/cpub-sdk-core";
 import {
   Article,
   PantheonTreeNode,
   TabTree,
   type SmartComponentMap as CoreSmartComponentMap,
-} from "@pantheon-systems/pcc-sdk-core/types";
+} from "@pantheon-systems/cpub-sdk-core/types";
 import { Element } from "hast";
 import React, { useEffect, useMemo } from "react";
 import { getTextContent } from "../../utils/react-element";

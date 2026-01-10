@@ -17,15 +17,15 @@ For a quick start on your local machine, follow the instructions below:
 1. In your terminal, run the following commands:
 
 ```bash
-npm install @pantheon-systems/pcc-cli --global
+npm install @pantheon-systems/cpub --global
 pcc init ./my-new-site --template=nextjs
 ```
 
 2. Follow the prompts in your terminal to complete the setup.
 
-## Pantheon's @pantheon-systems/pcc-react-sdk
+## Pantheon's @pantheon-systems/cpub-react-sdk
 
-Pantheon's @pantheon-systems/pcc-react-sdk is included as a dependency in this
+Pantheon's @pantheon-systems/cpub-react-sdk is included as a dependency in this
 project.
 
 ## Tests

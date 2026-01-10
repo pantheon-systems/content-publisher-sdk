@@ -1,8 +1,8 @@
-import { PCCConvenienceFunctions } from "@pantheon-systems/pcc-sdk-core";
+import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-sdk-core";
 import {
   ArticleWithoutContent,
   PaginatedArticle,
-} from "@pantheon-systems/pcc-sdk-core/types";
+} from "@pantheon-systems/cpub-sdk-core/types";
 import { useEffect, useState } from "react";
 
 interface Props {

@@ -1,4 +1,4 @@
-import { PantheonClient } from "@pantheon-systems/pcc-sdk-core";
+import { PantheonClient } from "@pantheon-systems/cpub-sdk-core";
 import PCCArticle from "./elements/pcc-article";
 
 type Args = {

@@ -2,7 +2,7 @@ import { CTALink as BaseCTALink } from "@pantheon-systems/pds-toolkit-react";
 import {
   SmartComponentMap,
   type InferSmartComponentProps,
-} from "@pantheon-systems/pcc-sdk-core";
+} from "@pantheon-systems/cpub-sdk-core";
 
 /**
  * CTA Links are stylized anchor elements that allow the user to navigate to another location.

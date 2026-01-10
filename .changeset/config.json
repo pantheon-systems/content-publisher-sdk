@@ -4,11 +4,11 @@
   "commit": false,
   "fixed": [
     [
-      "@pantheon-systems/pcc-browser-sdk",
-      "@pantheon-systems/pcc-cli",
-      "@pantheon-systems/pcc-sdk-core",
-      "@pantheon-systems/pcc-react-sample-library",
-      "@pantheon-systems/pcc-react-sdk"
+      "@pantheon-systems/cpub-browser-sdk",
+      "@pantheon-systems/cpub",
+      "@pantheon-systems/cpub-sdk-core",
+      "@pantheon-systems/cpub-react-sample-library",
+      "@pantheon-systems/cpub-react-sdk"
     ]
   ],
   "linked": [],
@@ -17,9 +17,8 @@
   "ignore": [
     "testpages",
     "@pantheon-systems/pcc-vue-sdk",
-    "@pantheon-systems/next-pcc-starter",
-    "@pantheon-systems/next-pcc-starter-ts",
-    "@pantheon-systems/next-approuter-pcc-starter-ts",
-    "@pantheon-systems/pcc-vue-sdk"
+    "@pantheon-systems/next-cpub-starter",
+    "@pantheon-systems/next-cpub-starter-ts",
+    "@pantheon-systems/next-approuter-cpub-starter-ts"
   ]
 }

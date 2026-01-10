@@ -1,4 +1,4 @@
-import { PCCConvenienceFunctions } from "@pantheon-systems/pcc-react-sdk";
+import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {

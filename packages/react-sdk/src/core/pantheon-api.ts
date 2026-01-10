@@ -1,7 +1,7 @@
 import {
   PantheonAPI,
   PantheonAPIOptions,
-} from "@pantheon-systems/pcc-sdk-core";
+} from "@pantheon-systems/cpub-sdk-core";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { NextRequest } from "next/server";
 

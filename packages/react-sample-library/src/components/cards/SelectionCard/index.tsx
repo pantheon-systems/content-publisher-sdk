@@ -1,5 +1,5 @@
 import { SelectionCard as BaseCard } from "@pantheon-systems/pds-toolkit-react";
-import { InferSmartComponentProps } from "@pantheon-systems/pcc-sdk-core";
+import { InferSmartComponentProps } from "@pantheon-systems/cpub-sdk-core";
 
 /**
  * Cards for displaying multiple choices that begin a user flow

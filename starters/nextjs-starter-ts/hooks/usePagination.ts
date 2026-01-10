@@ -1,7 +1,7 @@
 import {
   ArticleWithoutContent,
   PaginatedArticle,
-} from "@pantheon-systems/pcc-react-sdk";
+} from "@pantheon-systems/cpub-react-sdk";
 import queryString from "query-string";
 import { useCallback, useEffect, useState } from "react";
 import useSWR from "swr";

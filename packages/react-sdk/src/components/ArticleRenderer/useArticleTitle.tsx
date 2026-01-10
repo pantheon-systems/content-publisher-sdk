@@ -1,11 +1,11 @@
-import { flattenDocumentTabs } from "@pantheon-systems/pcc-sdk-core";
+import { flattenDocumentTabs } from "@pantheon-systems/cpub-sdk-core";
 import {
   Article,
   PantheonTree,
   PantheonTreeNode,
   TabTree,
   TreePantheonContent,
-} from "@pantheon-systems/pcc-sdk-core/types";
+} from "@pantheon-systems/cpub-sdk-core/types";
 import _ from "lodash";
 import { useMemo } from "react";
 

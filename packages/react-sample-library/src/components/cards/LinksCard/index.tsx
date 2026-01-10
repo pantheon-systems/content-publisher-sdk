@@ -2,7 +2,7 @@ import { LinksCard as BaseCard } from "@pantheon-systems/pds-toolkit-react";
 import {
   InferSmartComponentProps,
   SmartComponentMap,
-} from "@pantheon-systems/pcc-sdk-core";
+} from "@pantheon-systems/cpub-sdk-core";
 
 /**
  * Links Card UI component

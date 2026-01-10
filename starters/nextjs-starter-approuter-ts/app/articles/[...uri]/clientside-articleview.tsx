@@ -6,7 +6,7 @@ import {
   PCCConvenienceFunctions,
   updateConfig,
   type PublishingLevel,
-} from "@pantheon-systems/pcc-react-sdk";
+} from "@pantheon-systems/cpub-react-sdk";
 import ArticleView from "../../../components/article-view";
 
 updateConfig({

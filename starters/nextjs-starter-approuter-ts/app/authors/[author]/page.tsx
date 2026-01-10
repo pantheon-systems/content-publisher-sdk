@@ -1,4 +1,4 @@
-import { PCCConvenienceFunctions } from "@pantheon-systems/pcc-react-sdk/server";
+import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
 import Image from "next/image";
 import {
   FaFacebookSquare,
@@ -34,19 +34,13 @@ function fetchNextPages(author?: string | null | undefined) {
   };
 }
 
-export default async function ArticlesListTemplate(
-  props: {
-    params: Promise<{ author: string }>;
-  }
-) {
+export default async function ArticlesListTemplate(props: {
+  params: Promise<{ author: string }>;
+}) {
   const params = await props.params;
   const author = params.author ? decodeURIComponent(params.author) : undefined;
 
-  const [site, {
-    data: articles,
-    cursor,
-    totalCount,
-  }] = await Promise.all([
+  const [site, { data: articles, cursor, totalCount }] = await Promise.all([
     PCCConvenienceFunctions.getSite(),
     PCCConvenienceFunctions.getPaginatedArticles({
       pageSize: PAGE_SIZE,

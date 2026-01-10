@@ -1,4 +1,4 @@
-import { PCCConvenienceFunctions } from "@pantheon-systems/pcc-react-sdk";
+import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
 import Link from "next/link";
@@ -59,9 +59,7 @@ export default function Home({ articles, site }) {
 
 export async function getServerSideProps() {
   // Fetch the articles and site in parallel
-  const [{
-    data: articles,
-  }, site] = await Promise.all([
+  const [{ data: articles }, site] = await Promise.all([
     PCCConvenienceFunctions.getPaginatedArticles({
       pageSize: 3,
     }),

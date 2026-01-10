@@ -159,8 +159,8 @@ test("should be able to init starter kit with default git ref (latest tag)", asy
     readFileSync(`${appFolder}/package.json`).toString(),
   );
   const sdkVersion =
-    packageJson.dependencies?.["@pantheon-systems/pcc-react-sdk"] ||
-    packageJson.devDependencies?.["@pantheon-systems/pcc-react-sdk"];
+    packageJson.dependencies?.["@pantheon-systems/cpub-react-sdk"] ||
+    packageJson.devDependencies?.["@pantheon-systems/cpub-react-sdk"];
   expect(sdkVersion).not.toBe("~4.0.0-beta.0");
 
   // Remove app folder
@@ -188,8 +188,8 @@ test("should be able to init starter kit with a specific git ref (4.0.0-beta)", 
   );
   console.dir(packageJson, { depth: null });
   const sdkVersion =
-    packageJson.dependencies?.["@pantheon-systems/pcc-react-sdk"] ||
-    packageJson.devDependencies?.["@pantheon-systems/pcc-react-sdk"];
+    packageJson.dependencies?.["@pantheon-systems/cpub-react-sdk"] ||
+    packageJson.devDependencies?.["@pantheon-systems/cpub-react-sdk"];
   expect(sdkVersion).toBe("~4.0.0-beta.0");
 
   // Remove app folder

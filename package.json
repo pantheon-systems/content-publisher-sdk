@@ -31,12 +31,12 @@
   "pnpm": {
     "overrides": {
       "pbkdf2": ">=3.1.3",
-      "@pantheon-systems/pcc-react-sdk>glob-parent": ">=5.1.2",
-      "@pantheon-systems/pcc-react-sdk>parse-url": ">=8.1.0",
-      "@pantheon-systems/pcc-react-sdk>trim": ">=0.0.3",
-      "@pantheon-systems/pcc-react-sdk>trim-newlines": ">=3.0.1",
-      "@pantheon-systems/pcc-react-sdk>yaml": ">=2.2.2",
-      "@pantheon-systems/pcc-react-sdk>prettier": "^3.0.0",
+      "@pantheon-systems/cpub-react-sdk>glob-parent": ">=5.1.2",
+      "@pantheon-systems/cpub-react-sdk>parse-url": ">=8.1.0",
+      "@pantheon-systems/cpub-react-sdk>trim": ">=0.0.3",
+      "@pantheon-systems/cpub-react-sdk>trim-newlines": ">=3.0.1",
+      "@pantheon-systems/cpub-react-sdk>yaml": ">=2.2.2",
+      "@pantheon-systems/cpub-react-sdk>prettier": "^3.0.0",
       "webpack-dev-middleware": "^7.2.1",
       "@pantheon-systems/pcc-vue-sdk>ufo": "1.5.3",
       "next": "15.5.9",

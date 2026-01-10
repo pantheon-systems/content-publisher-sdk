@@ -1,8 +1,8 @@
-import { SmartComponentMap } from "@pantheon-systems/pcc-react-sdk/components";
+import { SmartComponentMap } from "@pantheon-systems/cpub-react-sdk/components";
 import LeadCapture from "./lead-capture";
 import MediaPreview from "./media-preview";
-import TileNavigation from "./tile-navigation";
 import { serverSmartComponentMap } from "./server-components";
+import TileNavigation from "./tile-navigation";
 
 const clientSmartComponentMap: SmartComponentMap = {
   LEAD_CAPTURE: {

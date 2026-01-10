@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 import http from "http";
 import { dirname, join } from "path";
 import url, { fileURLToPath } from "url";
-import { parseJwt } from "@pantheon-systems/pcc-sdk-core";
+import { parseJwt } from "@pantheon-systems/cpub-sdk-core";
 import axios from "axios";
 import chalk from "chalk";
 import { OAuth2Client } from "google-auth-library";

@@ -1,4 +1,4 @@
-import { PCCConvenienceFunctions } from "@pantheon-systems/pcc-react-sdk/server";
+import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
 import { Metadata } from "next";
 import ArticleList from "../../../components/article-list";
 import Layout from "../../../components/layout";

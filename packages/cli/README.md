@@ -13,13 +13,13 @@
 npm
 
 ```console
-npm install @pantheon-systems/pcc-cli --global
+npm install @pantheon-systems/cpub --global
 ```
 
 yarn
 
 ```console
-yarn add @pantheon-systems/pcc-cli --global
+yarn add @pantheon-systems/cpub --global
 ```
 
 ## Usage

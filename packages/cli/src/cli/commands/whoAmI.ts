@@ -1,4 +1,4 @@
-import { parseJwt } from "@pantheon-systems/pcc-sdk-core";
+import { parseJwt } from "@pantheon-systems/cpub-sdk-core";
 import chalk from "chalk";
 import { AUTH0_PCC_CONTEXT_KEY, Auth0Provider } from "../../lib/auth";
 import { errorHandler } from "../exceptions";

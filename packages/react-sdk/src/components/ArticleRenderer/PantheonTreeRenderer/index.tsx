@@ -1,4 +1,4 @@
-import { TreePantheonContent } from "@pantheon-systems/pcc-sdk-core/types";
+import { TreePantheonContent } from "@pantheon-systems/cpub-sdk-core/types";
 import React from "react";
 import { SmartComponentMap } from "../index";
 import ArticleComponent from "./ArticleComponent";

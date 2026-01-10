@@ -1,7 +1,7 @@
 import type {
   TreePantheonContent,
   TreePantheonContentSmartComponent,
-} from "@pantheon-systems/pcc-sdk-core/types";
+} from "@pantheon-systems/cpub-sdk-core/types";
 import * as React from "react";
 import { getStyleObjectFromString } from "../../../utils/styles";
 import { unescapeHTMLEntities } from "../../../utils/unescape";

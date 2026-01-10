@@ -6,12 +6,12 @@ settings:
 
 overrides:
   pbkdf2: '>=3.1.3'
-  '@pantheon-systems/pcc-react-sdk>glob-parent': '>=5.1.2'
-  '@pantheon-systems/pcc-react-sdk>parse-url': '>=8.1.0'
-  '@pantheon-systems/pcc-react-sdk>trim': '>=0.0.3'
-  '@pantheon-systems/pcc-react-sdk>trim-newlines': '>=3.0.1'
-  '@pantheon-systems/pcc-react-sdk>yaml': '>=2.2.2'
-  '@pantheon-systems/pcc-react-sdk>prettier': ^3.0.0
+  '@pantheon-systems/cpub-react-sdk>glob-parent': '>=5.1.2'
+  '@pantheon-systems/cpub-react-sdk>parse-url': '>=8.1.0'
+  '@pantheon-systems/cpub-react-sdk>trim': '>=0.0.3'
+  '@pantheon-systems/cpub-react-sdk>trim-newlines': '>=3.0.1'
+  '@pantheon-systems/cpub-react-sdk>yaml': '>=2.2.2'
+  '@pantheon-systems/cpub-react-sdk>prettier': ^3.0.0
   webpack-dev-middleware: ^7.2.1
   '@pantheon-systems/pcc-vue-sdk>ufo': 1.5.3
   next: 15.5.9
@@ -92,10 +92,10 @@ importers:
 
   local_testing/testpages:
     dependencies:
-      '@pantheon-systems/pcc-browser-sdk':
+      '@pantheon-systems/cpub-browser-sdk':
         specifier: workspace:*
         version: link:../../packages/browser
-      '@pantheon-systems/pcc-react-sample-library':
+      '@pantheon-systems/cpub-react-sample-library':
         specifier: workspace:*
         version: link:../../packages/react-sample-library
       next:
@@ -138,7 +138,7 @@ importers:
 
   packages/browser:
     dependencies:
-      '@pantheon-systems/pcc-sdk-core':
+      '@pantheon-systems/cpub-sdk-core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -157,7 +157,7 @@ importers:
 
   packages/cli:
     dependencies:
-      '@pantheon-systems/pcc-sdk-core':
+      '@pantheon-systems/cpub-sdk-core':
         specifier: workspace:*
         version: link:../core
       axios:
@@ -327,10 +327,10 @@ importers:
 
   packages/react-sample-library:
     dependencies:
-      '@pantheon-systems/pcc-react-sdk':
+      '@pantheon-systems/cpub-react-sdk':
         specifier: workspace:*
         version: link:../react-sdk
-      '@pantheon-systems/pcc-sdk-core':
+      '@pantheon-systems/cpub-sdk-core':
         specifier: workspace:*
         version: link:../core
       '@pantheon-systems/pds-toolkit-react':
@@ -406,7 +406,7 @@ importers:
       '@apollo/client':
         specifier: ^3.10.3
         version: 3.13.1(@types/react@19.1.8)(graphql-ws@5.16.2(graphql@16.10.0))(graphql@16.10.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
-      '@pantheon-systems/pcc-sdk-core':
+      '@pantheon-systems/cpub-sdk-core':
         specifier: workspace:*
         version: link:../core
       graphql:
@@ -522,8 +522,8 @@ importers:
         specifier: ^3.10.3
         version: 3.13.1(@types/react@19.1.8)(graphql-ws@5.16.2(graphql@16.10.0))(graphql@16.10.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
       '@pantheon-systems/pcc-sdk-core':
-        specifier: workspace:*
-        version: link:../core
+        specifier: 3.0.0
+        version: 3.0.0(@types/react@19.1.8)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
       '@vue/apollo-composable':
         specifier: 4.0.0-beta.12
         version: 4.0.0-beta.12(@apollo/client@3.13.1(@types/react@19.1.8)(graphql-ws@5.16.2(graphql@16.10.0))(graphql@16.10.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2))(graphql@16.10.0)(typescript@5.7.3)(vue@3.4.27(typescript@5.7.3))
@@ -606,7 +606,7 @@ importers:
 
   starters/nextjs-starter:
     dependencies:
-      '@pantheon-systems/pcc-react-sdk':
+      '@pantheon-systems/cpub-react-sdk':
         specifier: workspace:*
         version: link:../../packages/react-sdk
       '@radix-ui/react-popover':
@@ -718,7 +718,7 @@ importers:
 
   starters/nextjs-starter-approuter-ts:
     dependencies:
-      '@pantheon-systems/pcc-react-sdk':
+      '@pantheon-systems/cpub-react-sdk':
         specifier: workspace:*
         version: link:../../packages/react-sdk
       '@radix-ui/react-popover':
@@ -836,7 +836,7 @@ importers:
 
   starters/nextjs-starter-ts:
     dependencies:
-      '@pantheon-systems/pcc-react-sdk':
+      '@pantheon-systems/cpub-react-sdk':
         specifier: workspace:*
         version: link:../../packages/react-sdk
       '@radix-ui/react-popover':
@@ -3385,6 +3385,9 @@ packages:
   '@octokit/webhooks@13.7.4':
     resolution: {integrity: sha512-f386XyLTieQbgKPKS6ZMlH4dq8eLsxNddwofiKRZCq0bZ2gikoFwMD99K6l1oAwqe/KZNzrEziGicRgnzplplQ==}
     engines: {node: '>= 18'}
+
+  '@pantheon-systems/pcc-sdk-core@3.0.0':
+    resolution: {integrity: sha512-+/mkd8yFksiHNAv5wGpUDaKpJSdQQZlwh8qsafSbA9+SdFGBtk2UlioIzVnhFyl1SRIm/EWyh6SLpnUYvjWkaw==}
 
   '@pantheon-systems/pds-toolkit-react@1.0.0-dev.55':
     resolution: {integrity: sha512-xjXj7asV6oeTKiYQGkl0APX5fovjF1DDbSmD79p52S8jb+Mto1k9w//+aDg0yBjTKPwUi+NrHZ7FQ34uQlXmbQ==}
@@ -13001,6 +13004,22 @@ snapshots:
       '@octokit/request-error': 6.1.7
       '@octokit/webhooks-methods': 5.1.1
 
+  '@pantheon-systems/pcc-sdk-core@3.0.0(@types/react@19.1.8)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)':
+    dependencies:
+      '@apollo/client': 3.13.1(@types/react@19.1.8)(graphql-ws@5.16.2(graphql@16.10.0))(graphql@16.10.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+      graphql: 16.10.0
+      graphql-tag: 2.12.6(graphql@16.10.0)
+      graphql-ws: 5.16.2(graphql@16.10.0)
+      query-string: 8.2.0
+      typescript: 5.5.4
+      zod: 3.24.2
+      zod-validation-error: 1.5.0(zod@3.24.2)
+    transitivePeerDependencies:
+      - '@types/react'
+      - react
+      - react-dom
+      - subscriptions-transport-ws
+
   '@pantheon-systems/pds-toolkit-react@1.0.0-dev.55(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@floating-ui/react': 0.24.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -15998,8 +16017,8 @@ snapshots:
       '@typescript-eslint/parser': 5.59.5(eslint@8.57.1)(typescript@5.7.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.8.3(eslint-plugin-import@2.31.0)(eslint@8.57.1)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.8.3(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-typescript@3.8.3(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
       eslint-plugin-react: 7.37.4(eslint@8.57.1)
       eslint-plugin-react-hooks: 5.2.0(eslint@8.57.1)
@@ -16027,6 +16046,21 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  eslint-import-resolver-typescript@3.8.3(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1):
+    dependencies:
+      '@nolyfill/is-core-module': 1.0.39
+      debug: 4.4.3
+      enhanced-resolve: 5.18.3
+      eslint: 8.57.1
+      get-tsconfig: 4.10.0
+      is-bun-module: 1.3.0
+      stable-hash: 0.0.4
+      tinyglobby: 0.2.15
+    optionalDependencies:
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-typescript@3.8.3(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+    transitivePeerDependencies:
+      - supports-color
+
   eslint-import-resolver-typescript@3.8.3(eslint-plugin-import@2.31.0)(eslint@8.57.0):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
@@ -16042,21 +16076,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.8.3(eslint-plugin-import@2.31.0)(eslint@8.57.1):
-    dependencies:
-      '@nolyfill/is-core-module': 1.0.39
-      debug: 4.4.3
-      enhanced-resolve: 5.18.3
-      eslint: 8.57.1
-      get-tsconfig: 4.10.0
-      is-bun-module: 1.3.0
-      stable-hash: 0.0.4
-      tinyglobby: 0.2.15
-    optionalDependencies:
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)
-    transitivePeerDependencies:
-      - supports-color
-
   eslint-module-utils@2.12.0(@typescript-eslint/parser@5.59.5(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.8.3)(eslint@8.57.0):
     dependencies:
       debug: 3.2.7
@@ -16068,14 +16087,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.8.3)(eslint@8.57.1):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.8.3(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 5.59.5(eslint@8.57.1)(typescript@5.7.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.8.3(eslint-plugin-import@2.31.0)(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.8.3(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -16108,7 +16127,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-typescript@3.8.3(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
@@ -16119,7 +16138,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.8.3)(eslint@8.57.1)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.8.3(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.59.5(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3

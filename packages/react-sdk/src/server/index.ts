@@ -1,8 +1,8 @@
 export type {
   PantheonClientConfig,
   PantheonAPIOptions,
-} from "@pantheon-systems/pcc-sdk-core";
-export { PantheonClient } from "@pantheon-systems/pcc-sdk-core";
+} from "@pantheon-systems/cpub-sdk-core";
+export { PantheonClient } from "@pantheon-systems/cpub-sdk-core";
 
 export {
   getArticles,
@@ -20,7 +20,7 @@ export {
   getSite,
   findTab,
   flattenDocumentTabs,
-} from "@pantheon-systems/pcc-sdk-core";
-export * from "@pantheon-systems/pcc-sdk-core/types";
+} from "@pantheon-systems/cpub-sdk-core";
+export * from "@pantheon-systems/cpub-sdk-core/types";
 
 export { NextPantheonAPI as PantheonAPI } from "../core/pantheon-api";

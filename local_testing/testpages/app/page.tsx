@@ -1,9 +1,9 @@
 "use client";
 
-import { Blockquote } from "@pantheon-systems/pcc-react-sample-library";
-import "@pantheon-systems/pcc-react-sample-library/dist/css/pds-core.css";
-import "@pantheon-systems/pcc-react-sample-library/dist/css/pds-layouts.css";
-import "@pantheon-systems/pcc-react-sample-library/dist/css/pds-components.css";
+import { Blockquote } from "@pantheon-systems/cpub-react-sample-library";
+import "@pantheon-systems/cpub-react-sample-library/dist/css/pds-core.css";
+import "@pantheon-systems/cpub-react-sample-library/dist/css/pds-layouts.css";
+import "@pantheon-systems/cpub-react-sample-library/dist/css/pds-components.css";
 
 export default function Home() {
   return (

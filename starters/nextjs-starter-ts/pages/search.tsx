@@ -1,4 +1,7 @@
-import { ArticleWithoutContent, markdownToText } from "@pantheon-systems/pcc-react-sdk";
+import {
+  ArticleWithoutContent,
+  markdownToText,
+} from "@pantheon-systems/cpub-react-sdk";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
 import { useRouter } from "next/router";
