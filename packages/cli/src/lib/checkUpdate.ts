@@ -32,7 +32,7 @@ const checkUpdate = async (): Promise<void> => {
       const { name, version } = getPackageDetails();
 
       // Check if user is using the old package name
-      if (name === "@pantheon-systems/pcc-cli" || true) {
+      if (name === "@pantheon-systems/pcc-cli") {
         const migrationMsg = `We see you're on version ${chalk.dim(name)}, we've renamed to ${chalk.green("@pantheon-systems/cpub-cli")}. Please remove this package, and install the new one.\n\nFor more information, read ${chalk.cyan("https://docs.content.pantheon.io/CLI-update")}`;
 
         console.log(
