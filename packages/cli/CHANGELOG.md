@@ -1,5 +1,15 @@
 # @pantheon-systems/pcc-cli
 
+## 5.2.0-beta.0
+
+### Minor Changes
+
+- Show error log when listing 0 sites in pcc init command
+
+### Patch Changes
+
+- @pantheon-systems/pcc-sdk-core@5.2.0-beta.0
+
 ## 5.1.1
 
 ### Patch Changes
