@@ -1,4 +1,4 @@
-import { PCCConvenienceFunctions } from "@pantheon-systems/pcc-react-sdk";
+import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk";
 import { pantheonAPIOptions } from "../pantheoncloud/[...command]";
 
 const defaultBasePath = "/articles";

@@ -1,5 +1,5 @@
 import { Banner as BaseBannerNotification } from "@pantheon-systems/pds-toolkit-react";
-import { type InferSmartComponentProps } from "@pantheon-systems/pcc-sdk-core";
+import { type InferSmartComponentProps } from "@pantheon-systems/cpub-sdk-core";
 
 export const reactComponent = ({
   message,

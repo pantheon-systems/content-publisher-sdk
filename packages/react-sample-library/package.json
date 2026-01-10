@@ -1,5 +1,5 @@
 {
-  "name": "@pantheon-systems/pcc-react-sample-library",
+  "name": "@pantheon-systems/cpub-react-sample-library",
   "author": "@pantheon-systems",
   "description": "Pantheon Content Publisher Sample Component Library for React",
   "version": "5.2.0-beta.0",
@@ -70,8 +70,8 @@
     }
   },
   "dependencies": {
-    "@pantheon-systems/pcc-react-sdk": "workspace:*",
-    "@pantheon-systems/pcc-sdk-core": "workspace:*",
+    "@pantheon-systems/cpub-react-sdk": "workspace:*",
+    "@pantheon-systems/cpub-sdk-core": "workspace:*",
     "@pantheon-systems/pds-toolkit-react": "1.0.0-dev.55"
   },
   "sideEffects": false

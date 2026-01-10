@@ -1,7 +1,7 @@
 import {
   Article,
   PCCConvenienceFunctions,
-} from "@pantheon-systems/pcc-react-sdk";
+} from "@pantheon-systems/cpub-react-sdk";
 import { NextApiRequest, NextApiResponse } from "next";
 import { pantheonAPIOptions } from "../pantheoncloud/[...command]";
 

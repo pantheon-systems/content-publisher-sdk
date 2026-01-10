@@ -1,5 +1,5 @@
 import { IndicatorBadge as BaseIndicatorBadge } from "@pantheon-systems/pds-toolkit-react";
-import { InferSmartComponentProps } from "@pantheon-systems/pcc-sdk-core";
+import { InferSmartComponentProps } from "@pantheon-systems/cpub-sdk-core";
 
 /**
  * A visual label to indicate a special status or category

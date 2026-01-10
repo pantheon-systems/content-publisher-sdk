@@ -2,7 +2,7 @@ import {
   getArticlePathComponentsFromContentStructure,
   PCCConvenienceFunctions,
   type PublishingLevel,
-} from "@pantheon-systems/pcc-react-sdk/server";
+} from "@pantheon-systems/cpub-react-sdk/server";
 import { cookies } from "next/headers";
 import { notFound, redirect, RedirectType } from "next/navigation";
 import queryString from "query-string";

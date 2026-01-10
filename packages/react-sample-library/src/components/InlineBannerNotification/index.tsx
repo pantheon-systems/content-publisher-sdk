@@ -1,5 +1,5 @@
 import { InlineMessage as BaseInlineBannerNotification } from "@pantheon-systems/pds-toolkit-react";
-import { type InferSmartComponentProps } from "@pantheon-systems/pcc-sdk-core";
+import { type InferSmartComponentProps } from "@pantheon-systems/cpub-sdk-core";
 
 /**
  * A message that is displayed inline with other content

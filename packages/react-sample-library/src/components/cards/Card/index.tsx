@@ -1,4 +1,4 @@
-import { InferSmartComponentProps } from "@pantheon-systems/pcc-sdk-core/types";
+import { InferSmartComponentProps } from "@pantheon-systems/cpub-sdk-core/types";
 import { Card as BaseCard } from "@pantheon-systems/pds-toolkit-react";
 
 /**

@@ -1,5 +1,5 @@
 import { SectionMessage as BaseSectionBannerNotification } from "@pantheon-systems/pds-toolkit-react";
-import { type InferSmartComponentProps } from "@pantheon-systems/pcc-sdk-core";
+import { type InferSmartComponentProps } from "@pantheon-systems/cpub-sdk-core";
 
 /**
  * In-page messaging

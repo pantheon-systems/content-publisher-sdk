@@ -2,7 +2,7 @@ import {
   ArticleWithoutContent,
   PantheonTree,
   TabTree,
-} from "@pantheon-systems/pcc-react-sdk";
+} from "@pantheon-systems/cpub-react-sdk";
 import { clsx, type ClassValue } from "clsx";
 import { Metadata } from "next";
 import { twMerge } from "tailwind-merge";
@@ -95,7 +95,12 @@ export function parseAsTabTree(
   if (!raw) return null;
 
   // If it looks like a TabTree array, then return it.
-  if (typeof raw === "object" && Array.isArray(raw) && ("children" in (raw[0] as TabTree<PantheonTree | string | undefined | null>))) return raw;
+  if (
+    typeof raw === "object" &&
+    Array.isArray(raw) &&
+    "children" in (raw[0] as TabTree<PantheonTree | string | undefined | null>)
+  )
+    return raw;
 
   // If it's not a string, then return null since we can't parse it anyways
   if (typeof raw !== "string") return null;

@@ -1,7 +1,7 @@
 import {
   ServersideSmartComponentMap,
   SmartComponentMap,
-} from "@pantheon-systems/pcc-react-sdk/components";
+} from "@pantheon-systems/cpub-react-sdk/components";
 import * as Avatar from "./Avatar";
 import * as Badge from "./Badge";
 import * as IndicatorBadge from "./IndicatorBadge";

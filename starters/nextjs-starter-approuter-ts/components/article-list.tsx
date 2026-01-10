@@ -4,7 +4,7 @@ import {
   ArticleWithoutContent,
   PaginatedArticle,
   Site,
-} from "@pantheon-systems/pcc-react-sdk";
+} from "@pantheon-systems/cpub-react-sdk";
 import React, { useMemo, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useBreakpoint } from "../hooks/useBreakpoint";

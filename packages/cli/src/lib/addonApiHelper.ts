@@ -1,4 +1,4 @@
-import { SmartComponentMapZod } from "@pantheon-systems/pcc-sdk-core/types";
+import { SmartComponentMapZod } from "@pantheon-systems/cpub-sdk-core/types";
 import axios, { AxiosError, HttpStatusCode } from "axios";
 import ora from "ora";
 import queryString from "query-string";

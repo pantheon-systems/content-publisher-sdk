@@ -3,8 +3,8 @@
 import type {
   ArticleWithoutContent,
   Site,
-} from "@pantheon-systems/pcc-react-sdk";
-import { getArticleURLFromSite } from "@pantheon-systems/pcc-react-sdk/server";
+} from "@pantheon-systems/cpub-react-sdk";
+import { getArticleURLFromSite } from "@pantheon-systems/cpub-react-sdk/server";
 import Link from "next/link";
 import { useState } from "react";
 import { cn } from "../lib/utils";
@@ -67,12 +67,21 @@ interface ArticleGridCardProps {
 }
 
 // Utility to ensure URL include width and height params
-function withImageSizeParams(url: string | null, width = 400, height = 400): string | null {
+function withImageSizeParams(
+  url: string | null,
+  width = 400,
+  height = 400,
+): string | null {
   if (!url) return url;
   try {
-    const u = new URL(url, typeof window !== 'undefined' ? window.location.origin : 'http://localhost');
-    u.searchParams.set('width', width.toString());
-    u.searchParams.set('height', height.toString());
+    const u = new URL(
+      url,
+      typeof window !== "undefined"
+        ? window.location.origin
+        : "http://localhost",
+    );
+    u.searchParams.set("width", width.toString());
+    u.searchParams.set("height", height.toString());
     return u.toString();
   } catch {
     // If url is not valid, return as is

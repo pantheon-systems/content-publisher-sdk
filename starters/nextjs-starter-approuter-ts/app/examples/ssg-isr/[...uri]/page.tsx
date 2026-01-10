@@ -1,7 +1,7 @@
 import {
   getArticlePathComponentsFromContentStructure,
   PCCConvenienceFunctions,
-} from "@pantheon-systems/pcc-react-sdk/server";
+} from "@pantheon-systems/cpub-react-sdk/server";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { StaticArticleView } from "../../../../components/article-view";
@@ -9,7 +9,7 @@ import Layout from "../../../../components/layout";
 import { getSeoMetadata } from "../../../../lib/utils";
 
 interface ArticlePageProps {
-  params: Promise<{ uri: string[], tabId: string }>;
+  params: Promise<{ uri: string[]; tabId: string }>;
 }
 
 export const revalidate = 21600; // revalidate every 6 hours
@@ -33,7 +33,9 @@ export default async function ArticlePage(props: ArticlePageProps) {
   );
 }
 
-export async function generateMetadata(props: ArticlePageProps): Promise<Metadata> {
+export async function generateMetadata(
+  props: ArticlePageProps,
+): Promise<Metadata> {
   const params = await props.params;
   const article = await PCCConvenienceFunctions.getArticleBySlugOrId(
     params.uri[params.uri.length - 1],

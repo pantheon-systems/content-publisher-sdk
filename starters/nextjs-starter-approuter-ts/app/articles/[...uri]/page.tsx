@@ -1,12 +1,9 @@
+import { PublishingLevel } from "@pantheon-systems/cpub-react-sdk/server";
 import { Suspense } from "react";
 import Layout from "../../../components/layout";
 import { SkeletonArticleView } from "../../../components/skeleton-article-view";
 import { getSeoMetadata } from "../../../lib/utils";
-import {
-  ArticleView,
-  getServersideArticle,
-} from "./article-view";
-import { PublishingLevel } from "@pantheon-systems/pcc-react-sdk/server";
+import { ArticleView, getServersideArticle } from "./article-view";
 
 interface ArticleViewProps {
   params: Promise<{ uri: string[] }>;
@@ -31,7 +28,6 @@ export default async function ArticlePage(props: ArticleViewProps) {
     </Layout>
   );
 }
-
 
 export async function generateMetadata(props: ArticleViewProps) {
   const searchParams = await props.searchParams;

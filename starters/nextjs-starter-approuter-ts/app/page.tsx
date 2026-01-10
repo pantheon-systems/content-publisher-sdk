@@ -1,4 +1,4 @@
-import { PCCConvenienceFunctions } from "@pantheon-systems/pcc-react-sdk/server";
+import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
 import Image from "next/image";
 import Link from "next/link";
 import { HomepageArticleGrid } from "../components/grid";

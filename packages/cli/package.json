@@ -1,5 +1,5 @@
 {
-  "name": "@pantheon-systems/pcc-cli",
+  "name": "@pantheon-systems/cpub",
   "author": "@pantheon-systems",
   "description": "Pantheon Content Publisher CLI",
   "version": "5.2.0-beta.0",
@@ -16,7 +16,8 @@
     "url": ""
   },
   "bin": {
-    "pcc": "./dist/index.js"
+    "pcc": "./dist/index.js",
+    "cpub": "./dist/index.js"
   },
   "files": [
     "dist",
@@ -36,7 +37,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@pantheon-systems/pcc-sdk-core": "workspace:*",
+    "@pantheon-systems/cpub-sdk-core": "workspace:*",
     "axios": "^1.12.2",
     "bluebird": "^3.7.2",
     "boxen": "^7.1.1",

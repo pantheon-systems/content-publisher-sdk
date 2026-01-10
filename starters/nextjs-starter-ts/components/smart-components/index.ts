@@ -1,7 +1,7 @@
 import {
   ServersideSmartComponentMap,
   SmartComponentMap,
-} from "@pantheon-systems/pcc-react-sdk/components";
+} from "@pantheon-systems/cpub-react-sdk/components";
 import { withSmartComponentErrorBoundary } from "./error-boundary";
 import LeadCapture from "./lead-capture";
 import MediaPreview from "./media-preview";

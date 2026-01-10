@@ -1,8 +1,8 @@
 import {
   PCCConvenienceFunctions,
   type Article,
-} from "@pantheon-systems/pcc-react-sdk";
-import { getArticlePathComponentsFromContentStructure } from "@pantheon-systems/pcc-react-sdk/server";
+} from "@pantheon-systems/cpub-react-sdk";
+import { getArticlePathComponentsFromContentStructure } from "@pantheon-systems/cpub-react-sdk/server";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { NextSeo } from "next-seo";
 import { useSearchParams } from "next/navigation";
@@ -27,7 +27,10 @@ export default function ArticlePage({ article }: ArticlePageProps) {
       />
 
       <div className="prose mx-4 mt-16 text-black sm:mx-6 md:mx-auto">
-        <StaticArticleView article={article} tabId={searchParams.get("tabId")} />
+        <StaticArticleView
+          article={article}
+          tabId={searchParams.get("tabId")}
+        />
       </div>
     </Layout>
   );

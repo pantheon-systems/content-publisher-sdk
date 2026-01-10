@@ -1,5 +1,5 @@
 import { Blockquote as BaseBlockquote } from "@pantheon-systems/pds-toolkit-react";
-import { type InferSmartComponentProps } from "@pantheon-systems/pcc-sdk-core";
+import { type InferSmartComponentProps } from "@pantheon-systems/cpub-sdk-core";
 
 /**
  * The Blockquote component is used to show a quote and the quote author in a full-width or inline format.

@@ -1,7 +1,7 @@
 import {
   ArticleWithoutContent,
   PaginatedArticle,
-} from "@pantheon-systems/pcc-react-sdk";
+} from "@pantheon-systems/cpub-react-sdk";
 import { useEffect, useState } from "react";
 
 interface Props {
