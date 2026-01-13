@@ -49,7 +49,6 @@ jobs:
 
       - name: Validate Changeset Config
         run: |
-          # Validate changeset configuration to catch issues before they reach the release workflow
           echo "Validating changeset configuration..."
           set +e
           OUTPUT=$(pnpm pnpm changeset status 2>&1)
