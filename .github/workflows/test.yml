@@ -47,6 +47,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Validate Changeset Config
+        run: pnpm changeset status --since=HEAD
+
       - name: Build All Packages
         run: pnpm build
 
