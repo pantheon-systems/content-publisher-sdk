@@ -34,8 +34,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-        with:
-          fetch-depth: 0
 
       - name: Setup PNPM
         uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda
@@ -50,7 +48,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Validate Changeset Config
-        run: pnpm changeset status
+        run: pnpm changeset status --since=HEAD
 
       - name: Build All Packages
         run: pnpm build
