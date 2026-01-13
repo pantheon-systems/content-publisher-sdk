@@ -13,8 +13,13 @@ interface File {
   contents: Buffer;
 }
 
-interface TreeNode {
-  path: string;
+interface GitHubTreeNode {
+  path?: string;
+  mode?: string;
+  type?: string;
+  sha?: string;
+  size?: number;
+  url?: string;
 }
 
 export async function downloadTemplateDirectory(
@@ -63,10 +68,10 @@ async function fetchFiles(
   );
 
   const files = data.tree
-    .filter((node: any): node is TreeNode =>
+    .filter((node: GitHubTreeNode): node is GitHubTreeNode & { path: string } =>
       Boolean(node.path?.startsWith(directory) && node.type === "blob"),
     )
-    .map((node: any) => node.path);
+    .map((node: GitHubTreeNode & { path: string }) => node.path);
 
   const downloadPromises = files.map(async (filePath: string) => {
     if (printVerbose) {
