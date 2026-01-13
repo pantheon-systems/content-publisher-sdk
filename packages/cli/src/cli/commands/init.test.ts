@@ -108,7 +108,7 @@ test("should raise error when project directory already exists", async () => {
   let error = false;
   try {
     await executePCC("init", [appFolder, "--template", "nextjs", "--eslint"]);
-  } catch (err) {
+  } catch {
     error = true;
   }
 
@@ -132,7 +132,7 @@ test("should raise error when template name is incorrect", async () => {
       "react",
       "--eslint",
     ]);
-  } catch (err) {
+  } catch {
     error = 1;
   }
 

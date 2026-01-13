@@ -2,7 +2,7 @@
   "name": "@pantheon-systems/pcc-browser-sdk",
   "author": "@pantheon-systems",
   "description": "Pantheon Content Publisher Browser SDK",
-  "version": "5.1.1",
+  "version": "5.2.0-beta.1",
   "main": "dist/index.js",
   "files": [
     "dist",

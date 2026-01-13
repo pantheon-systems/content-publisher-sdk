@@ -31,7 +31,7 @@ export const generatePreviewLink = errorHandler<GeneratePreviewParam>(
           // Validate again
           new URL(baseUrl);
         }
-      } catch (_err) {
+      } catch {
         logger.error(
           chalk.red(
             `ERROR: Value provided for \`baseUrl\` is not a valid URL. `,
