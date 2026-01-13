@@ -1,7 +1,7 @@
 import react from "@vitejs/plugin-react";
 import { configDefaults, defineConfig } from "vitest/config";
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(() => {
   return {
     test: {
       globals: true,
