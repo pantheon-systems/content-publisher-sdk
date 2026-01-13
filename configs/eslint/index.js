@@ -5,15 +5,19 @@ module.exports = {
     node: true,
     browser: true,
   },
-  parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint", "prettier"],
+  parser: "typescript-eslint/parser",
+  plugins: ["typescript-eslint", "prettier"],
   extends: [
     "turbo",
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
+    "plugin:typescript-eslint/recommended",
     "prettier",
   ],
   rules: {
     "prettier/prettier": "error",
+    "typescript-eslint/no-empty-function": [
+      "warn",
+      { allow: ["arrowFunctions", "functions", "methods"] },
+    ],
   },
 };
