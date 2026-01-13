@@ -64,7 +64,6 @@ jobs:
               echo "$OUTPUT"
               exit 1
             else
-              # Other errors (like missing NPM_TOKEN or no changesets to publish) are expected
               echo "✓ Changeset config validation passed"
             fi
           else
