@@ -68,7 +68,7 @@ function UnboxContent(content: string | unknown) {
 
   try {
     return JSON.parse(content);
-  } catch (e) {
+  } catch {
     return content;
   }
 }

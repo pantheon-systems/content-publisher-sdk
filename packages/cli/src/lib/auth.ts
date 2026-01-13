@@ -79,7 +79,7 @@ export class Auth0Provider extends BaseAuthProvider {
       );
       await LocalStorage.persistAuthDetails(newCred);
       return newCred;
-    } catch (_err) {
+    } catch {
       return null;
     }
   }
@@ -251,7 +251,7 @@ export class GoogleAuthProvider extends BaseAuthProvider {
       );
       await LocalStorage.persistGoogleAuthDetails(email, newCred);
       return newCred;
-    } catch (_err) {
+    } catch {
       return null;
     }
   }

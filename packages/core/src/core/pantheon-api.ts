@@ -208,7 +208,7 @@ export const PantheonAPI = (givenOptions?: PantheonAPIOptions) => {
             `PCC-GRANT=deleted; Path=/; SameSite=Lax; Expires=Thu, 01 Jan 1970 00:00:00 GMT`,
           );
         }
-      } catch (e) {
+      } catch {
         // noop
       }
     }

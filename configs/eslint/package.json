@@ -7,8 +7,15 @@
   "main": "index.js",
   "files": [
     "index.js",
-    "react.js"
+    "react.js",
+    "flat.mjs"
   ],
+  "exports": {
+    ".": "./index.js",
+    "./react": "./react.js",
+    "./flat": "./flat.mjs",
+    "./flat/react": "./flat.mjs"
+  },
   "author": "",
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
