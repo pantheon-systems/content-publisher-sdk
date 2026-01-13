@@ -15,6 +15,8 @@
     "@pantheon-systems/next-pcc-starter-ts": "1.0.0"
   },
   "changesets": [
-    "famous-drinks-enjoy"
+    "big-bikes-film",
+    "famous-drinks-enjoy",
+    "khaki-mangos-brake"
   ]
 }
