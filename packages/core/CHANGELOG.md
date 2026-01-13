@@ -1,5 +1,11 @@
 # @pantheon-systems/pcc-sdk-core
 
+## 5.2.0
+
+### Patch Changes
+
+- c30a021: Updating dependencies.
+
 ## 5.1.1
 
 ### Patch Changes

@@ -1,5 +1,18 @@
 # @pantheon-systems/pcc-cli
 
+## 5.2.0
+
+### Minor Changes
+
+- 60aa425: Show a help message to the user in the CLI if they are using the old
+  NPM package name.
+
+### Patch Changes
+
+- c30a021: Updating dependencies.
+- Updated dependencies [c30a021]
+  - @pantheon-systems/pcc-sdk-core@5.2.0
+
 ## 5.1.1
 
 ### Patch Changes
