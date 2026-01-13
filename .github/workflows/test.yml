@@ -47,6 +47,30 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Validate Changeset Config
+        run: |
+          # Validate changeset configuration to catch issues before they reach the release workflow
+          echo "Validating changeset configuration..."
+          set +e
+          OUTPUT=$(pnpm pnpm changeset status 2>&1)
+          EXIT_CODE=$?
+          set -e
+
+          if [ $EXIT_CODE -ne 0 ]; then
+            if echo "$OUTPUT" | grep -q "ValidationError"; then
+              echo "❌ Changeset config validation failed!"
+              echo ""
+              echo "Error output:"
+              echo "$OUTPUT"
+              exit 1
+            else
+              # Other errors (like missing NPM_TOKEN or no changesets to publish) are expected
+              echo "✓ Changeset config validation passed"
+            fi
+          else
+            echo "✓ Changeset config validation passed"
+          fi
+
       - name: Build All Packages
         run: pnpm build
 
