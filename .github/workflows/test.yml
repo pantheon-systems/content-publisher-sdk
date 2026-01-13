@@ -48,26 +48,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Validate Changeset Config
-        run: |
-          echo "Validating changeset configuration..."
-          set +e
-          OUTPUT=$(pnpm pnpm changeset status 2>&1)
-          EXIT_CODE=$?
-          set -e
-
-          if [ $EXIT_CODE -ne 0 ]; then
-            if echo "$OUTPUT" | grep -q "ValidationError"; then
-              echo "❌ Changeset config validation failed!"
-              echo ""
-              echo "Error output:"
-              echo "$OUTPUT"
-              exit 1
-            else
-              echo "✓ Changeset config validation passed"
-            fi
-          else
-            echo "✓ Changeset config validation passed"
-          fi
+        run: pnpm changeset status
 
       - name: Build All Packages
         run: pnpm build
