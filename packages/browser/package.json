@@ -25,6 +25,10 @@
   "dependencies": {
     "@pantheon-systems/pcc-sdk-core": "workspace:*"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pantheon-systems/content-publisher-sdk"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
