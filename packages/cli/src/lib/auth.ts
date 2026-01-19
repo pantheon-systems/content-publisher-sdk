@@ -148,7 +148,7 @@ export class Auth0Provider extends BaseAuthProvider {
 
           spinner.start("Waiting for you to complete login in the browser...");
           let credentials: PersistedTokens;
-          // eslint-disable-next-line no-constant-condition
+
           while (true) {
             try {
               const resp = await axios.post(
