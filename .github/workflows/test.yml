@@ -26,7 +26,6 @@ jobs:
           - os: windows-latest
             shell: cmd
     env:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       PCC_SITE_ID: ${{ secrets.PCC_SITE_ID }}
       PCC_TOKEN: ${{ secrets.PCC_TOKEN }}
       IS_CICD: true
@@ -88,7 +87,6 @@ jobs:
           - flags: "--eslint --ts --appRouter"
             name: "eslint-typescript-approuter"
     env:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       PCC_SITE_ID: ${{ secrets.PCC_SITE_ID }}
       PCC_TOKEN: ${{ secrets.PCC_TOKEN }}
       IS_CICD: true

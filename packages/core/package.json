@@ -32,6 +32,14 @@
       ]
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pantheon-systems/content-publisher-sdk"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
