@@ -8,8 +8,8 @@ const MediaPreview = ({ url, isSmartComponentPreview }) => {
   if (!previewComponent) {
     if (isSmartComponentPreview) {
       return (
-        <div className="w-full max-w-[400px] rounded-md p-4 outline outline-black/10">
-          <p className="my-2 text-4xl font-medium">
+        <div className="flex w-full items-center justify-center rounded-md bg-[#1d1d28] p-4 text-center text-white">
+          <p className="my-2 max-w-[400px] text-left text-4xl font-medium">
             Paste the URL you want to embed on the right 👉
           </p>
         </div>

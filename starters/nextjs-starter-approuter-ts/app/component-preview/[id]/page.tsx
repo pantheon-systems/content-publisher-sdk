@@ -25,7 +25,7 @@ export default async function ComponentPreviewPage(props: {
   return (
     <div>
       {SmartComponent ? (
-        <div>
+        <div className="h-[100vh]">
           <SmartComponent isSmartComponentPreview {...decodedAttrs} />
         </div>
       ) : (
