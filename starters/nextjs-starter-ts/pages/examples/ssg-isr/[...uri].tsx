@@ -36,7 +36,7 @@ export default function ArticlePage({ article }: ArticlePageProps) {
   );
 }
 
-export const getStaticProps: GetStaticProps<{}> = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (!params?.uri || !Array.isArray(params?.uri) || params?.uri.length === 0) {
     return {
       notFound: true,
@@ -67,7 +67,7 @@ export const getStaticProps: GetStaticProps<{}> = async ({ params }) => {
   }
 };
 
-export const getStaticPaths: GetStaticPaths = async (uri) => {
+export const getStaticPaths: GetStaticPaths = async () => {
   try {
     // Get all the published articles and sites in parallel
     const [publishedArticles, site] = await Promise.all([

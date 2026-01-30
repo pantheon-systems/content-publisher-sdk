@@ -68,7 +68,7 @@ export const getComponentSchema = async (
 
   try {
     validateComponentSchema(result);
-  } catch (e) {
+  } catch {
     spinner.fail(
       chalk.red(
         "Failed to validate this schema:",

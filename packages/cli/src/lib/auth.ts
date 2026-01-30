@@ -79,7 +79,7 @@ export class Auth0Provider extends BaseAuthProvider {
       );
       await LocalStorage.persistAuthDetails(newCred);
       return newCred;
-    } catch (_err) {
+    } catch {
       return null;
     }
   }
@@ -148,7 +148,7 @@ export class Auth0Provider extends BaseAuthProvider {
 
           spinner.start("Waiting for you to complete login in the browser...");
           let credentials: PersistedTokens;
-          // eslint-disable-next-line no-constant-condition
+
           while (true) {
             try {
               const resp = await axios.post(
@@ -251,7 +251,7 @@ export class GoogleAuthProvider extends BaseAuthProvider {
       );
       await LocalStorage.persistGoogleAuthDetails(email, newCred);
       return newCred;
-    } catch (_err) {
+    } catch {
       return null;
     }
   }

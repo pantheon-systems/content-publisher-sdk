@@ -25,7 +25,7 @@ const persistDetailsToFile = async (payload: unknown, filePath: string) => {
 const readFile = async <T>(path: string): Promise<T | null> => {
   try {
     return JSON.parse(readFileSync(path).toString()) as T;
-  } catch (_err) {
+  } catch {
     return null;
   }
 };

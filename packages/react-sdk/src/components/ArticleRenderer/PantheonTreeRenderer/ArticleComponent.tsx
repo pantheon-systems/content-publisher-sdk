@@ -23,7 +23,6 @@ const ArticleComponent = ({
     return (
       <>
         {x.map((span, idx) => (
-          // eslint-disable-next-line react/no-array-index-key
           <ArticleComponent
             key={idx}
             x={span}

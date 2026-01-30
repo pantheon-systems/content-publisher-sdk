@@ -108,7 +108,7 @@ test("should raise error when project directory already exists", async () => {
   let error = false;
   try {
     await executePCC("init", [appFolder, "--template", "nextjs", "--eslint"]);
-  } catch (err) {
+  } catch {
     error = true;
   }
 
@@ -132,7 +132,7 @@ test("should raise error when template name is incorrect", async () => {
       "react",
       "--eslint",
     ]);
-  } catch (err) {
+  } catch {
     error = 1;
   }
 
@@ -161,13 +161,13 @@ test("should be able to init starter kit with default git ref (latest tag)", asy
   const sdkVersion =
     packageJson.dependencies?.["@pantheon-systems/cpub-react-sdk"] ||
     packageJson.devDependencies?.["@pantheon-systems/cpub-react-sdk"];
-  expect(sdkVersion).not.toBe("~4.0.0-beta.0");
+  expect(sdkVersion).not.toBe("~5.2.0");
 
   // Remove app folder
   fs.rmSync(appFolder, { recursive: true, force: true });
 });
 
-test("should be able to init starter kit with a specific git ref (4.0.0-beta)", async () => {
+test("should be able to init starter kit with a specific git ref (5.2.0)", async () => {
   const appFolder = tmp.tmpNameSync();
 
   await executePCC("init", [
@@ -175,14 +175,14 @@ test("should be able to init starter kit with a specific git ref (4.0.0-beta)", 
     "--template",
     "nextjs",
     "--git-ref",
-    "4.0.0-beta",
+    "5.2.0",
   ]);
 
   // Check for expected files
   expect(fs.existsSync(`${appFolder}/next.config.js`)).toBe(true);
   expect(fs.existsSync(`${appFolder}/package.json`)).toBe(true);
 
-  // Check that the pcc-sdk-core version is 4.0.0-beta.0
+  // Check that the pcc-sdk-core version is 5.2.0
   const packageJson = JSON.parse(
     readFileSync(`${appFolder}/package.json`).toString(),
   );
@@ -190,7 +190,7 @@ test("should be able to init starter kit with a specific git ref (4.0.0-beta)", 
   const sdkVersion =
     packageJson.dependencies?.["@pantheon-systems/cpub-react-sdk"] ||
     packageJson.devDependencies?.["@pantheon-systems/cpub-react-sdk"];
-  expect(sdkVersion).toBe("~4.0.0-beta.0");
+  expect(sdkVersion).toBe("~5.2.0");
 
   // Remove app folder
   fs.rmSync(appFolder, { recursive: true, force: true });

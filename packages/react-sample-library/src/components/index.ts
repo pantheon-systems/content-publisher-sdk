@@ -1,3 +1,4 @@
+import React from "react";
 import {
   ServersideSmartComponentMap,
   SmartComponentMap,
@@ -21,55 +22,81 @@ import * as Tooltip from "./Tooltip";
 export const ClientSmartComponentMap: SmartComponentMap = {
   PANTHEON_AVATAR: {
     ...Avatar.smartComponentDefinition,
-    reactComponent: Avatar.reactComponent,
+    reactComponent: Avatar.reactComponent as (
+      props: unknown,
+    ) => React.JSX.Element,
   },
   PANTHEON_BADGE: {
     ...Badge.smartComponentDefinition,
-    reactComponent: Badge.reactComponent,
+    reactComponent: Badge.reactComponent as (
+      props: unknown,
+    ) => React.JSX.Element,
   },
   PANTHEON_CARD: {
     ...Card.smartComponentDefinition,
-    reactComponent: Card.reactComponent,
+    reactComponent: Card.reactComponent as (
+      props: unknown,
+    ) => React.JSX.Element,
   },
   PANTHEON_SELECTION_CARD: {
     ...SelectionCard.smartComponentDefinition,
-    reactComponent: SelectionCard.reactComponent,
+    reactComponent: SelectionCard.reactComponent as (
+      props: unknown,
+    ) => React.JSX.Element,
   },
   PANTHEON_SITE_CARD: {
     ...SiteCard.smartComponentDefinition,
-    reactComponent: SiteCard.reactComponent,
+    reactComponent: SiteCard.reactComponent as (
+      props: unknown,
+    ) => React.JSX.Element,
   },
   PANTHEON_LINKS_CARD: {
     ...LinksCard.smartComponentDefinition,
-    reactComponent: LinksCard.reactComponent,
+    reactComponent: LinksCard.reactComponent as (
+      props: unknown,
+    ) => React.JSX.Element,
   },
   PANTHEON_INDICATOR_BADGE: {
     ...IndicatorBadge.smartComponentDefinition,
-    reactComponent: IndicatorBadge.reactComponent,
+    reactComponent: IndicatorBadge.reactComponent as (
+      props: unknown,
+    ) => React.JSX.Element,
   },
   PANTHEON_BANNER_NOTIFICATION: {
     ...BannerNotification.smartComponentDefinition,
-    reactComponent: BannerNotification.reactComponent,
+    reactComponent: BannerNotification.reactComponent as (
+      props: unknown,
+    ) => React.JSX.Element,
   },
   PANTHEON_BLOCKQUOTE: {
     ...Blockquote.smartComponentDefinition,
-    reactComponent: Blockquote.reactComponent,
+    reactComponent: Blockquote.reactComponent as (
+      props: unknown,
+    ) => React.JSX.Element,
   },
   PANTHEON_CTA_LINK: {
     ...CTALink.smartComponentDefinition,
-    reactComponent: CTALink.reactComponent,
+    reactComponent: CTALink.reactComponent as (
+      props: unknown,
+    ) => React.JSX.Element,
   },
   PANTHEON_INLINE_BANNER_NOTIFICATION: {
     ...InlineBannerNotification.smartComponentDefinition,
-    reactComponent: InlineBannerNotification.reactComponent,
+    reactComponent: InlineBannerNotification.reactComponent as (
+      props: unknown,
+    ) => React.JSX.Element,
   },
   PANTHEON_SECTION_BANNER_NOTIFICATION: {
     ...SectionBannerNotification.smartComponentDefinition,
-    reactComponent: SectionBannerNotification.reactComponent,
+    reactComponent: SectionBannerNotification.reactComponent as (
+      props: unknown,
+    ) => React.JSX.Element,
   },
   PANTHEON_TOOLTIP: {
     ...Tooltip.smartComponentDefinition,
-    reactComponent: Tooltip.reactComponent,
+    reactComponent: Tooltip.reactComponent as (
+      props: unknown,
+    ) => React.JSX.Element,
   },
 };
 

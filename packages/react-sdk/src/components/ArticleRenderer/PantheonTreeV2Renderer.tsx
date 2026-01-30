@@ -138,7 +138,7 @@ const PantheonTreeRenderer = ({
             imageChild.attrs.src = srcUrl.toString();
           }
         }
-      } catch (err) {
+      } catch {
         // If it's not a valid URL (or cannot be parsed), leave it unchanged.
       }
     }

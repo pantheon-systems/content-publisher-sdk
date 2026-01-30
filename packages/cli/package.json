@@ -2,18 +2,19 @@
   "name": "@pantheon-systems/cpub",
   "author": "@pantheon-systems",
   "description": "Pantheon Content Publisher CLI",
-  "version": "5.2.0-beta.0",
+  "version": "5.2.0",
   "type": "module",
   "license": "MIT",
   "keywords": [
     "pcc",
+    "cpub",
     "nextjs",
     "react",
     "pantheon"
   ],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/pantheon-systems/content-publisher-sdk"
   },
   "bin": {
     "pcc": "./dist/index.js",
@@ -35,6 +36,10 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "dependencies": {
     "@pantheon-systems/cpub-sdk-core": "workspace:*",
@@ -61,6 +66,8 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.25.3",
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^9.39.2",
     "@types/bluebird": "^3.5.42",
     "@types/fs-extra": "^11.0.4",
     "@types/inquirer": "^9.0.7",
@@ -72,7 +79,7 @@
     "@types/tmp": "^0.2.6",
     "@types/yargs": "^17.0.33",
     "babel-jest": "^29.7.0",
-    "eslint": "^8.57.0",
+    "eslint": "^9.39.2",
     "eslint-config-pcc-custom": "workspace:*",
     "jest": "29.5.0",
     "tmp": "^0.2.5",

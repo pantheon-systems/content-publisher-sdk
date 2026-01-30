@@ -95,7 +95,7 @@ export async function isProgramInstalled(programNamed: string) {
   try {
     await sh(`${programNamed} -v`, []);
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }

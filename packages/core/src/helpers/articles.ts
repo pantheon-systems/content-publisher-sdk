@@ -286,8 +286,7 @@ export async function getArticleBySlugOrId(
     if (article) {
       return article;
     }
-    // eslint-disable-next-line no-empty
-  } catch (e) {
+  } catch {
     // Ignore any errors with retrieving by slug, because next we will try
     // to retrieve by id.
   }

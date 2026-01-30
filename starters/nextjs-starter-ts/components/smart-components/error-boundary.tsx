@@ -35,10 +35,12 @@ const SmartComponentSuspenseErrorBoundary = ({ children }: Props) => {
 };
 
 export const withSmartComponentErrorBoundary =
-  // eslint-disable-next-line react/display-name
-  (Component: React.ComponentType<any>) => (props: Record<string, unknown>) => (
+  <T extends Record<string, unknown>>(
+    Component: React.ComponentType<T>,
+  ): ((props: unknown) => React.JSX.Element) =>
+  (props: unknown) => (
     <SmartComponentSuspenseErrorBoundary>
-      <Component {...props} />
+      <Component {...(props as T)} />
     </SmartComponentSuspenseErrorBoundary>
   );
 

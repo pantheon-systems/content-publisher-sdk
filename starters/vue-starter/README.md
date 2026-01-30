@@ -11,8 +11,7 @@ in the future.
 To get started with the Next Pantheon Content Publisher Starter, use our `pcc`
 (command-line interface tool we have created). Full documentation for this npm
 package based on [npm init](https://docs.npmjs.com/cli/v8/commands/npm-init) can
-be found [here](https://www.npmjs.com/package/@pantheon-systems/pcc) on our docs
-site.
+be found [here](https://docs.content.pantheon.io) on our docs site.
 
 ## Deploy your own
 

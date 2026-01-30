@@ -25,7 +25,9 @@ interface DateInputObject {
   msSinceEpoch: string;
 }
 
-function isDateInputObject(v: DateInputObject | unknown): v is DateInputObject {
+export function isDateInputObject(
+  v: DateInputObject | unknown,
+): v is DateInputObject {
   return (v as DateInputObject).msSinceEpoch != null;
 }
 
@@ -115,7 +117,7 @@ export function parseAsTabTree(
     return JSON.parse(raw) as TabTree<
       PantheonTree | string | undefined | null
     >[];
-  } catch (e) {
+  } catch {
     return null;
   }
 }

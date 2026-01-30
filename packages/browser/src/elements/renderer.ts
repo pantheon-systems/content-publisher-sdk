@@ -52,7 +52,10 @@ export function renderArticleToElement(
   // Add PCC content to the document node
   content.forEach((node) => {
     const contentNode = renderContentNode(node, config);
-    contentNode && documentNode.appendChild(contentNode);
+
+    if (contentNode) {
+      documentNode.appendChild(contentNode);
+    }
   });
 
   // Clear fallback content
@@ -103,7 +106,10 @@ export const renderContentNode = (
   if (element.children) {
     element.children.forEach((child) => {
       const contentNode = renderContentNode(child, config);
-      contentNode && node.appendChild(contentNode);
+
+      if (contentNode) {
+        node.appendChild(contentNode);
+      }
     });
   }
 
