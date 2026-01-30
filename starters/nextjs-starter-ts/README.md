@@ -16,7 +16,7 @@ For a quick start on your local machine, follow the instructions below:
 1. In your terminal, run the following commands:
 
 ```bash
-npm install @pantheon-systems/cpub --global
+npm install @pantheon-systems/cpub-cli --global
 cpub init ./my-new-site --template=nextjs
 ```
 

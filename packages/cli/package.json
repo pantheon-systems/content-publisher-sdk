@@ -1,5 +1,5 @@
 {
-  "name": "@pantheon-systems/cpub",
+  "name": "@pantheon-systems/cpub-cli",
   "author": "@pantheon-systems",
   "description": "Pantheon Content Publisher CLI",
   "version": "5.2.0",
