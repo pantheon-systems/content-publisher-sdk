@@ -99,8 +99,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/react-sample-library
       next:
-        specifier: 15.5.11
-        version: 15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
+        specifier: 15.5.9
+        version: 15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
       react:
         specifier: 19.1.2
         version: 19.1.2
@@ -513,8 +513,8 @@ importers:
         specifier: ^30.0.4
         version: 30.2.0
       next:
-        specifier: 15.5.11
-        version: 15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
+        specifier: 15.5.9
+        version: 15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
       octokit:
         specifier: ^3.2.1
         version: 3.2.2
@@ -658,11 +658,11 @@ importers:
         specifier: 16.4.7
         version: 16.4.7
       next:
-        specifier: 15.5.11
-        version: 15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
+        specifier: 15.5.9
+        version: 15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
       next-seo:
         specifier: 5.15.0
-        version: 5.15.0(next@15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+        version: 5.15.0(next@15.5.9(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
       query-string:
         specifier: 8.2.0
         version: 8.2.0
@@ -770,8 +770,8 @@ importers:
         specifier: 16.4.7
         version: 16.4.7
       next:
-        specifier: 15.5.11
-        version: 15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
+        specifier: 15.5.9
+        version: 15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
       query-string:
         specifier: 8.2.0
         version: 8.2.0
@@ -888,11 +888,11 @@ importers:
         specifier: 16.4.7
         version: 16.4.7
       next:
-        specifier: 15.5.11
-        version: 15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
+        specifier: 15.5.9
+        version: 15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
       next-seo:
         specifier: 5.15.0
-        version: 5.15.0(next@15.5.11(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+        version: 5.15.0(next@15.5.9(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
       query-string:
         specifier: 8.2.0
         version: 8.2.0
@@ -2664,6 +2664,9 @@ packages:
 
   '@next/env@15.5.11':
     resolution: {integrity: sha512-g9s5SS9gC7GJCEOR3OV3zqs7C5VddqxP9X+/6BpMbdXRkqsWfFf2CJPBZNvNEtAkKTNuRgRXAgNxSAXzfLdaTg==}
+
+  '@next/env@15.5.9':
+    resolution: {integrity: sha512-4GlTZ+EJM7WaW2HEZcyU317tIQDjkQIyENDLxYJfSWlfqguN+dHkZgyQTV/7ykvobU7yEH5gKvreNrH4B6QgIg==}
 
   '@next/eslint-plugin-next@16.1.1':
     resolution: {integrity: sha512-Ovb/6TuLKbE1UiPcg0p39Ke3puyTCIKN9hGbNItmpQsp+WX3qrjO3WaMVSi6JHr9X1NrmthqIguVHodMJbh/dw==}
@@ -7284,6 +7287,27 @@ packages:
       sass:
         optional: true
 
+  next@15.5.9:
+    resolution: {integrity: sha512-agNLK89seZEtC5zUHwtut0+tNrc0Xw4FT/Dg+B/VLEo9pAcS9rtTKpek3V6kVcVwsB2YlqMaHdfZL4eLEVYuCg==}
+    engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@opentelemetry/api': ^1.1.0
+      '@playwright/test': ^1.51.1
+      babel-plugin-react-compiler: '*'
+      react: ^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0
+      react-dom: ^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0
+      sass: ^1.3.0
+    peerDependenciesMeta:
+      '@opentelemetry/api':
+        optional: true
+      '@playwright/test':
+        optional: true
+      babel-plugin-react-compiler:
+        optional: true
+      sass:
+        optional: true
+
   no-case@3.0.4:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
 
@@ -11458,6 +11482,8 @@ snapshots:
 
   '@next/env@15.5.11': {}
 
+  '@next/env@15.5.9': {}
+
   '@next/eslint-plugin-next@16.1.1':
     dependencies:
       fast-glob: 3.3.1
@@ -14219,12 +14245,12 @@ snapshots:
 
   css-loader@7.1.2(webpack@5.104.1(esbuild@0.25.12)):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.6)
-      postcss: 8.5.6
-      postcss-modules-extract-imports: 3.1.0(postcss@8.5.6)
-      postcss-modules-local-by-default: 4.2.0(postcss@8.5.6)
-      postcss-modules-scope: 3.2.1(postcss@8.5.6)
-      postcss-modules-values: 4.0.0(postcss@8.5.6)
+      icss-utils: 5.1.0(postcss@8.4.35)
+      postcss: 8.4.35
+      postcss-modules-extract-imports: 3.1.0(postcss@8.4.35)
+      postcss-modules-local-by-default: 4.2.0(postcss@8.4.35)
+      postcss-modules-scope: 3.2.1(postcss@8.4.35)
+      postcss-modules-values: 4.0.0(postcss@8.4.35)
       postcss-value-parser: 4.2.0
       semver: 7.7.3
     optionalDependencies:
@@ -15903,6 +15929,10 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
+  icss-utils@5.1.0(postcss@8.4.35):
+    dependencies:
+      postcss: 8.4.35
+
   icss-utils@5.1.0(postcss@8.5.6):
     dependencies:
       postcss: 8.5.6
@@ -17213,15 +17243,9 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next-seo@5.15.0(next@15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2):
+  next-seo@5.15.0(next@15.5.9(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2):
     dependencies:
-      next: 15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
-      react: 19.1.2
-      react-dom: 19.1.2(react@19.1.2)
-
-  next-seo@5.15.0(next@15.5.11(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2):
-    dependencies:
-      next: 15.5.11(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
+      next: 15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
       react: 19.1.2
       react-dom: 19.1.2(react@19.1.2)
 
@@ -17250,34 +17274,9 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2):
+  next@15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2):
     dependencies:
-      '@next/env': 15.5.11
-      '@swc/helpers': 0.5.15
-      caniuse-lite: 1.0.30001766
-      postcss: 8.4.31
-      react: 19.1.2
-      react-dom: 19.1.2(react@19.1.2)
-      styled-jsx: 5.1.6(@babel/core@7.26.0)(react@19.1.2)
-    optionalDependencies:
-      '@next/swc-darwin-arm64': 15.5.7
-      '@next/swc-darwin-x64': 15.5.7
-      '@next/swc-linux-arm64-gnu': 15.5.7
-      '@next/swc-linux-arm64-musl': 15.5.7
-      '@next/swc-linux-x64-gnu': 15.5.7
-      '@next/swc-linux-x64-musl': 15.5.7
-      '@next/swc-win32-arm64-msvc': 15.5.7
-      '@next/swc-win32-x64-msvc': 15.5.7
-      '@playwright/test': 1.57.0
-      sass: 1.97.2
-      sharp: 0.34.5
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-
-  next@15.5.11(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2):
-    dependencies:
-      '@next/env': 15.5.11
+      '@next/env': 15.5.9
       '@swc/helpers': 0.5.15
       caniuse-lite: 1.0.30001766
       postcss: 8.4.31
@@ -17763,9 +17762,20 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
+  postcss-modules-extract-imports@3.1.0(postcss@8.4.35):
+    dependencies:
+      postcss: 8.4.35
+
   postcss-modules-extract-imports@3.1.0(postcss@8.5.6):
     dependencies:
       postcss: 8.5.6
+
+  postcss-modules-local-by-default@4.2.0(postcss@8.4.35):
+    dependencies:
+      icss-utils: 5.1.0(postcss@8.4.35)
+      postcss: 8.4.35
+      postcss-selector-parser: 7.1.1
+      postcss-value-parser: 4.2.0
 
   postcss-modules-local-by-default@4.2.0(postcss@8.5.6):
     dependencies:
@@ -17774,10 +17784,20 @@ snapshots:
       postcss-selector-parser: 7.1.1
       postcss-value-parser: 4.2.0
 
+  postcss-modules-scope@3.2.1(postcss@8.4.35):
+    dependencies:
+      postcss: 8.4.35
+      postcss-selector-parser: 7.1.1
+
   postcss-modules-scope@3.2.1(postcss@8.5.6):
     dependencies:
       postcss: 8.5.6
       postcss-selector-parser: 7.1.1
+
+  postcss-modules-values@4.0.0(postcss@8.4.35):
+    dependencies:
+      icss-utils: 5.1.0(postcss@8.4.35)
+      postcss: 8.4.35
 
   postcss-modules-values@4.0.0(postcss@8.5.6):
     dependencies:
