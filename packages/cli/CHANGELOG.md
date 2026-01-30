@@ -1,5 +1,19 @@
 # @pantheon-systems/pcc-cli
 
+## 5.2.0
+
+### Minor Changes
+
+- bcdf533: Show error log when listing 0 sites in pcc init command
+- 60aa425: Show a help message to the user in the CLI if they are using the old
+  NPM package name.
+
+### Patch Changes
+
+- c30a021: Updating dependencies.
+- Updated dependencies [c30a021]
+  - @pantheon-systems/pcc-sdk-core@5.2.0
+
 ## 5.2.0-beta.1
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @pantheon-systems/pcc-react-sdk
 
+## 5.2.0
+
+### Patch Changes
+
+- c30a021: Updating dependencies.
+- Updated dependencies [c30a021]
+  - @pantheon-systems/pcc-sdk-core@5.2.0
+
 ## 5.2.0-beta.1
 
 ### Patch Changes
