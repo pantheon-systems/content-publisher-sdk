@@ -1,4 +1,4 @@
-# @pantheon-systems/next-pcc-starter
+# @pantheon-systems/next-approuter-cpub-starter-ts
 
 ## 1.2.4
 

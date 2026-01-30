@@ -1,4 +1,4 @@
-# @pantheon-systems/next-pcc-starter
+# @pantheon-systems/next-cpub-starter
 
 ## 1.0.0
 
