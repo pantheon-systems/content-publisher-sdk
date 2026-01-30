@@ -5,7 +5,7 @@
   "fixed": [
     [
       "@pantheon-systems/cpub-browser-sdk",
-      "@pantheon-systems/cpub",
+      "@pantheon-systems/cpub-cli",
       "@pantheon-systems/cpub-sdk-core",
       "@pantheon-systems/cpub-react-sample-library",
       "@pantheon-systems/cpub-react-sdk"
