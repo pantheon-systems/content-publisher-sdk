@@ -113,7 +113,7 @@
     "@apollo/client": "^3.10.3",
     "@pantheon-systems/cpub-sdk-core": "workspace:*",
     "graphql": "^16.8.1",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "markdown-to-txt": "^2.0.1",
     "react-markdown": "^10.1.0",
     "rehype-raw": "^7.0.0",
