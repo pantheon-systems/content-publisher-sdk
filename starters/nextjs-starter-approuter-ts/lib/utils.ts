@@ -2,7 +2,7 @@ import {
   ArticleWithoutContent,
   PantheonTree,
   TabTree,
-} from "@pantheon-systems/pcc-react-sdk";
+} from "@pantheon-systems/cpub-react-sdk";
 import { clsx, type ClassValue } from "clsx";
 import { Metadata } from "next";
 import { twMerge } from "tailwind-merge";

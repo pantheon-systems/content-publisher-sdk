@@ -1,10 +1,10 @@
-import { PCCConvenienceFunctions } from "@pantheon-systems/pcc-react-sdk";
-import { getArticlePathComponentsFromContentStructure } from "@pantheon-systems/pcc-react-sdk/server";
+import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk";
+import { getArticlePathComponentsFromContentStructure } from "@pantheon-systems/cpub-react-sdk/server";
 import { NextSeo } from "next-seo";
+import { useSearchParams } from "next/navigation";
 import { StaticArticleView } from "../../../components/article-view";
 import Layout from "../../../components/layout";
 import { getSeoMetadata } from "../../../lib/utils";
-import { useSearchParams } from "next/navigation";
 
 export default function ArticlePage({ article, recommendedArticles }) {
   const seoMetadata = getSeoMetadata(article);
@@ -19,7 +19,10 @@ export default function ArticlePage({ article, recommendedArticles }) {
       />
 
       <div className="prose mx-4 mt-16 text-black sm:mx-6 md:mx-auto">
-        <StaticArticleView article={article} tabId={searchParams.get("tabId")} />
+        <StaticArticleView
+          article={article}
+          tabId={searchParams.get("tabId")}
+        />
       </div>
     </Layout>
   );

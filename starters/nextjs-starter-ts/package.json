@@ -1,5 +1,5 @@
 {
-  "name": "@pantheon-systems/next-pcc-starter-ts",
+  "name": "@pantheon-systems/next-cpub-starter-ts",
   "version": "1.0.0",
   "private": true,
   "license": "GPL-3.0-or-later",
@@ -25,14 +25,14 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@pantheon-systems/pcc-react-sdk": "~5.2.0",
+    "@pantheon-systems/cpub-react-sdk": "~5.2.0",
     "@radix-ui/react-popover": "1.1.6",
     "@tailwindcss/typography": "0.5.10",
     "@types/node": "20.19.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "dotenv": "16.4.7",
-    "next": "15.5.9",
+    "next": "15.5.11",
     "next-seo": "5.15.0",
     "query-string": "8.2.0",
     "react": "19.1.2",

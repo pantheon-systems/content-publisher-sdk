@@ -2,11 +2,10 @@
 
 ## Getting Started
 
-To get started with the Next Pantheon Content Publisher Starter, use our `pcc`
+To get started with the Next Pantheon Content Publisher Starter, use our `cpub`
 (command-line interface tool we have created). Full documentation for this npm
 package based on [npm init](https://docs.npmjs.com/cli/v8/commands/npm-init) can
-be found [here](https://www.npmjs.com/package/@pantheon-systems/pcc) on our docs
-site.
+be found [here](https://docs.content.pantheon.io) on our docs site.
 
 ## Deploy your own
 
@@ -17,15 +16,15 @@ For a quick start on your local machine, follow the instructions below:
 1. In your terminal, run the following commands:
 
 ```bash
-npm install @pantheon-systems/pcc-cli --global
-pcc init ./my-new-site --template=nextjs
+npm install @pantheon-systems/cpub --global
+cpub init ./my-new-site --template=nextjs
 ```
 
 2. Follow the prompts in your terminal to complete the setup.
 
-## Pantheon's @pantheon-systems/pcc-react-sdk
+## Pantheon's @pantheon-systems/cpub-react-sdk
 
-Pantheon's @pantheon-systems/pcc-react-sdk is included as a dependency in this
+Pantheon's @pantheon-systems/cpub-react-sdk is included as a dependency in this
 project.
 
 ## Tests

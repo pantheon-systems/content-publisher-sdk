@@ -20,7 +20,7 @@
 ```html
 <-- Add this to the <head> of your HTML file or right before the closing </body> tag -->
 <script
-  src="https://unpkg.com/@pantheon-systems/pcc-browser-sdk@latest/dist/index.js"
+  src="https://unpkg.com/@pantheon-systems/cpub-browser-sdk@latest/dist/index.js"
   data-site-id="<your PCC Site ID>"
   data-token="<your PCC Token>"
 ></script>

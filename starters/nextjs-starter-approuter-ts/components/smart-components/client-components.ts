@@ -1,4 +1,4 @@
-import { SmartComponentMap } from "@pantheon-systems/pcc-react-sdk/components";
+import { SmartComponentMap } from "@pantheon-systems/cpub-react-sdk/components";
 import React from "react";
 import LeadCapture from "./lead-capture";
 import MediaPreview from "./media-preview";

@@ -6,8 +6,8 @@ import {
   buildContentType,
   convertSearchParamsToGQL,
   LIST_ARTICLES_QUERY,
-} from "@pantheon-systems/pcc-sdk-core";
-import { ArticleWithoutContent } from "@pantheon-systems/pcc-sdk-core/types";
+} from "@pantheon-systems/cpub-sdk-core";
+import { ArticleWithoutContent } from "@pantheon-systems/cpub-sdk-core/types";
 
 type ListArticlesResponse = {
   articles: ArticleWithoutContent[];

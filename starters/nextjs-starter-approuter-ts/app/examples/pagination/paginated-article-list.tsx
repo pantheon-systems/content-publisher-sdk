@@ -4,7 +4,7 @@ import {
   ArticleWithoutContent,
   PaginatedArticle,
   Site,
-} from "@pantheon-systems/pcc-react-sdk";
+} from "@pantheon-systems/cpub-react-sdk";
 import React from "react";
 import { ArticleGrid } from "../../../components/grid";
 import PageHeader from "../../../components/page-header";

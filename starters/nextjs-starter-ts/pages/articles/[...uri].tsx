@@ -3,8 +3,8 @@ import {
   PCCConvenienceFunctions,
   type Article,
   type PublishingLevel,
-} from "@pantheon-systems/pcc-react-sdk";
-import { getArticlePathComponentsFromContentStructure } from "@pantheon-systems/pcc-react-sdk/server";
+} from "@pantheon-systems/cpub-react-sdk";
+import { getArticlePathComponentsFromContentStructure } from "@pantheon-systems/cpub-react-sdk/server";
 import { NextSeo } from "next-seo";
 import queryString from "query-string";
 import ArticleView from "../../components/article-view";

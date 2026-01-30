@@ -1,4 +1,4 @@
-import { TabTree } from "@pantheon-systems/pcc-react-sdk";
+import { TabTree } from "@pantheon-systems/cpub-react-sdk";
 import clsx from "clsx";
 import Image from "next/image";
 import { usePathname } from "next/navigation";

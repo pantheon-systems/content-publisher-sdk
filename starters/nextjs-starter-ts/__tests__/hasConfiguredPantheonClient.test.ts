@@ -1,4 +1,4 @@
-import { Site } from "@pantheon-systems/pcc-react-sdk/server";
+import { Site } from "@pantheon-systems/cpub-react-sdk/server";
 import { pantheonAPIOptions } from "../pages/api/pantheoncloud/[...command]";
 
 describe("hasConfiguredPantheonClient", () => {

@@ -1,8 +1,8 @@
+import { getArticleURLFromSite } from "@pantheon-systems/cpub-react-sdk/server";
 import Link from "next/link";
 import { useState } from "react";
 import { cn } from "../lib/utils";
 import { Button } from "./ui/button";
-import { getArticleURLFromSite } from "@pantheon-systems/pcc-react-sdk/server";
 
 export function HomepageArticleGrid({ articles, site }) {
   return (
@@ -42,9 +42,14 @@ export function ArticleGrid({ articles, site, basePath = "/articles" }) {
 function withImageSizeParams(url, width = 400, height = 400) {
   if (!url) return url;
   try {
-    const u = new URL(url, typeof window !== 'undefined' ? window.location.origin : 'http://localhost');
-    u.searchParams.set('width', width.toString());
-    u.searchParams.set('height', height.toString());
+    const u = new URL(
+      url,
+      typeof window !== "undefined"
+        ? window.location.origin
+        : "http://localhost",
+    );
+    u.searchParams.set("width", width.toString());
+    u.searchParams.set("height", height.toString());
     return u.toString();
   } catch {
     // If url is not valid, return as is

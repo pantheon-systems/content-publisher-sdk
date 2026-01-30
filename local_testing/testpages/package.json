@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cp ./node_modules/@pantheon-systems/pcc-browser-sdk/dist/index.js ./public/ignore/browser-sdk.js && next dev --turbopack",
+    "dev": "cp ./node_modules/@pantheon-systems/cpub-browser-sdk/dist/index.js ./public/ignore/browser-sdk.js && next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@pantheon-systems/pcc-browser-sdk": "workspace:*",
-    "@pantheon-systems/pcc-react-sample-library": "workspace:*",
-    "next": "^15.5.9",
+    "@pantheon-systems/cpub-browser-sdk": "workspace:*",
+    "@pantheon-systems/cpub-react-sample-library": "workspace:*",
+    "next": "15.5.11",
     "react": "19.1.2",
     "react-dom": "19.1.2"
   },

@@ -1,8 +1,8 @@
 import type {
   ArticleWithoutContent,
   Site,
-} from "@pantheon-systems/pcc-react-sdk";
-import { getArticleURLFromSite } from "@pantheon-systems/pcc-react-sdk/server";
+} from "@pantheon-systems/cpub-react-sdk";
+import { getArticleURLFromSite } from "@pantheon-systems/cpub-react-sdk/server";
 import Link from "next/link";
 import { useState } from "react";
 import { cn } from "../lib/utils";

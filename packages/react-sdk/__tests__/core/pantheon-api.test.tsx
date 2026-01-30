@@ -11,7 +11,7 @@ beforeEach(() => {
  * and correctly transforms responses from the PantheonAPI for Pages routing and App routing.
  */
 const apiHandlerMock = jest.fn();
-jest.mock("@pantheon-systems/pcc-sdk-core", () => ({
+jest.mock("@pantheon-systems/cpub-sdk-core", () => ({
   PantheonAPI: jest.fn(() => ({
     handler: apiHandlerMock,
     buildStatus: jest.fn(() => ({

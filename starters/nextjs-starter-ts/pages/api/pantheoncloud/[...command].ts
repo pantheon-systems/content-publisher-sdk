@@ -1,8 +1,8 @@
 import {
   PantheonAPI,
   PantheonAPIOptions,
-} from "@pantheon-systems/pcc-react-sdk";
-import { getArticleURLFromSiteWithOptions } from "@pantheon-systems/pcc-react-sdk/server";
+} from "@pantheon-systems/cpub-react-sdk";
+import { getArticleURLFromSiteWithOptions } from "@pantheon-systems/cpub-react-sdk/server";
 import { serverSmartComponentMap } from "../../../components/smart-components";
 import { getAuthorById, listAuthors } from "../../../lib/pcc-metadata-groups";
 

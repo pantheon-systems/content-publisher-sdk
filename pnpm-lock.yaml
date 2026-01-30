@@ -6,15 +6,15 @@ settings:
 
 overrides:
   pbkdf2: '>=3.1.3'
-  '@pantheon-systems/pcc-react-sdk>glob-parent': '>=5.1.2'
-  '@pantheon-systems/pcc-react-sdk>parse-url': '>=8.1.0'
-  '@pantheon-systems/pcc-react-sdk>trim': '>=0.0.3'
-  '@pantheon-systems/pcc-react-sdk>trim-newlines': '>=3.0.1'
-  '@pantheon-systems/pcc-react-sdk>yaml': '>=2.2.2'
-  '@pantheon-systems/pcc-react-sdk>prettier': ^3.0.0
+  '@pantheon-systems/cpub-react-sdk>glob-parent': '>=5.1.2'
+  '@pantheon-systems/cpub-react-sdk>parse-url': '>=8.1.0'
+  '@pantheon-systems/cpub-react-sdk>trim': '>=0.0.3'
+  '@pantheon-systems/cpub-react-sdk>trim-newlines': '>=3.0.1'
+  '@pantheon-systems/cpub-react-sdk>yaml': '>=2.2.2'
+  '@pantheon-systems/cpub-react-sdk>prettier': ^3.0.0
   webpack-dev-middleware: ^7.2.1
   '@pantheon-systems/pcc-vue-sdk>ufo': 1.5.3
-  next: 15.5.9
+  next: 15.5.11
   '@babel/core': 7.26.0
   path-to-regexp: 0.1.12
   serialize-javascript: ^6.0.2
@@ -92,15 +92,15 @@ importers:
 
   local_testing/testpages:
     dependencies:
-      '@pantheon-systems/pcc-browser-sdk':
+      '@pantheon-systems/cpub-browser-sdk':
         specifier: workspace:*
         version: link:../../packages/browser
-      '@pantheon-systems/pcc-react-sample-library':
+      '@pantheon-systems/cpub-react-sample-library':
         specifier: workspace:*
         version: link:../../packages/react-sample-library
       next:
-        specifier: 15.5.9
-        version: 15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
+        specifier: 15.5.11
+        version: 15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
       react:
         specifier: 19.1.2
         version: 19.1.2
@@ -138,7 +138,7 @@ importers:
 
   packages/browser:
     dependencies:
-      '@pantheon-systems/pcc-sdk-core':
+      '@pantheon-systems/cpub-sdk-core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -163,7 +163,7 @@ importers:
 
   packages/cli:
     dependencies:
-      '@pantheon-systems/pcc-sdk-core':
+      '@pantheon-systems/cpub-sdk-core':
         specifier: workspace:*
         version: link:../core
       axios:
@@ -283,7 +283,7 @@ importers:
         version: 0.2.5
       ts-jest:
         specifier: 29.1.0
-        version: 29.1.0(@babel/core@7.26.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(jest@29.5.0(@types/node@20.19.0))(typescript@5.5.4)
+        version: 29.1.0(@babel/core@7.26.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(esbuild@0.27.2)(jest@29.5.0(@types/node@20.19.0))(typescript@5.5.4)
       tsup:
         specifier: ^8.2.4
         version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.5.4)(yaml@2.8.2)
@@ -339,10 +339,10 @@ importers:
 
   packages/react-sample-library:
     dependencies:
-      '@pantheon-systems/pcc-react-sdk':
+      '@pantheon-systems/cpub-react-sdk':
         specifier: workspace:*
         version: link:../react-sdk
-      '@pantheon-systems/pcc-sdk-core':
+      '@pantheon-systems/cpub-sdk-core':
         specifier: workspace:*
         version: link:../core
       '@pantheon-systems/pds-toolkit-react':
@@ -372,7 +372,7 @@ importers:
         version: 8.6.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.15(prettier@3.2.5))
       '@storybook/nextjs':
         specifier: ^10.1.11
-        version: 10.1.11(esbuild@0.25.12)(next@15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.97.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.97.2)(storybook@8.6.15(prettier@3.2.5))(type-fest@2.19.0)(typescript@5.5.4)(vite@7.1.11(@types/node@20.19.0)(jiti@2.6.1)(sass@1.97.2)(terser@5.44.1)(yaml@2.8.2))(webpack-hot-middleware@2.26.1)(webpack@5.104.1(esbuild@0.25.12))
+        version: 10.1.11(esbuild@0.25.12)(next@15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.97.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.97.2)(storybook@8.6.15(prettier@3.2.5))(type-fest@2.19.0)(typescript@5.5.4)(vite@7.1.11(@types/node@20.19.0)(jiti@2.6.1)(sass@1.97.2)(terser@5.44.1)(yaml@2.8.2))(webpack-hot-middleware@2.26.1)(webpack@5.104.1(esbuild@0.25.12))
       '@storybook/react':
         specifier: ^9.1.10
         version: 9.1.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.15(prettier@3.2.5))(typescript@5.5.4)
@@ -424,7 +424,7 @@ importers:
       '@apollo/client':
         specifier: ^3.10.3
         version: 3.14.0(@types/react@19.1.8)(graphql-ws@5.16.2(graphql@16.12.0))(graphql@16.12.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
-      '@pantheon-systems/pcc-sdk-core':
+      '@pantheon-systems/cpub-sdk-core':
         specifier: workspace:*
         version: link:../core
       graphql:
@@ -513,8 +513,8 @@ importers:
         specifier: ^30.0.4
         version: 30.2.0
       next:
-        specifier: 15.5.9
-        version: 15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
+        specifier: 15.5.11
+        version: 15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
       octokit:
         specifier: ^3.2.1
         version: 3.2.2
@@ -529,7 +529,7 @@ importers:
         version: 19.1.2(react@19.1.2)
       ts-jest:
         specifier: 29.1.0
-        version: 29.1.0(@babel/core@7.26.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(jest@29.5.0(@types/node@20.19.0))(typescript@5.5.4)
+        version: 29.1.0(@babel/core@7.26.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(esbuild@0.27.2)(jest@29.5.0(@types/node@20.19.0))(typescript@5.5.4)
       tsup:
         specifier: ^8.2.4
         version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.5.4)(yaml@2.8.2)
@@ -546,8 +546,8 @@ importers:
         specifier: ^3.10.3
         version: 3.14.0(@types/react@19.1.8)(graphql-ws@5.16.2(graphql@16.12.0))(graphql@16.12.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
       '@pantheon-systems/pcc-sdk-core':
-        specifier: workspace:*
-        version: link:../core
+        specifier: 5.2.0
+        version: 5.2.0(@types/react@19.1.8)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
       '@vue/apollo-composable':
         specifier: 4.0.0-beta.12
         version: 4.0.0-beta.12(@apollo/client@3.14.0(@types/react@19.1.8)(graphql-ws@5.16.2(graphql@16.12.0))(graphql@16.12.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2))(graphql@16.12.0)(typescript@5.5.4)(vue@3.4.27(typescript@5.5.4))
@@ -636,7 +636,7 @@ importers:
 
   starters/nextjs-starter:
     dependencies:
-      '@pantheon-systems/pcc-react-sdk':
+      '@pantheon-systems/cpub-react-sdk':
         specifier: workspace:*
         version: link:../../packages/react-sdk
       '@radix-ui/react-popover':
@@ -658,11 +658,11 @@ importers:
         specifier: 16.4.7
         version: 16.4.7
       next:
-        specifier: 15.5.9
-        version: 15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
+        specifier: 15.5.11
+        version: 15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
       next-seo:
         specifier: 5.15.0
-        version: 5.15.0(next@15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+        version: 5.15.0(next@15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
       query-string:
         specifier: 8.2.0
         version: 8.2.0
@@ -748,7 +748,7 @@ importers:
 
   starters/nextjs-starter-approuter-ts:
     dependencies:
-      '@pantheon-systems/pcc-react-sdk':
+      '@pantheon-systems/cpub-react-sdk':
         specifier: workspace:*
         version: link:../../packages/react-sdk
       '@radix-ui/react-popover':
@@ -770,8 +770,8 @@ importers:
         specifier: 16.4.7
         version: 16.4.7
       next:
-        specifier: 15.5.9
-        version: 15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
+        specifier: 15.5.11
+        version: 15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
       query-string:
         specifier: 8.2.0
         version: 8.2.0
@@ -866,7 +866,7 @@ importers:
 
   starters/nextjs-starter-ts:
     dependencies:
-      '@pantheon-systems/pcc-react-sdk':
+      '@pantheon-systems/cpub-react-sdk':
         specifier: workspace:*
         version: link:../../packages/react-sdk
       '@radix-ui/react-popover':
@@ -888,11 +888,11 @@ importers:
         specifier: 16.4.7
         version: 16.4.7
       next:
-        specifier: 15.5.9
-        version: 15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
+        specifier: 15.5.11
+        version: 15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
       next-seo:
         specifier: 5.15.0
-        version: 5.15.0(next@15.5.9(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+        version: 5.15.0(next@15.5.11(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
       query-string:
         specifier: 8.2.0
         version: 8.2.0
@@ -2662,8 +2662,8 @@ packages:
   '@napi-rs/wasm-runtime@0.2.12':
     resolution: {integrity: sha512-ZVWUcfwY4E/yPitQJl481FjFo3K22D6qF0DuFH6Y/nbnE11GY5uguDxZMGXPQ8WQ0128MXQD7TnfHyK4oWoIJQ==}
 
-  '@next/env@15.5.9':
-    resolution: {integrity: sha512-4GlTZ+EJM7WaW2HEZcyU317tIQDjkQIyENDLxYJfSWlfqguN+dHkZgyQTV/7ykvobU7yEH5gKvreNrH4B6QgIg==}
+  '@next/env@15.5.11':
+    resolution: {integrity: sha512-g9s5SS9gC7GJCEOR3OV3zqs7C5VddqxP9X+/6BpMbdXRkqsWfFf2CJPBZNvNEtAkKTNuRgRXAgNxSAXzfLdaTg==}
 
   '@next/eslint-plugin-next@16.1.1':
     resolution: {integrity: sha512-Ovb/6TuLKbE1UiPcg0p39Ke3puyTCIKN9hGbNItmpQsp+WX3qrjO3WaMVSi6JHr9X1NrmthqIguVHodMJbh/dw==}
@@ -2957,6 +2957,9 @@ packages:
   '@octokit/webhooks@13.9.1':
     resolution: {integrity: sha512-Nss2b4Jyn4wB3EAqAPJypGuCJFalz/ZujKBQQ5934To7Xw9xjf4hkr/EAByxQY7hp7MKd790bWGz7XYSTsHmaw==}
     engines: {node: '>= 18'}
+
+  '@pantheon-systems/pcc-sdk-core@5.2.0':
+    resolution: {integrity: sha512-4LUuICvGtUlggbYySOXJKq2R+93Y3KtmiwvdjWswN/AaLDXfO0hWmJW177QeOjksfNCw14sS7cSItcWs8yhmBg==}
 
   '@pantheon-systems/pds-toolkit-react@1.0.0-dev.55':
     resolution: {integrity: sha512-xjXj7asV6oeTKiYQGkl0APX5fovjF1DDbSmD79p52S8jb+Mto1k9w//+aDg0yBjTKPwUi+NrHZ7FQ34uQlXmbQ==}
@@ -3593,7 +3596,7 @@ packages:
   '@storybook/nextjs@10.1.11':
     resolution: {integrity: sha512-nCetbwoEiHNOO7M+kteWcSNig35+j7JpEXstRBWY15YvcwGP6oR+9WdJWUmZb4XDYptceI/bSxAun82WCC3BqA==}
     peerDependencies:
-      next: 15.5.9
+      next: 15.5.11
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       storybook: ^10.1.11
@@ -4771,6 +4774,9 @@ packages:
 
   caniuse-lite@1.0.30001762:
     resolution: {integrity: sha512-PxZwGNvH7Ak8WX5iXzoK1KPZttBXNPuaOvI2ZYU7NrlM+d9Ov+TUvlLOBNGzVXAntMSMMlJPd+jY6ovrVjSmUw==}
+
+  caniuse-lite@1.0.30001766:
+    resolution: {integrity: sha512-4C0lfJ0/YPjJQHagaE9x2Elb69CIqEPZeG0anQt9SIvIoOH4a4uaRl73IavyO+0qZh6MDLH//DrXThEYKHkmYA==}
 
   case-sensitive-paths-webpack-plugin@2.4.0:
     resolution: {integrity: sha512-roIFONhcxog0JSSWbvVAh3OocukmSgpqOH6YpMkCvav/ySIV3JKg4Dc8vYtQjYi/UxpNE36r/9v+VqTQqgkYmw==}
@@ -7253,12 +7259,12 @@ packages:
   next-seo@5.15.0:
     resolution: {integrity: sha512-LGbcY91yDKGMb7YI+28n3g+RuChUkt6pXNpa8FkfKkEmNiJkeRDEXTnnjVtwT9FmMhG6NH8qwHTelGrlYm9rgg==}
     peerDependencies:
-      next: 15.5.9
+      next: 15.5.11
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
 
-  next@15.5.9:
-    resolution: {integrity: sha512-agNLK89seZEtC5zUHwtut0+tNrc0Xw4FT/Dg+B/VLEo9pAcS9rtTKpek3V6kVcVwsB2YlqMaHdfZL4eLEVYuCg==}
+  next@15.5.11:
+    resolution: {integrity: sha512-L2KPiKmqTDpRdeVDdPjhf43g2/VPe0NCNndq7OKDCgOLWtxe1kbr/zXGIZtYY7kZEAjRf7Bj/mwUFSr+tYC2Yg==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
     hasBin: true
     peerDependencies:
@@ -11450,7 +11456,7 @@ snapshots:
       '@tybys/wasm-util': 0.10.1
     optional: true
 
-  '@next/env@15.5.9': {}
+  '@next/env@15.5.11': {}
 
   '@next/eslint-plugin-next@16.1.1':
     dependencies:
@@ -11805,6 +11811,24 @@ snapshots:
       '@octokit/openapi-webhooks-types': 11.0.0
       '@octokit/request-error': 6.1.8
       '@octokit/webhooks-methods': 5.1.1
+
+  '@pantheon-systems/pcc-sdk-core@5.2.0(@types/react@19.1.8)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)':
+    dependencies:
+      '@apollo/client': 3.14.0(@types/react@19.1.8)(graphql-ws@5.16.2(graphql@16.12.0))(graphql@16.12.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+      axios: 1.13.2
+      graphql: 16.12.0
+      graphql-tag: 2.12.6(graphql@16.12.0)
+      graphql-ws: 5.16.2(graphql@16.12.0)
+      query-string: 8.2.0
+      typescript: 5.5.4
+      zod: 3.25.76
+      zod-validation-error: 1.5.0(zod@3.25.76)
+    transitivePeerDependencies:
+      - '@types/react'
+      - debug
+      - react
+      - react-dom
+      - subscriptions-transport-ws
 
   '@pantheon-systems/pds-toolkit-react@1.0.0-dev.55(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -12396,7 +12420,7 @@ snapshots:
       '@vitest/utils': 2.1.9
       storybook: 8.6.15(prettier@3.2.5)
 
-  '@storybook/nextjs@10.1.11(esbuild@0.25.12)(next@15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.97.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.97.2)(storybook@8.6.15(prettier@3.2.5))(type-fest@2.19.0)(typescript@5.5.4)(vite@7.1.11(@types/node@20.19.0)(jiti@2.6.1)(sass@1.97.2)(terser@5.44.1)(yaml@2.8.2))(webpack-hot-middleware@2.26.1)(webpack@5.104.1(esbuild@0.25.12))':
+  '@storybook/nextjs@10.1.11(esbuild@0.25.12)(next@15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.97.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.97.2)(storybook@8.6.15(prettier@3.2.5))(type-fest@2.19.0)(typescript@5.5.4)(vite@7.1.11(@types/node@20.19.0)(jiti@2.6.1)(sass@1.97.2)(terser@5.44.1)(yaml@2.8.2))(webpack-hot-middleware@2.26.1)(webpack@5.104.1(esbuild@0.25.12))':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.26.0)
@@ -12420,7 +12444,7 @@ snapshots:
       css-loader: 6.11.0(webpack@5.104.1(esbuild@0.25.12))
       image-size: 1.2.1
       loader-utils: 3.3.1
-      next: 15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.97.2)
+      next: 15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.97.2)
       node-polyfill-webpack-plugin: 2.0.1(webpack@5.104.1(esbuild@0.25.12))
       postcss: 8.5.6
       postcss-loader: 8.2.0(postcss@8.5.6)(typescript@5.5.4)(webpack@5.104.1(esbuild@0.25.12))
@@ -13883,6 +13907,8 @@ snapshots:
 
   caniuse-lite@1.0.30001762: {}
 
+  caniuse-lite@1.0.30001766: {}
+
   case-sensitive-paths-webpack-plugin@2.4.0: {}
 
   ccount@2.0.1: {}
@@ -14180,12 +14206,12 @@ snapshots:
 
   css-loader@6.11.0(webpack@5.104.1(esbuild@0.25.12)):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.4.35)
-      postcss: 8.4.35
-      postcss-modules-extract-imports: 3.1.0(postcss@8.4.35)
-      postcss-modules-local-by-default: 4.2.0(postcss@8.4.35)
-      postcss-modules-scope: 3.2.1(postcss@8.4.35)
-      postcss-modules-values: 4.0.0(postcss@8.4.35)
+      icss-utils: 5.1.0(postcss@8.5.6)
+      postcss: 8.5.6
+      postcss-modules-extract-imports: 3.1.0(postcss@8.5.6)
+      postcss-modules-local-by-default: 4.2.0(postcss@8.5.6)
+      postcss-modules-scope: 3.2.1(postcss@8.5.6)
+      postcss-modules-values: 4.0.0(postcss@8.5.6)
       postcss-value-parser: 4.2.0
       semver: 7.7.3
     optionalDependencies:
@@ -15881,6 +15907,10 @@ snapshots:
     dependencies:
       postcss: 8.4.35
 
+  icss-utils@5.1.0(postcss@8.5.6):
+    dependencies:
+      postcss: 8.5.6
+
   ieee754@1.2.1: {}
 
   ignore@5.3.2: {}
@@ -17187,23 +17217,23 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next-seo@5.15.0(next@15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2):
+  next-seo@5.15.0(next@15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2):
     dependencies:
-      next: 15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
+      next: 15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
       react: 19.1.2
       react-dom: 19.1.2(react@19.1.2)
 
-  next-seo@5.15.0(next@15.5.9(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2):
+  next-seo@5.15.0(next@15.5.11(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2):
     dependencies:
-      next: 15.5.9(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
+      next: 15.5.11(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2)
       react: 19.1.2
       react-dom: 19.1.2(react@19.1.2)
 
-  next@15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.97.2):
+  next@15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.97.2):
     dependencies:
-      '@next/env': 15.5.9
+      '@next/env': 15.5.11
       '@swc/helpers': 0.5.15
-      caniuse-lite: 1.0.30001762
+      caniuse-lite: 1.0.30001766
       postcss: 8.4.31
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -17224,11 +17254,11 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@15.5.9(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2):
+  next@15.5.11(@babel/core@7.26.0)(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2):
     dependencies:
-      '@next/env': 15.5.9
+      '@next/env': 15.5.11
       '@swc/helpers': 0.5.15
-      caniuse-lite: 1.0.30001762
+      caniuse-lite: 1.0.30001766
       postcss: 8.4.31
       react: 19.1.2
       react-dom: 19.1.2(react@19.1.2)
@@ -17249,11 +17279,11 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@15.5.9(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2):
+  next@15.5.11(@playwright/test@1.57.0)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.97.2):
     dependencies:
-      '@next/env': 15.5.9
+      '@next/env': 15.5.11
       '@swc/helpers': 0.5.15
-      caniuse-lite: 1.0.30001762
+      caniuse-lite: 1.0.30001766
       postcss: 8.4.31
       react: 19.1.2
       react-dom: 19.1.2(react@19.1.2)
@@ -17741,10 +17771,21 @@ snapshots:
     dependencies:
       postcss: 8.4.35
 
+  postcss-modules-extract-imports@3.1.0(postcss@8.5.6):
+    dependencies:
+      postcss: 8.5.6
+
   postcss-modules-local-by-default@4.2.0(postcss@8.4.35):
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.35)
       postcss: 8.4.35
+      postcss-selector-parser: 7.1.1
+      postcss-value-parser: 4.2.0
+
+  postcss-modules-local-by-default@4.2.0(postcss@8.5.6):
+    dependencies:
+      icss-utils: 5.1.0(postcss@8.5.6)
+      postcss: 8.5.6
       postcss-selector-parser: 7.1.1
       postcss-value-parser: 4.2.0
 
@@ -17753,10 +17794,20 @@ snapshots:
       postcss: 8.4.35
       postcss-selector-parser: 7.1.1
 
+  postcss-modules-scope@3.2.1(postcss@8.5.6):
+    dependencies:
+      postcss: 8.5.6
+      postcss-selector-parser: 7.1.1
+
   postcss-modules-values@4.0.0(postcss@8.4.35):
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.35)
       postcss: 8.4.35
+
+  postcss-modules-values@4.0.0(postcss@8.5.6):
+    dependencies:
+      icss-utils: 5.1.0(postcss@8.5.6)
+      postcss: 8.5.6
 
   postcss-nested@6.2.0(postcss@8.4.35):
     dependencies:
@@ -18253,7 +18304,7 @@ snapshots:
       adjust-sourcemap-loader: 4.0.0
       convert-source-map: 1.9.0
       loader-utils: 2.0.4
-      postcss: 8.4.35
+      postcss: 8.5.6
       source-map: 0.6.1
 
   resolve.exports@2.0.3: {}
@@ -18987,7 +19038,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  ts-jest@29.1.0(@babel/core@7.26.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(jest@29.5.0(@types/node@20.19.0))(typescript@5.5.4):
+  ts-jest@29.1.0(@babel/core@7.26.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(esbuild@0.27.2)(jest@29.5.0(@types/node@20.19.0))(typescript@5.5.4):
     dependencies:
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
@@ -19003,6 +19054,7 @@ snapshots:
       '@babel/core': 7.26.0
       '@jest/types': 29.6.3
       babel-jest: 29.7.0(@babel/core@7.26.0)
+      esbuild: 0.27.2
 
   tsconfig-paths-webpack-plugin@4.2.0:
     dependencies:

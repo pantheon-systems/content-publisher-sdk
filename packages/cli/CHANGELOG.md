@@ -1,4 +1,4 @@
-# @pantheon-systems/pcc-cli
+# @pantheon-systems/pcc-cpub
 
 ## 5.2.0
 

@@ -1,4 +1,4 @@
-import { ServersideSmartComponentMap } from "@pantheon-systems/pcc-react-sdk/components";
+import { ServersideSmartComponentMap } from "@pantheon-systems/cpub-react-sdk/components";
 
 const serverSmartComponentMap: ServersideSmartComponentMap = {
   LEAD_CAPTURE: {

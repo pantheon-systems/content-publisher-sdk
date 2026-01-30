@@ -2,7 +2,7 @@ import {
   Article,
   PCCConvenienceFunctions,
   Site,
-} from "@pantheon-systems/pcc-react-sdk";
+} from "@pantheon-systems/cpub-react-sdk";
 import { NextSeo } from "next-seo";
 import queryString from "query-string";
 import ArticleList from "../../../components/article-list";

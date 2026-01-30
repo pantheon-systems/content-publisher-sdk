@@ -1,6 +1,9 @@
 "use client";
 
-import { ArticleWithoutContent, markdownToText } from "@pantheon-systems/pcc-react-sdk";
+import {
+  ArticleWithoutContent,
+  markdownToText,
+} from "@pantheon-systems/cpub-react-sdk";
 import Link from "next/link";
 import { Fragment } from "react";
 import Skeleton from "react-loading-skeleton";

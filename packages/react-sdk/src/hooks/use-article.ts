@@ -5,8 +5,8 @@ import {
   buildContentType,
   generateArticleQuery,
   generateArticleUpdateSubscription,
-} from "@pantheon-systems/pcc-sdk-core";
-import { Article } from "@pantheon-systems/pcc-sdk-core/types";
+} from "@pantheon-systems/cpub-sdk-core";
+import { Article } from "@pantheon-systems/cpub-sdk-core/types";
 import { useEffect, useMemo } from "react";
 
 type Return = ReturnType<typeof useQuery<{ article: Article }>> & {

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { Article } from "@pantheon-systems/pcc-sdk-core/types";
+import { Article } from "@pantheon-systems/cpub-sdk-core/types";
 import { render } from "@testing-library/react";
 import { ArticleRenderer, getArticleTitle } from "../../src/components";
 import articleTabbedContent from "../data/article-tabbed-content.json";

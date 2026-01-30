@@ -1,13 +1,13 @@
 import {
   flattenDocumentTabs,
   type Article,
-} from "@pantheon-systems/pcc-sdk-core";
+} from "@pantheon-systems/cpub-sdk-core";
 import {
   PantheonTree,
   PantheonTreeNode,
   TabTree,
   TreePantheonContent,
-} from "@pantheon-systems/pcc-sdk-core/types";
+} from "@pantheon-systems/cpub-sdk-core/types";
 import _ from "lodash";
 
 export type RendererConfig = {

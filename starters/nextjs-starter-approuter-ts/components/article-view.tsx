@@ -1,8 +1,11 @@
 "use client";
 
-import { useArticle } from "@pantheon-systems/pcc-react-sdk";
-import type { Article, PublishingLevel } from "@pantheon-systems/pcc-react-sdk";
-import { ArticleRenderer } from "@pantheon-systems/pcc-react-sdk/components";
+import { useArticle } from "@pantheon-systems/cpub-react-sdk";
+import type {
+  Article,
+  PublishingLevel,
+} from "@pantheon-systems/cpub-react-sdk";
+import { ArticleRenderer } from "@pantheon-systems/cpub-react-sdk/components";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";

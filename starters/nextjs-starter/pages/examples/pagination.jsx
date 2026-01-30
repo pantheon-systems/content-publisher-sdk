@@ -1,4 +1,4 @@
-import { PCCConvenienceFunctions } from "@pantheon-systems/pcc-react-sdk";
+import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk";
 import { NextSeo } from "next-seo";
 import { ArticleGrid } from "../../components/grid";
 import Layout from "../../components/layout";

@@ -1,14 +1,12 @@
 import {
-  PantheonAPIOptions,
   getArticleURLFromSiteWithOptions,
-} from "@pantheon-systems/pcc-react-sdk/server";
+  PantheonAPIOptions,
+} from "@pantheon-systems/cpub-react-sdk/server";
 import { serverSmartComponentMap } from "../../../../components/smart-components/server-components";
 import {
   getAuthorById,
   listAuthors,
 } from "../../../../lib/pcc-metadata-groups";
-
-
 
 export const pantheonAPIOptions: PantheonAPIOptions = {
   resolvePath: getArticleURLFromSiteWithOptions({

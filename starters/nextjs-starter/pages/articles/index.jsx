@@ -1,4 +1,4 @@
-import { PCCConvenienceFunctions } from "@pantheon-systems/pcc-react-sdk";
+import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk";
 import { NextSeo } from "next-seo";
 import queryString from "query-string";
 import ArticleList from "../../components/article-list";

@@ -1,5 +1,5 @@
 import { Tooltip as BaseTooltip } from "@pantheon-systems/pds-toolkit-react";
-import { type InferSmartComponentProps } from "@pantheon-systems/pcc-sdk-core";
+import { type InferSmartComponentProps } from "@pantheon-systems/cpub-sdk-core";
 
 /**
  * A brief message to give more context to an elements

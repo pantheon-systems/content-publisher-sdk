@@ -1,5 +1,5 @@
 {
-  "name": "@pantheon-systems/pcc-cli",
+  "name": "@pantheon-systems/cpub",
   "author": "@pantheon-systems",
   "description": "Pantheon Content Publisher CLI",
   "version": "5.2.0",
@@ -7,6 +7,7 @@
   "license": "MIT",
   "keywords": [
     "pcc",
+    "cpub",
     "nextjs",
     "react",
     "pantheon"
@@ -16,7 +17,8 @@
     "url": "https://github.com/pantheon-systems/content-publisher-sdk"
   },
   "bin": {
-    "pcc": "./dist/index.js"
+    "pcc": "./dist/index.js",
+    "cpub": "./dist/index.js"
   },
   "files": [
     "dist",
@@ -40,7 +42,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@pantheon-systems/pcc-sdk-core": "workspace:*",
+    "@pantheon-systems/cpub-sdk-core": "workspace:*",
     "axios": "^1.12.2",
     "bluebird": "^3.7.2",
     "boxen": "^7.1.1",
