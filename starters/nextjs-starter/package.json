@@ -32,7 +32,7 @@
     "classnames": "2.5.1",
     "clsx": "2.1.1",
     "dotenv": "16.4.7",
-    "next": "15.5.9",
+    "next": "15.5.11",
     "next-seo": "5.15.0",
     "query-string": "8.2.0",
     "react": "19.1.2",
