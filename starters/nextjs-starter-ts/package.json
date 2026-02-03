@@ -54,7 +54,7 @@
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "5.1.1",
     "autoprefixer": "10.4.17",
-    "eslint": "9.39.2",
+    "eslint": "^9.39.2",
     "eslint-config-next": "16.1.6",
     "jsdom": "22.1.0",
     "postcss": "8.4.35",
@@ -62,14 +62,8 @@
     "tailwindcss": "3.4.1",
     "tailwindcss-animate": "1.0.7",
     "typescript": "5.5.4",
-    "vite": "7.1.11",
-    "vitest": "1.6.1",
-    "vitest-fetch-mock": "0.2.2"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "19.2.10",
-      "@types/react-dom": "19.2.3"
-    }
+    "vite": "^7.3.1",
+    "vitest": "^2.0.0",
+    "vitest-fetch-mock": "^0.4.5"
   }
 }
