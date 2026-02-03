@@ -3,6 +3,7 @@ yarn.lock
 yarn-error.log
 package-lock.json
 tsup.config.*.mjs
+*.tsbuildinfo
 
 .env.local
 .env.development

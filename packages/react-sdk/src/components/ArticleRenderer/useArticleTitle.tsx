@@ -1,9 +1,7 @@
 import { flattenDocumentTabs } from "@pantheon-systems/cpub-sdk-core";
 import {
   Article,
-  PantheonTree,
   PantheonTreeNode,
-  TabTree,
   TreePantheonContent,
 } from "@pantheon-systems/cpub-sdk-core/types";
 import _ from "lodash";
@@ -23,7 +21,7 @@ export function getArticleTitle(article: Article | undefined): string | null {
   const jsonContent =
     typeof article.resolvedContent === "string"
       ? JSON.parse(article.resolvedContent)
-      : (article.resolvedContent as PantheonTree | TabTree<PantheonTree>[]);
+      : article.resolvedContent;
 
   const content: Array<PantheonTreeNode> = Array.isArray(jsonContent)
     ? _.flatMap(jsonContent, flattenDocumentTabs)

@@ -22,13 +22,15 @@ const ELEMENT_STYLES_TO_OVERRIDE = [
   /lineHeight/,
   /height/,
 ];
-const overrideElementStyles = (tag: keyof HTMLElementTagNameMap) => {
+function overrideElementStyles<T extends keyof React.JSX.IntrinsicElements>(
+  tag: T,
+) {
   function resultFunc({
     children,
     id,
     style,
     ...attrs
-  }: React.HTMLAttributes<HTMLElement>) {
+  }: React.JSX.IntrinsicElements[T] & { node?: unknown }) {
     const newStyles = { ...style };
     ELEMENT_STYLES_TO_OVERRIDE.forEach((s) => {
       Object.keys(newStyles).forEach((key) => {
@@ -42,7 +44,7 @@ const overrideElementStyles = (tag: keyof HTMLElementTagNameMap) => {
     );
   }
   return resultFunc;
-};
+}
 
 type ArticleViewProps = {
   article: Article;
@@ -188,13 +190,13 @@ export function StaticArticleView({
       <div className="border-base-300 mt-16 flex w-full flex-wrap gap-x-3 gap-y-3 border-t-[1px] pt-9 lg:mt-32">
         {seoMetadata.keywords && Array.isArray(seoMetadata.keywords)
           ? seoMetadata.keywords.map((x, i) => (
-              <div
-                key={i}
-                className="text-bold text-neutral-content inline-block rounded-full border border-[#D4D4D4] bg-[#F5F5F5] px-3 py-1 text-sm !no-underline"
-              >
-                {x}
-              </div>
-            ))
+            <div
+              key={i}
+              className="text-bold text-neutral-content inline-block rounded-full border border-[#D4D4D4] bg-[#F5F5F5] px-3 py-1 text-sm !no-underline"
+            >
+              {x}
+            </div>
+          ))
           : null}
       </div>
     </div>
