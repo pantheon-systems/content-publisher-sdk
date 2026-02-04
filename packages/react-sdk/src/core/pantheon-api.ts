@@ -13,24 +13,51 @@ export interface AppRouterContext {
   >;
 }
 
-type Handler = {
-  // In Pages routing, req and res are NextApiRequest and NextApiResponse
-  (req: NextApiRequest, res: NextApiResponse): Promise<unknown>;
-  // App Router has a slightly different approach.
-  (
-    request: NextRequest,
-    context: AppRouterContext,
-  ): void | Response | Promise<void | Response>;
-};
+/**
+ * Minimal request shape for App Router. Uses structural typing so the consumer's
+ * NextRequest (from their `next` version) is assignable without version conflicts.
+ */
+export interface AppRouterRequestLike {
+  nextUrl: { searchParams: URLSearchParams };
+  headers: Headers & { forEach(cb: (value: string, key: string) => void): void };
+  cookies: { getAll(): Array<{ name: string; value: string }> };
+}
 
-export function NextPantheonAPI(options?: PantheonAPIOptions) {
+/** App Router route handler type for Next.js 15+ (params is a Promise). */
+export type AppRouterRouteHandler = (
+  request: AppRouterRequestLike,
+  context: AppRouterContext,
+) => void | Response | Promise<void | Response>;
+
+/**
+ * Unified handler type: one function works for both Pages API and App Router.
+ * Uses union params so it's assignable to (NextApiRequest, NextApiResponse) and
+ * to (NextRequest, AppRouterContext) without breaking either consumer.
+ * Return type is narrowed so App Router route handlers accept it.
+ */
+type UnifiedHandler = (
+  req: NextApiRequest | AppRouterRequestLike,
+  resOrContext: NextApiResponse | AppRouterContext,
+) => void | Response | Promise<void | Response>;
+
+/**
+ * Optional: returns the same handler typed as AppRouterRouteHandler for App Router route.ts.
+ * Use PantheonAPI for both Pages and App Router; use this only if you want narrower types.
+ */
+export function PantheonAPIAppRouter(
+  options?: PantheonAPIOptions,
+): AppRouterRouteHandler {
+  return NextPantheonAPI(options) as AppRouterRouteHandler;
+}
+
+export function NextPantheonAPI(options?: PantheonAPIOptions): UnifiedHandler {
   const api = PantheonAPI(options);
 
-  const handler: Handler = async (req, res) => {
-    if (isPagesRouterResponse(res)) {
+  const handler: UnifiedHandler = async (req, resOrContext) => {
+    if (isPagesRouterResponse(resOrContext)) {
       // Pages router
       const nextReq = req as NextApiRequest;
-      const nextRes = res as NextApiResponse;
+      const nextRes = resOrContext as NextApiResponse;
       const command = nextReq.query.command?.toString();
 
       // Handle status requests here
@@ -44,22 +71,23 @@ export function NextPantheonAPI(options?: PantheonAPIOptions) {
       }
 
       // Non-status flows: pass through to core
-      return void (await api.handler(
+      await api.handler(
         nextReq as NextApiRequest,
         nextRes as NextApiResponse,
-      ));
+      );
+      return;
     }
 
     // App router
-    const context = res as { params: Promise<{ command: string | string[] }> };
+    const context = resOrContext as { params: Promise<{ command: string | string[] }> };
     const nextReq = req as NextRequest;
     const params = await context.params;
     const command =
       params.command != null && Array.isArray(params.command)
         ? params.command[0]
         : params.command ||
-          nextReq.nextUrl.searchParams.get("command") ||
-          undefined;
+        nextReq.nextUrl.searchParams.get("command") ||
+        undefined;
 
     // Handle status requests here
     if (command === "status" && typeof api.buildStatus === "function") {
@@ -133,7 +161,7 @@ function buildPlatformDiagnostics(
 ) {
   const runtime =
     typeof (globalThis as unknown as { EdgeRuntime?: unknown }).EdgeRuntime !==
-    "undefined"
+      "undefined"
       ? "edge"
       : "node";
 
