@@ -17,8 +17,9 @@ describe("hasConfiguredPantheonClient", () => {
         active: [],
       },
     };
+
     expect(pantheonAPIOptions.resolvePath).toBeDefined();
-    expect(pantheonAPIOptions.resolvePath!({ id: "123" }, site)).toBe(
+    expect(pantheonAPIOptions.resolvePath?.({ id: "123" }, site)).toBe(
       "/articles/123",
     );
   });
@@ -37,7 +38,7 @@ describe("hasConfiguredPantheonClient", () => {
     };
     expect(pantheonAPIOptions.resolvePath).toBeDefined();
     expect(
-      pantheonAPIOptions.resolvePath!(
+      pantheonAPIOptions.resolvePath?.(
         { id: "123", slug: "foo-bar-slug", publishingLevel: "PRODUCTION" },
         site,
       ),
