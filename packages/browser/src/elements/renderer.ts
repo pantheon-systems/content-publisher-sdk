@@ -39,11 +39,8 @@ export function renderArticleToElement(
           | TabTree<PantheonTree>[])
       : article.resolvedContent;
 
-  const content: Array<PantheonTreeNode> = Array.isArray(jsonContent)
-    ? _.flatMap(
-        jsonContent as Array<TabTree<PantheonTree>>,
-        flattenDocumentTabs,
-      )
+  const content: PantheonTreeNode[] = Array.isArray(jsonContent)
+    ? _.flatMap(jsonContent as TabTree<PantheonTree>[], flattenDocumentTabs)
     : jsonContent.children;
 
   // Parent node to be added to the DOM
