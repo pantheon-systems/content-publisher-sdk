@@ -19,7 +19,9 @@ export interface AppRouterContext {
  */
 export interface AppRouterRequestLike {
   nextUrl: { searchParams: URLSearchParams };
-  headers: Headers & { forEach(cb: (value: string, key: string) => void): void };
+  headers: Headers & {
+    forEach(cb: (value: string, key: string) => void): void;
+  };
   cookies: { getAll(): Array<{ name: string; value: string }> };
 }
 
@@ -71,23 +73,22 @@ export function NextPantheonAPI(options?: PantheonAPIOptions): UnifiedHandler {
       }
 
       // Non-status flows: pass through to core
-      await api.handler(
-        nextReq as NextApiRequest,
-        nextRes as NextApiResponse,
-      );
+      await api.handler(nextReq as NextApiRequest, nextRes as NextApiResponse);
       return;
     }
 
     // App router
-    const context = resOrContext as { params: Promise<{ command: string | string[] }> };
+    const context = resOrContext as {
+      params: Promise<{ command: string | string[] }>;
+    };
     const nextReq = req as NextRequest;
     const params = await context.params;
     const command =
       params.command != null && Array.isArray(params.command)
         ? params.command[0]
         : params.command ||
-        nextReq.nextUrl.searchParams.get("command") ||
-        undefined;
+          nextReq.nextUrl.searchParams.get("command") ||
+          undefined;
 
     // Handle status requests here
     if (command === "status" && typeof api.buildStatus === "function") {
@@ -161,7 +162,7 @@ function buildPlatformDiagnostics(
 ) {
   const runtime =
     typeof (globalThis as unknown as { EdgeRuntime?: unknown }).EdgeRuntime !==
-      "undefined"
+    "undefined"
       ? "edge"
       : "node";
 
