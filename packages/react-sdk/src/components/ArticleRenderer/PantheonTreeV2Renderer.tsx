@@ -67,12 +67,12 @@ const PantheonTreeRenderer = ({
 
       return disableDefaultErrorBoundaries
         ? React.createElement(
-          component.reactComponent,
-          element.attrs as Record<string, unknown>,
-        )
+            component.reactComponent,
+            element.attrs as Record<string, unknown>,
+          )
         : withSmartComponentErrorBoundary(component.reactComponent)(
-          element.attrs as Record<string, unknown>,
-        );
+            element.attrs as Record<string, unknown>,
+          );
     }
   }
 
