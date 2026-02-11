@@ -3,8 +3,8 @@ import ReactMarkdown, { ExtraProps } from "react-markdown";
 import { Components } from "react-markdown/lib";
 import rehypeRaw from "rehype-raw";
 import remarkHeaderId from "remark-heading-id";
+import type { Parent } from "unist";
 import { visit } from "unist-util-visit";
-import type { UnistParent } from "unist-util-visit/lib";
 import type { ComponentMap, SmartComponentMap } from ".";
 import { CDNDomains } from "../../utils/cdn-domains";
 import { withSmartComponentErrorBoundary } from "./SmartComponentErrorBoundary";
@@ -113,7 +113,7 @@ function isomorphicBase64Decode(str: string): Record<string, unknown> {
  * to fix hydration errors from the component being nested in an invalid parent.
  */
 function fixComponentParentRehypePlugin() {
-  return (tree: UnistParent) => {
+  return (tree: Parent) => {
     visit(
       tree,
       { type: "element", tagName: "pcc-component" },
@@ -121,11 +121,9 @@ function fixComponentParentRehypePlugin() {
         if (
           parent &&
           "tagName" in parent &&
-          // @ts-expect-error TODO: Type this properly
-          parent.tagName !== "div"
+          (parent as { tagName?: string }).tagName !== "div"
         ) {
-          // @ts-expect-error TODO: Type this properly
-          parent.tagName = "div";
+          (parent as { tagName?: string }).tagName = "div";
         }
       },
     );
@@ -138,10 +136,10 @@ function fixComponentParentRehypePlugin() {
 function overrideCDNUrls(cdnURLOverride?: string | ((url: string) => string)) {
   // If cdnURLOverride is not provided, return a no-op transformer:
   if (!cdnURLOverride) {
-    return () => (tree: UnistParent) => tree;
+    return () => (tree: Parent) => tree;
   }
 
-  return () => (tree: UnistParent) => {
+  return () => (tree: Parent) => {
     visit(
       tree,
       "element",
