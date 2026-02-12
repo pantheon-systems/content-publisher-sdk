@@ -1,5 +1,6 @@
 import { markdownToText } from "@pantheon-systems/cpub-react-sdk";
-import { NextSeo } from "next-seo";
+import Head from "next/head";
+import { generateNextSeo } from "next-seo/pages";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
@@ -34,12 +35,14 @@ export default function Search() {
 
   return (
     <Layout>
-      <NextSeo
-        title={searchString ? `Search results for "${searchString}"` : "Search"}
-        description={
-          searchString ? `Search results for "${searchString}"` : "Search"
-        }
-      />
+      <Head>
+        {generateNextSeo({
+          title: searchString ? `Search results for "${searchString}"` : "Search",
+          description: searchString
+            ? `Search results for "${searchString}"`
+            : "Search",
+        })}
+      </Head>
 
       <section className="max-w-screen-3xl mx-auto px-4 pt-16 sm:w-4/5 md:w-3/4 lg:w-4/5 2xl:w-3/4">
         <PageHeader title="Search results" />

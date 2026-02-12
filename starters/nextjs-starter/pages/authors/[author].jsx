@@ -1,5 +1,6 @@
 import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk";
-import { NextSeo } from "next-seo";
+import Head from "next/head";
+import { generateNextSeo } from "next-seo/pages";
 import Image from "next/image";
 import {
   FaFacebookSquare,
@@ -42,7 +43,7 @@ export default function ArticlesListTemplate({
 }) {
   return (
     <Layout>
-      <NextSeo title="Articles" description="Articles" />
+      <Head>{generateNextSeo({ title: "Articles", description: "Articles" })}</Head>
 
       <ArticleList
         articles={articles}

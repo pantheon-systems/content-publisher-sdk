@@ -33,7 +33,7 @@
     "clsx": "2.1.1",
     "dotenv": "16.4.7",
     "next": "16.1.6",
-    "next-seo": "5.15.0",
+    "next-seo": "7.1.0",
     "query-string": "8.2.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",

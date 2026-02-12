@@ -1,4 +1,5 @@
-import { NextSeo } from "next-seo";
+import Head from "next/head";
+import { generateNextSeo } from "next-seo/pages";
 import Link from "next/link";
 import Layout from "../../components/layout";
 import PageHeader from "../../components/page-header";
@@ -6,7 +7,7 @@ import PageHeader from "../../components/page-header";
 export default function ExamplesPageTemplate() {
   return (
     <Layout>
-      <NextSeo title="Examples" description="Examples" />
+      <Head>{generateNextSeo({ title: "Examples", description: "Examples" })}</Head>
 
       <section className="max-w-screen-3xl mx-auto px-4 pt-16 sm:w-4/5 md:w-3/4 lg:w-4/5 2xl:w-3/4">
         <PageHeader title="Examples" />
