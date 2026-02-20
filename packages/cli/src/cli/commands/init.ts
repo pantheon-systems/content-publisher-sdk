@@ -297,7 +297,7 @@ export const INIT_EXAMPLES = [
   },
   {
     description:
-      "Create project and provide collection ID (SITE_ID)to pre-populate .env file with",
+      "Create project and provide collection ID (SITE_ID) to pre-populate .env file with",
     command: "cpub init new_proj --site-id 123456789example1234",
   },
 ];
