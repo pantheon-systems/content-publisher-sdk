@@ -196,7 +196,7 @@ const init = async ({
       {
         type: "confirm",
         name: "createNewApiKey",
-        message: "Create a new AccessToken?",
+        message: "Create a new access token?",
       },
     ]);
 
