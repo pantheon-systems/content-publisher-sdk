@@ -66,7 +66,7 @@ const init = async ({
   if (!dirName) {
     logger.error(
       chalk.red(
-        "ERROR: Please enter valid directory name. Check pcc init --help for more details.",
+        "ERROR: Please enter valid directory name. Check cpub init --help for more details.",
       ),
     );
     exit(1);
@@ -168,7 +168,7 @@ const init = async ({
         {
           type: "confirm",
           name: "chooseSite",
-          message: "Pick site now?",
+          message: "Pick collection now?",
         },
       ]);
 
@@ -187,7 +187,7 @@ const init = async ({
             .split(" (")[1]
             .replace(")", "");
         } else {
-          new SpinnerLogger("", silentLogs).fail("No sites found.");
+          new SpinnerLogger("", silentLogs).fail("No collections found.");
         }
       }
     }
@@ -196,7 +196,7 @@ const init = async ({
       {
         type: "confirm",
         name: "createNewApiKey",
-        message: "Create a new Token?",
+        message: "Create a new AccessToken?",
       },
     ]);
 
@@ -281,23 +281,23 @@ export default errorHandler<{
 export const INIT_EXAMPLES = [
   {
     description: "Create project with nextjs template",
-    command: "pcc init new_proj",
+    command: "cpub init new_proj",
   },
   {
     description: "Create project using pnpm package manager",
-    command: "pcc init new_proj --use-pnpm",
+    command: "cpub init new_proj --use-pnpm",
   },
   {
     description: "Create Typescript project and setup ESLint in it",
-    command: "pcc init new_proj --ts --eslint",
+    command: "cpub init new_proj --ts --eslint",
   },
   {
     description: "Create project without installing dependencies",
-    command: "pcc init new_proj --noInstall",
+    command: "cpub init new_proj --noInstall",
   },
   {
     description:
-      "Create project and provide site ID to pre-populate .env file with",
-    command: "pcc init new_proj --site-id 123456789example1234",
+      "Create project and provide collection ID (SITE_ID)to pre-populate .env file with",
+    command: "cpub init new_proj --site-id 123456789example1234",
   },
 ];
