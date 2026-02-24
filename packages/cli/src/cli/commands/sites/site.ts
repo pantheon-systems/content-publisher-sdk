@@ -17,7 +17,7 @@ export const createSite = errorHandler<{ url: string; accountEmail: string }>(
     } catch (e) {
       if (e instanceof IncorrectAccount) {
         spinner.fail(
-          "Given `accountEmail` is not connected to your user. Please connect an account first using  `pcc account connect` command.",
+          "Given `accountEmail` is not connected to your user. Please connect an account first using  `cpub account connect` command.",
         );
         return;
       }
@@ -49,7 +49,7 @@ export const listSites = errorHandler<{
     const accounts = await AddOnApiHelper.listAccounts();
     if (accounts.length === 0) {
       spinner.fail(
-        "You don't have any connected accounts. Please connect at least one account using `pcc account connect` command.",
+        "You don't have any connected accounts. Please connect at least one account using `cpub account connect` command.",
       );
       return;
     }
