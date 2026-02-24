@@ -27,24 +27,24 @@ const PantheonTreeRenderer = ({
   renderImageCaptions,
   cdnURLOverride,
 }: Props): React.ReactElement | null => {
-  const children =
-    element.children?.map((child, idx) =>
-      React.createElement(PantheonTreeRenderer, {
-        key: idx,
-        element: {
-          ...child,
-          prevNode: element.children[idx - 1],
-          nextNode: element.children[idx + 1],
-        },
-        smartComponentMap,
-        componentMap,
-        disableAllStyles,
-        preserveImageStyles,
-        disableDefaultErrorBoundaries,
-        renderImageCaptions,
-        cdnURLOverride,
-      }),
-    ) ?? [];
+  const elementChildren = element.children ?? [];
+  const children = elementChildren.map((child, idx) =>
+    React.createElement(PantheonTreeRenderer, {
+      key: idx,
+      element: {
+        ...child,
+        prevNode: elementChildren[idx - 1] ?? null,
+        nextNode: elementChildren[idx + 1] ?? null,
+      },
+      smartComponentMap,
+      componentMap,
+      disableAllStyles,
+      preserveImageStyles,
+      disableDefaultErrorBoundaries,
+      renderImageCaptions,
+      cdnURLOverride,
+    }),
+  );
 
   if (element.tag === "component") {
     const componentType = element.type?.toUpperCase();
@@ -101,7 +101,7 @@ const PantheonTreeRenderer = ({
     ? undefined
     : getStyleObjectFromString(element?.style);
 
-  if (isImageContainer(element) && children.length === 1) {
+  if (isImageContainer(element) && children.length === 1 && element.children) {
     targetingClasses.push("pantheon-img-container");
 
     if (styleObject?.float === "left") {
@@ -123,40 +123,43 @@ const PantheonTreeRenderer = ({
 
     const imageChild = isOldImageContainer(element)
       ? element.children[0]
-      : element.children[0].children[0];
-    const imageTitle = imageChild.attrs?.title?.trim();
+      : element.children[0].children?.[0];
 
-    if (imageChild.attrs.src && cdnURLOverride) {
-      try {
-        const srcUrl = new URL(imageChild.attrs.src);
+    if (imageChild) {
+      const imageTitle = imageChild.attrs?.title?.trim();
 
-        if (CDNDomains.includes(srcUrl.hostname)) {
-          if (typeof cdnURLOverride === "function") {
-            imageChild.attrs.src = cdnURLOverride(srcUrl.toString());
-          } else {
-            srcUrl.hostname = cdnURLOverride;
-            imageChild.attrs.src = srcUrl.toString();
+      if (imageChild.attrs.src && cdnURLOverride) {
+        try {
+          const srcUrl = new URL(imageChild.attrs.src);
+
+          if (CDNDomains.includes(srcUrl.hostname)) {
+            if (typeof cdnURLOverride === "function") {
+              imageChild.attrs.src = cdnURLOverride(srcUrl.toString());
+            } else {
+              srcUrl.hostname = cdnURLOverride;
+              imageChild.attrs.src = srcUrl.toString();
+            }
           }
+        } catch {
+          // If it's not a valid URL (or cannot be parsed), leave it unchanged.
         }
-      } catch {
-        // If it's not a valid URL (or cannot be parsed), leave it unchanged.
       }
-    }
 
-    if (renderImageCaptions !== false && imageTitle?.length) {
-      nodeChildren.push(
-        <span
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            fontSize: ".75rem",
-          }}
-          className="pantheon-caption"
-        >
-          {imageTitle}
-        </span>,
-      );
+      if (renderImageCaptions !== false && imageTitle?.length) {
+        nodeChildren.push(
+          <span
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              fontSize: ".75rem",
+            }}
+            className="pantheon-caption"
+          >
+            {imageTitle}
+          </span>,
+        );
+      }
     }
   }
 
@@ -178,8 +181,8 @@ const PantheonTreeRenderer = ({
 function isOldImageContainer(element: PantheonTreeNode<string>) {
   return (
     element.tag === "span" &&
-    element.children?.[0].tag === "img" &&
-    element.children.length === 1
+    element.children?.[0]?.tag === "img" &&
+    element.children?.length === 1
   );
 }
 
@@ -187,10 +190,10 @@ function isImageContainer(element: PantheonTreeNode<string>) {
   return (
     element.tag === "span" &&
     (isOldImageContainer(element) ||
-      (element.children?.[0].tag === "span" &&
-        element.children.length === 1 &&
-        element.children?.[0].children?.[0].tag === "img" &&
-        element.children[0].children?.length === 1))
+      (element.children?.[0]?.tag === "span" &&
+        element.children?.length === 1 &&
+        element.children?.[0]?.children?.[0]?.tag === "img" &&
+        element.children?.[0]?.children?.length === 1))
   );
 }
 
