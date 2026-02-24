@@ -141,7 +141,7 @@ export interface PantheonTreeNode<T extends "component" | string = string> {
   parentNode: PantheonTreeNode | null;
   prevNode: PantheonTreeNode | null;
   nextNode: PantheonTreeNode | null;
-  children: PantheonTreeNode[];
+  children: PantheonTreeNode[] | null | undefined;
   data: string | null;
   style: string[] | null;
   attrs: Attrs;
