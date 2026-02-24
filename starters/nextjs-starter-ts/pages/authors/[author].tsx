@@ -3,7 +3,8 @@ import {
   PCCConvenienceFunctions,
   Site,
 } from "@pantheon-systems/cpub-react-sdk";
-import { NextSeo } from "next-seo";
+import Head from "next/head";
+import { generateNextSeo } from "next-seo/pages";
 import Image from "next/image";
 import queryString from "query-string";
 import {
@@ -53,7 +54,7 @@ export default function ArticlesListTemplate({
 }) {
   return (
     <Layout>
-      <NextSeo title="Articles" description="Articles" />
+      <Head>{generateNextSeo({ title: "Articles", description: "Articles" })}</Head>
 
       <ArticleList
         articles={articles}

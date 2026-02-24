@@ -1,5 +1,6 @@
 import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk";
-import { NextSeo } from "next-seo";
+import Head from "next/head";
+import { generateNextSeo } from "next-seo/pages";
 import { ArticleGrid } from "../../../components/grid";
 import Layout from "../../../components/layout";
 import PageHeader from "../../../components/page-header";
@@ -25,10 +26,12 @@ export default function SSGISRExampleTemplate({
   });
   return (
     <Layout>
-      <NextSeo
-        title="SSG and ISR Example"
-        description="Example of using SSG and ISR"
-      />
+      <Head>
+        {generateNextSeo({
+          title: "SSG and ISR Example",
+          description: "Example of using SSG and ISR",
+        })}
+      </Head>
       <section className="max-w-screen-3xl mx-auto px-4 pt-16 sm:w-4/5 md:w-3/4 lg:w-4/5 2xl:w-3/4">
         <PageHeader title="SSG and ISR Example" />
         <div className="prose lg:prose-xl my-10 flex flex-col">

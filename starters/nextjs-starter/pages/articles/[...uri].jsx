@@ -3,7 +3,8 @@ import {
   PCCConvenienceFunctions,
 } from "@pantheon-systems/cpub-react-sdk";
 import { getArticlePathComponentsFromContentStructure } from "@pantheon-systems/cpub-react-sdk/server";
-import { NextSeo } from "next-seo";
+import { generateNextSeo } from "next-seo/pages";
+import Head from "next/head";
 import queryString from "query-string";
 import ArticleView from "../../components/article-view";
 import Layout from "../../components/layout";
@@ -26,11 +27,13 @@ export default function ArticlePage({
       })}
     >
       <Layout>
-        <NextSeo
-          title={seoMetadata.title}
-          description={seoMetadata.description}
-          openGraph={seoMetadata.openGraph}
-        />
+        <Head>
+          {generateNextSeo({
+            title: seoMetadata.title,
+            description: seoMetadata.description,
+            openGraph: seoMetadata.openGraph,
+          })}
+        </Head>
 
         <div className="prose mx-4 mt-16 text-black sm:mx-6 md:mx-auto">
           <ArticleView

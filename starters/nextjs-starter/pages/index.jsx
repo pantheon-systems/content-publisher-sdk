@@ -1,5 +1,6 @@
 import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk";
-import { NextSeo } from "next-seo";
+import Head from "next/head";
+import { generateNextSeo } from "next-seo/pages";
 import Image from "next/image";
 import Link from "next/link";
 import { HomepageArticleGrid } from "../components/grid";
@@ -9,10 +10,13 @@ import { Button } from "../components/ui/button";
 export default function Home({ articles, site }) {
   return (
     <Layout>
-      <NextSeo
-        title="Pantheon Content Publisher Next.js Starter"
-        description="A starter kit for building a Next.js site with Pantheon Content Publisher."
-      />
+      <Head>
+        {generateNextSeo({
+          title: "Pantheon Content Publisher Next.js Starter",
+          description:
+            "A starter kit for building a Next.js site with Pantheon Content Publisher.",
+        })}
+      </Head>
 
       <section className="bg-neutral-100">
         <div className="max-w-screen-3xl 3xl:px-12 mx-auto flex flex-col py-0 xl:flex-row xl:items-center xl:gap-[139px]">
