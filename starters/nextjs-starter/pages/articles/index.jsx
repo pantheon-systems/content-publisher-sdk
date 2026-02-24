@@ -1,5 +1,6 @@
 import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk";
-import { NextSeo } from "next-seo";
+import Head from "next/head";
+import { generateNextSeo } from "next-seo/pages";
 import queryString from "query-string";
 import ArticleList from "../../components/article-list";
 import Layout from "../../components/layout";
@@ -25,7 +26,7 @@ async function fetchNextPages(cursor) {
 export default function ArticlesListTemplate({ articles, totalCount, cursor }) {
   return (
     <Layout>
-      <NextSeo title="Articles" description="Articles" />
+      <Head>{generateNextSeo({ title: "Articles", description: "Articles" })}</Head>
 
       <ArticleList
         headerText="Articles"

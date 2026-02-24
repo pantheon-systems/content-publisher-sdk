@@ -3,7 +3,8 @@ import {
   PCCConvenienceFunctions,
   Site,
 } from "@pantheon-systems/cpub-react-sdk";
-import { NextSeo } from "next-seo";
+import Head from "next/head";
+import { generateNextSeo } from "next-seo/pages";
 import queryString from "query-string";
 import ArticleList from "../../../components/article-list";
 import Layout from "../../../components/layout";
@@ -41,10 +42,12 @@ export default function SSGISRExampleTemplate({
 }: Props) {
   return (
     <Layout>
-      <NextSeo
-        title="SSG and ISR Example"
-        description="Example of using SSG and ISR"
-      />
+      <Head>
+        {generateNextSeo({
+          title: "SSG and ISR Example",
+          description: "Example of using SSG and ISR",
+        })}
+      </Head>
       <ArticleList
         headerText={"SSG and ISR Example"}
         articles={articles}

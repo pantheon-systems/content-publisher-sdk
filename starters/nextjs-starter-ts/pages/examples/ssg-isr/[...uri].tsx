@@ -4,7 +4,8 @@ import {
 } from "@pantheon-systems/cpub-react-sdk";
 import { getArticlePathComponentsFromContentStructure } from "@pantheon-systems/cpub-react-sdk/server";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { NextSeo } from "next-seo";
+import Head from "next/head";
+import { generateNextSeo } from "next-seo/pages";
 import { useSearchParams } from "next/navigation";
 import { StaticArticleView } from "../../../components/article-view";
 import Layout from "../../../components/layout";
@@ -20,11 +21,13 @@ export default function ArticlePage({ article }: ArticlePageProps) {
 
   return (
     <Layout>
-      <NextSeo
-        title={seoMetadata.title || undefined}
-        description={seoMetadata.description}
-        openGraph={seoMetadata.openGraph}
-      />
+      <Head>
+        {generateNextSeo({
+          title: seoMetadata.title || undefined,
+          description: seoMetadata.description,
+          openGraph: seoMetadata.openGraph,
+        })}
+      </Head>
 
       <div className="prose mx-4 mt-16 text-black sm:mx-6 md:mx-auto">
         <StaticArticleView
