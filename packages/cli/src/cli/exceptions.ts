@@ -11,7 +11,7 @@ export class UnhandledError extends Error {
 
 export class UserNotLoggedIn extends Error {
   constructor() {
-    super("Please login user using `pcc login` command");
+    super("Please login user using `cpub login` command");
     this.name = this.constructor.name;
   }
 }
@@ -40,7 +40,7 @@ export function errorHandler<T>(
 
       if (e instanceof UserNotLoggedIn) {
         console.log(chalk.red("\nError: User is not logged in."));
-        console.log(chalk.yellow('\nPlease run "pcc login" to login.'));
+        console.log(chalk.yellow('\nPlease run "cpub login" to login.'));
       } else {
         if (
           axios.isAxiosError(e) &&

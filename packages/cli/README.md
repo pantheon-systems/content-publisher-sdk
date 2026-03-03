@@ -26,43 +26,43 @@ yarn add @pantheon-systems/cpub-cli --global
 
 ```bash
 # Login the user
-$ pcc login
+$ cpub login
 
 # Create project with nextjs template
-$ pcc init new_proj
+$ cpub init new_proj
 
 # Create project using pnpm package manager
-$ pcc init new_proj --use-pnpm
+$ cpub init new_proj --use-pnpm
 
 # Create Typescript project and setup ESLint in it
-$ pcc init new_proj --ts --eslint
+$ cpub init new_proj --ts --eslint
 
 # Create project without installing dependencies
-$ pcc init new_proj --noInstall
+$ cpub init new_proj --noInstall
 
 # Create project and provide site ID to pre-populate .env file with
-$ pcc init new_proj --site-id 123456789example1234
+$ cpub init new_proj --site-id 123456789example1234
 
 # Create new token
-$ pcc token create
+$ cpub token create
 
 # Create new site
-$ pcc site create --url test-site.com
+$ cpub site create --url test-site.com
 
 # Get webhooks event delivery logs for a site ID
-$ pcc site webhooks history 123456789example1234
+$ cpub site webhooks history 123456789example1234
 
 # Generate preview link for given document ID
-$ pcc document preview 1234567890example1234567890exam_ple123456789
+$ cpub document preview 1234567890example1234567890exam_ple123456789
 
 # Generate preview link for given document URL
-$ pcc document preview https://docs.google.com/document/d/1234567890example1234567890exam_ple123456789
+$ cpub document preview https://docs.google.com/document/d/1234567890example1234567890exam_ple123456789
 
 # Get details of logged-in user
-$ pcc whoami
+$ cpub whoami
 
 # Logout the user
-$ pcc logout
+$ cpub logout
 
 ```
 

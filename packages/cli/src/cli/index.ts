@@ -70,7 +70,7 @@ const configureMiddleware = (func: () => void) => {
 const LONG_LIVED_COMMANDS = ["site webhooks history"];
 
 yargs(hideBin(process.argv))
-  .scriptName("pcc")
+  .scriptName("cpub")
   .usage("$0 <cmd>")
   .middleware(configureMiddleware(checkUpdate))
   .middleware(configureMiddleware(checkEnvironment))
@@ -800,14 +800,14 @@ yargs(hideBin(process.argv))
   )
   .command(
     "import",
-    "Imports posts from a Drupal JSON API endpoint into PCC",
+    "Imports posts from a Drupal JSON API endpoint into Content Publisher",
     (yargs) => {
       yargs
         .strictCommands()
         .demandCommand()
         .command(
           "drupal <baseUrl> <siteId>",
-          "Imports all articles from a Drupal JSON API endpoint into a new Google Drive folder and connects them to a target PCC collection",
+          "Imports all articles from a Drupal JSON API endpoint into a new Google Drive folder and connects them to a target Content Publisher collection",
           (yargs) => {
             yargs
               .strictCommands()
@@ -844,7 +844,7 @@ yargs(hideBin(process.argv))
         )
         .command(
           "wordpress <baseUrl> <siteId>",
-          "Imports all articles from a WordPress site into a new Google Drive folder and connects them to a target PCC collection",
+          "Imports all articles from a WordPress site into a new Google Drive folder and connects them to a target Content Publisher collection",
           (yargs) => {
             yargs
               .strictCommands()
