@@ -74,14 +74,14 @@ export function convertSearchParamsToGQL(
   const convertedObject: ConvertedArticleSearchArgs = {
     body: searchParams.bodyContains
       ? {
-          contains: searchParams.bodyContains,
-        }
+        contains: searchParams.bodyContains,
+      }
       : undefined,
     tags: searchParams.tags,
     title: searchParams.titleContains
       ? {
-          contains: searchParams.titleContains,
-        }
+        contains: searchParams.titleContains,
+      }
       : undefined,
     publishStatus: searchParams.publishStatus,
   };
@@ -143,12 +143,12 @@ export async function getPaginatedArticles(
       fetchNextPage:
         pageInfo.nextCursor && articles.length > 0
           ? () =>
-              getPaginatedArticles(
-                client,
-                { ...args, cursor: pageInfo.nextCursor },
-                searchParams,
-                includeContent,
-              )
+            getPaginatedArticles(
+              client,
+              { ...args, cursor: pageInfo.nextCursor },
+              searchParams,
+              includeContent,
+            )
           : fetchEmptyPage(pageInfo.totalCount, pageInfo.nextCursor),
     };
   } catch (e) {
@@ -301,9 +301,9 @@ export async function getArticleBySlugOrId(
         e.message !== "No document matching this slug was found." &&
         e.message !== "No document matching this ID was found." &&
         e.graphQLErrors[0]?.message !==
-          "No document matching this ID was found." &&
+        "No document matching this ID was found." &&
         e.graphQLErrors[0]?.message !==
-          "No document matching this slug was found.")
+        "No document matching this slug was found.")
     ) {
       handleApolloError(e);
     }
@@ -481,9 +481,13 @@ export function getArticleURLFromSite(
   basePath = "/articles",
   maxDepth = -1,
 ) {
+  const identifier =
+    article.publishingLevel === "PRODUCTION"
+      ? article.slug || article.id
+      : article.id;
+
   if (!site) {
-    // If the site is undefined, return the base path - basePath/<slug-or-id>
-    return `${basePath}/${article.slug || article.id}`;
+    return `${basePath}/${identifier}`;
   }
   // Get the article path
   const articlePath = getArticlePathComponentsFromContentStructure(
@@ -495,11 +499,6 @@ export function getArticleURLFromSite(
     articlePath,
     maxDepth,
   );
-
-  const identifier =
-    article.publishingLevel === "PRODUCTION"
-      ? article.slug || article.id
-      : article.id;
 
   // Add the basePath before the articlePath and the article slug or id at the end
   if (relevantArticlePath.length > 0) {
