@@ -44,6 +44,11 @@
       "types": "./dist/server/index.d.ts",
       "require": "./dist/server/index.js",
       "import": "./dist/server/index.mjs"
+    },
+    "./testing": {
+      "types": "./dist/testing/vitest-setup.d.ts",
+      "require": "./dist/testing/vitest-setup.js",
+      "import": "./dist/testing/vitest-setup.mjs"
     }
   },
   "typesVersions": {
@@ -53,6 +58,9 @@
       ],
       "components": [
         "./dist/components/index.d.ts"
+      ],
+      "testing": [
+        "./dist/testing/vitest-setup.d.ts"
       ]
     }
   },
@@ -96,6 +104,7 @@
     "ts-jest": "29.1.0",
     "tsup": "^8.2.4",
     "typescript": "^5.5.4",
+    "vitest": "^4.0.0",
     "yargs": "^17.7.2"
   },
   "peerDependencies": {

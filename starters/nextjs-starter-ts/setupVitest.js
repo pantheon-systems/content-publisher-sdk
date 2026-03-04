@@ -1,8 +1,4 @@
-//setupVitest.js or similar file
-import createFetchMock from "vitest-fetch-mock";
-import { vi } from "vitest";
+// Setup Vitest with fetch mock from React SDK
+import { setupFetchMock } from "@pantheon-systems/cpub-react-sdk/testing";
 
-const fetchMocker = createFetchMock(vi);
-
-// sets globalThis.fetch and globalThis.fetchMock to our mocked version
-fetchMocker.enableMocks();
+setupFetchMock();
