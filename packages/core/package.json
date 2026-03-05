@@ -2,7 +2,7 @@
   "name": "@pantheon-systems/cpub-sdk-core",
   "author": "@pantheon-systems",
   "description": "Pantheon Content Publisher SDK Core",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
