@@ -154,4 +154,51 @@ describe("Article URL generation from Site content structure", () => {
     const articleURL2 = getArticleURLFromSite(article, site, basePath, 1);
     expect(articleURL2).toBe(`${basePath}/bar/my-article`);
   });
+
+  it("should use slug for PRODUCTION articles when site is undefined", () => {
+    const article = {
+      id: "test-article-123",
+      slug: "my-article",
+      publishingLevel: "PRODUCTION",
+    } as const;
+
+    const articleURL = getArticleURLFromSite(article, undefined);
+
+    expect(articleURL).toBe("/articles/my-article");
+  });
+
+  it("should use ID for DRAFT articles when site is undefined", () => {
+    const article = {
+      id: "test-article-123",
+      slug: "my-article",
+      publishingLevel: "DRAFT",
+    } as const;
+
+    const articleURL = getArticleURLFromSite(article, undefined);
+
+    expect(articleURL).toBe("/articles/test-article-123");
+  });
+
+  it("should use ID for REALTIME articles when site is undefined", () => {
+    const article = {
+      id: "test-article-123",
+      slug: "my-article",
+      publishingLevel: "REALTIME",
+    } as const;
+
+    const articleURL = getArticleURLFromSite(article, undefined);
+
+    expect(articleURL).toBe("/articles/test-article-123");
+  });
+
+  it("should use ID when article has no slug and site is undefined", () => {
+    const article = {
+      id: "test-article-123",
+      publishingLevel: "PRODUCTION",
+    } as const;
+
+    const articleURL = getArticleURLFromSite(article, undefined);
+
+    expect(articleURL).toBe("/articles/test-article-123");
+  });
 });
