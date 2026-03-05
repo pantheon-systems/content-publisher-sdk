@@ -481,9 +481,13 @@ export function getArticleURLFromSite(
   basePath = "/articles",
   maxDepth = -1,
 ) {
+  const identifier =
+    article.publishingLevel === "PRODUCTION"
+      ? article.slug || article.id
+      : article.id;
+
   if (!site) {
-    // If the site is undefined, return the base path - basePath/<slug-or-id>
-    return `${basePath}/${article.slug || article.id}`;
+    return `${basePath}/${identifier}`;
   }
   // Get the article path
   const articlePath = getArticlePathComponentsFromContentStructure(
@@ -495,11 +499,6 @@ export function getArticleURLFromSite(
     articlePath,
     maxDepth,
   );
-
-  const identifier =
-    article.publishingLevel === "PRODUCTION"
-      ? article.slug || article.id
-      : article.id;
 
   // Add the basePath before the articlePath and the article slug or id at the end
   if (relevantArticlePath.length > 0) {
