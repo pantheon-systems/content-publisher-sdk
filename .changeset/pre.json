@@ -1,0 +1,21 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "eslint-config-pcc-custom": "1.0.0",
+    "testpages": "0.1.0",
+    "@pantheon-systems/cpub-browser-sdk": "5.2.0",
+    "@pantheon-systems/cpub-cli": "5.2.0",
+    "@pantheon-systems/cpub-sdk-core": "5.2.0",
+    "@pantheon-systems/cpub-react-sample-library": "5.2.0",
+    "@pantheon-systems/cpub-react-sdk": "5.2.0",
+    "@pantheon-systems/pcc-vue-sdk": "3.13.1",
+    "@pantheon-systems/next-cpub-starter": "1.0.0",
+    "@pantheon-systems/next-approuter-cpub-starter-ts": "1.2.4",
+    "@pantheon-systems/next-cpub-starter-ts": "1.0.0"
+  },
+  "changesets": [
+    "kind-coats-swim",
+    "modern-nights-glow"
+  ]
+}

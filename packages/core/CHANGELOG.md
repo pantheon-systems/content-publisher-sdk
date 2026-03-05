@@ -1,5 +1,13 @@
 # @pantheon-systems/pcc-sdk-core
 
+## 5.2.1-beta.0
+
+### Patch Changes
+
+- 494ced2: Cover edge case of empty children array during article rendering.
+- 71b2d51: The SDK should redirect draft articles to a URL with their id, not
+  slug.
+
 ## 5.2.0
 
 ### Patch Changes
