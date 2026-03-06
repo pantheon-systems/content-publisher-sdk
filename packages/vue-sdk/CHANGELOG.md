@@ -1,5 +1,7 @@
 # @pantheon-systems/pcc-vue-sdk
 
+## 3.13.2
+
 ## 3.13.1
 
 ### Minor Changes

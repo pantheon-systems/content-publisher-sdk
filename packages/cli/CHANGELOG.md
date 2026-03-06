@@ -1,5 +1,13 @@
 # @pantheon-systems/pcc-cpub
 
+## 5.2.1
+
+### Patch Changes
+
+- Updated dependencies [494ced2]
+- Updated dependencies [71b2d51]
+  - @pantheon-systems/cpub-sdk-core@5.2.1
+
 ## 5.2.1-beta.0
 
 ### Patch Changes
