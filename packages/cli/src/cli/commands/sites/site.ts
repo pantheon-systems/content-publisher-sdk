@@ -114,6 +114,12 @@ export const updateSiteConfig = errorHandler(
     const spinner = ora("Updating site...").start();
 
     try {
+      const site = await AddOnApiHelper.getSite(id);
+      if (site.__isPlayground) {
+        spinner.fail("Cannot configure a playground collection.");
+        return;
+      }
+
       await AddOnApiHelper.updateSiteConfig(id, configurableProperties);
       spinner.succeed(`Successfully updated the site.`);
     } catch (e) {
