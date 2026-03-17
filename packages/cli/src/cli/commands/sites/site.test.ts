@@ -1,3 +1,6 @@
+import AddOnApiHelper from "../../../lib/addonApiHelper";
+import { updateSiteConfig } from "./site";
+
 jest.mock("../../../lib/addonApiHelper", () => ({
   __esModule: true,
   default: {
@@ -15,9 +18,6 @@ jest.mock("ora", () => {
   };
   return jest.fn(() => spinner);
 });
-
-import AddOnApiHelper from "../../../lib/addonApiHelper";
-import { updateSiteConfig } from "./site";
 
 const mockedGetSite = AddOnApiHelper.getSite as jest.MockedFunction<
   typeof AddOnApiHelper.getSite
@@ -53,7 +53,7 @@ describe("updateSiteConfig playground restrictions", () => {
       __isPlayground: false,
       accessorAccount: "test@test.com",
     });
-    mockedUpdateSiteConfig.mockResolvedValue(undefined as any);
+    mockedUpdateSiteConfig.mockResolvedValue(undefined);
 
     await updateSiteConfig({ id: "regular-1", url: "https://new-url.com" });
 
