@@ -15,14 +15,14 @@ type ApiConfig = {
 
 const apiConfigMap: { [key in TargetEnvironment]: ApiConfig } = {
   [TargetEnvironment.production]: {
-    addOnApiEndpoint: "https://addonapi-gfttxsojwq-uc.a.run.app",
+    addOnApiEndpoint: "https://api.content.pantheon.io",
     googleClientId:
       "432998952749-6eurouamlt7mvacb6u4e913m3kg4774c.apps.googleusercontent.com",
     googleRedirectUri: "http://localhost:3030/oauth-redirect",
     playgroundUrl: "https://live-collabcms-fe-demo.appa.pantheon.site",
   },
   [TargetEnvironment.staging]: {
-    addOnApiEndpoint: "https://addonapi-cxog5ytt4a-uc.a.run.app",
+    addOnApiEndpoint: "https://api.staging.content.pantheon.io",
     googleClientId:
       "142470191541-bmomms4luuhoc68g903rscgr9qa3150b.apps.googleusercontent.com",
     googleRedirectUri: "http://localhost:3030/oauth-redirect",
@@ -40,9 +40,9 @@ export const getApiConfig = async () => {
   const config = await getConfigDetails();
   const apiConfig =
     apiConfigMap[
-      config?.targetEnvironment ||
-        (process.env.NODE_ENV as TargetEnvironment) ||
-        "production"
+    config?.targetEnvironment ||
+    (process.env.NODE_ENV as TargetEnvironment) ||
+    "production"
     ];
 
   return {
