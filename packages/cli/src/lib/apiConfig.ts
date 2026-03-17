@@ -40,9 +40,9 @@ export const getApiConfig = async () => {
   const config = await getConfigDetails();
   const apiConfig =
     apiConfigMap[
-    config?.targetEnvironment ||
-    (process.env.NODE_ENV as TargetEnvironment) ||
-    "production"
+      config?.targetEnvironment ||
+        (process.env.NODE_ENV as TargetEnvironment) ||
+        "production"
     ];
 
   return {
