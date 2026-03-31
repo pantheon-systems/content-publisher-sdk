@@ -11,7 +11,7 @@
   "dependencies": {
     "@pantheon-systems/cpub-browser-sdk": "workspace:*",
     "@pantheon-systems/cpub-react-sample-library": "workspace:*",
-    "next": "16.1.7",
+    "next": "16.2.1",
     "react": "19.1.2",
     "react-dom": "19.1.2"
   },
