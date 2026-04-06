@@ -75,7 +75,7 @@ export default function ArticleList({
           fetcher(pageCursor)
             .then(({ data, newCursor }) => {
               if (data?.length) {
-                setAllArticles((v) => [...v, ...data] as any[]);
+                setAllArticles((v) => [...v, ...data] as (PaginatedArticle | ArticleWithoutContent)[]);
               }
 
               setPageCursor(newCursor);

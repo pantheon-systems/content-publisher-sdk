@@ -9,7 +9,6 @@ function TileCoverImage({
   imageAltText,
 }: TileCoverImageProps) {
   return imageSrc != null ? (
-    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={imageSrc}
       alt={imageAltText}

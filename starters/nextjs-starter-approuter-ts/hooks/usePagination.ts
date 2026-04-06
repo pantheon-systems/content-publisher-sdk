@@ -35,7 +35,6 @@ export function usePagination({ cursor, initialArticles, fetcher }: Props) {
       });
       setCurrentCursor(newCursor);
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   return {

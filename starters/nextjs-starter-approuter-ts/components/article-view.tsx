@@ -25,7 +25,7 @@ const ELEMENT_STYLES_TO_OVERRIDE = [
 ];
 
 const overrideElementStyles = (tag: keyof HTMLElementTagNameMap) => {
-  function resultFunc({ children, id, style, ...attrs }: any) {
+  function resultFunc({ children, id, style, ...attrs }: { children?: React.ReactNode; id?: string; style?: Record<string, string>; [key: string]: unknown }) {
     const newStyles = { ...style };
 
     ELEMENT_STYLES_TO_OVERRIDE.forEach((s) => {
