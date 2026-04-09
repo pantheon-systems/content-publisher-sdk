@@ -73,7 +73,7 @@ export async function generateStaticParams() {
     PCCConvenienceFunctions.getSite(),
   ]);
 
-  return publishedArticles.flatMap((article) => {
+  const params = publishedArticles.flatMap((article) => {
     // Generate the article path from the contnet structure
     const articlePath = getArticlePathComponentsFromContentStructure(
       article,
@@ -95,4 +95,12 @@ export async function generateStaticParams() {
     }
     return params;
   });
+
+  // Next.js 16 with Cache Components requires generateStaticParams to return
+  // at least one result for build-time validation.
+  if (params.length === 0) {
+    return [{ uri: ["placeholder"] }];
+  }
+
+  return params;
 }
