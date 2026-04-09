@@ -1,4 +1,5 @@
 import { createCacheHandler } from "@pantheon-systems/nextjs-cache-handler";
+import { createUseCacheHandler } from "@pantheon-systems/nextjs-cache-handler/use-cache";
 import type {
   CacheContext,
   FileSystemCacheContext,
@@ -207,5 +208,37 @@ describe("cacheHandler", () => {
     expect(nextConfig.cacheHandler).toBeDefined();
     expect(nextConfig.cacheHandler).toContain("cacheHandler.mjs");
     expect(nextConfig.cacheMaxMemorySize).toBe(0);
+  });
+
+  it("next.config.js has cacheHandlers configured for 'use cache' directive", () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const nextConfig = require("../next.config.js");
+    expect(nextConfig.cacheHandlers).toBeDefined();
+    expect(nextConfig.cacheHandlers.default).toBeDefined();
+    expect(nextConfig.cacheHandlers.default).toContain(
+      "useCacheHandler.mjs",
+    );
+  });
+
+  it("next.config.js has cacheComponents enabled", () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const nextConfig = require("../next.config.js");
+    expect(nextConfig.cacheComponents).toBe(true);
+  });
+});
+
+describe("useCacheHandler", () => {
+  it("createUseCacheHandler returns a handler with the expected interface", () => {
+    const UseCacheHandler = createUseCacheHandler({ type: "file" });
+    expect(UseCacheHandler).toBeDefined();
+    expect(UseCacheHandler.prototype.get).toBeTypeOf("function");
+    expect(UseCacheHandler.prototype.set).toBeTypeOf("function");
+  });
+
+  it("auto mode returns file handler when CACHE_BUCKET is not set", () => {
+    delete process.env.CACHE_BUCKET;
+    const UseCacheHandler = createUseCacheHandler({ type: "auto" });
+    expect(UseCacheHandler).toBeDefined();
+    expect(UseCacheHandler.prototype.get).toBeTypeOf("function");
   });
 });

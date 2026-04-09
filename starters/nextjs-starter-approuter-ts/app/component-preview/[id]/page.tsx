@@ -1,16 +1,19 @@
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { clientSmartComponentMap } from "../../../components/smart-components/client-components";
 
-export default async function ComponentPreviewPage(props: {
+async function PreviewContent({
+  params,
+  searchParams,
+}: {
   params: Promise<{ id: string }>;
   searchParams: Promise<{ attrs: string }>;
 }) {
-  const searchParams = await props.searchParams;
+  const resolvedSearchParams = await searchParams;
+  const { attrs } = resolvedSearchParams;
 
-  const { attrs } = searchParams;
-
-  const params = await props.params;
-  if (!params.id) {
+  const resolvedParams = await params;
+  if (!resolvedParams.id) {
     return notFound();
   }
 
@@ -20,7 +23,7 @@ export default async function ComponentPreviewPage(props: {
       : {};
 
   const SmartComponent =
-    clientSmartComponentMap[params.id?.toString()]?.reactComponent;
+    clientSmartComponentMap[resolvedParams.id?.toString()]?.reactComponent;
 
   return (
     <div>
@@ -32,5 +35,16 @@ export default async function ComponentPreviewPage(props: {
         <div>Component not found</div>
       )}
     </div>
+  );
+}
+
+export default function ComponentPreviewPage(props: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ attrs: string }>;
+}) {
+  return (
+    <Suspense>
+      <PreviewContent params={props.params} searchParams={props.searchParams} />
+    </Suspense>
   );
 }
