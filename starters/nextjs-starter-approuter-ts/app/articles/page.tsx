@@ -1,9 +1,8 @@
 import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
+import { Suspense } from "react";
 import ArticleList from "../../components/article-list";
 import Layout from "../../components/layout";
 import { PAGE_SIZE } from "../../constants";
-
-export const dynamic = "force-dynamic";
 
 async function fetchNextPages(cursor?: string | null | undefined) {
   "use server";
@@ -18,7 +17,7 @@ async function fetchNextPages(cursor?: string | null | undefined) {
   };
 }
 
-export default async function ArticlesListTemplate() {
+async function ArticlesContent() {
   // Fetch the articles and site in parallel
   const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
     PCCConvenienceFunctions.getPaginatedArticles({
@@ -28,15 +27,23 @@ export default async function ArticlesListTemplate() {
   ]);
 
   return (
+    <ArticleList
+      headerText="Articles"
+      articles={articles}
+      cursor={cursor}
+      totalCount={totalCount}
+      fetcher={fetchNextPages}
+      site={site}
+    />
+  );
+}
+
+export default function ArticlesListTemplate() {
+  return (
     <Layout>
-      <ArticleList
-        headerText="Articles"
-        articles={articles}
-        cursor={cursor}
-        totalCount={totalCount}
-        fetcher={fetchNextPages}
-        site={site}
-      />
+      <Suspense>
+        <ArticlesContent />
+      </Suspense>
     </Layout>
   );
 }

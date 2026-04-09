@@ -25,8 +25,9 @@ const ELEMENT_STYLES_TO_OVERRIDE = [
 ];
 
 const overrideElementStyles = (tag: keyof HTMLElementTagNameMap) => {
-  function resultFunc({ children, id, style, ...attrs }: any) {
-    const newStyles = { ...style };
+  function resultFunc(props: React.HTMLAttributes<HTMLElement> & React.ClassAttributes<HTMLElement>) {
+    const { children, id, style, ...attrs } = props;
+    const newStyles: Record<string, unknown> = { ...style };
 
     ELEMENT_STYLES_TO_OVERRIDE.forEach((s) => {
       Object.keys(newStyles).forEach((key) => {
@@ -36,7 +37,7 @@ const overrideElementStyles = (tag: keyof HTMLElementTagNameMap) => {
 
     return React.createElement(
       tag,
-      { id, style: newStyles, ...attrs },
+      { id, style: newStyles as React.CSSProperties, ...attrs },
       children,
     );
   }

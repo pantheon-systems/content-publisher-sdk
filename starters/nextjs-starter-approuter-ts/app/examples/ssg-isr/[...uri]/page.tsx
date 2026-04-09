@@ -4,20 +4,24 @@ import {
 } from "@pantheon-systems/cpub-react-sdk/server";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { StaticArticleView } from "../../../../components/article-view";
 import Layout from "../../../../components/layout";
+import { SkeletonArticleView } from "../../../../components/skeleton-article-view";
 import { getSeoMetadata } from "../../../../lib/utils";
 
 interface ArticlePageProps {
   params: Promise<{ uri: string[]; tabId: string }>;
 }
 
-export const revalidate = 21600; // revalidate every 6 hours
-
-export default async function ArticlePage(props: ArticlePageProps) {
-  const params = await props.params;
+async function ArticleContent({
+  params,
+}: {
+  params: Promise<{ uri: string[]; tabId: string }>;
+}) {
+  const resolvedParams = await params;
   const article = await PCCConvenienceFunctions.getArticleBySlugOrId(
-    params.uri[params.uri.length - 1],
+    resolvedParams.uri[resolvedParams.uri.length - 1],
   );
 
   if (!article) {
@@ -25,9 +29,20 @@ export default async function ArticlePage(props: ArticlePageProps) {
   }
 
   return (
+    <StaticArticleView
+      article={article}
+      tabId={resolvedParams.tabId}
+    />
+  );
+}
+
+export default function ArticlePage(props: ArticlePageProps) {
+  return (
     <Layout>
       <div className="prose mx-4 mt-16 text-black sm:mx-6 md:mx-auto">
-        <StaticArticleView article={article} tabId={params.tabId} />
+        <Suspense fallback={<SkeletonArticleView />}>
+          <ArticleContent params={props.params} />
+        </Suspense>
       </div>
     </Layout>
   );
@@ -58,7 +73,7 @@ export async function generateStaticParams() {
     PCCConvenienceFunctions.getSite(),
   ]);
 
-  return publishedArticles.flatMap((article) => {
+  const params = publishedArticles.flatMap((article) => {
     // Generate the article path from the contnet structure
     const articlePath = getArticlePathComponentsFromContentStructure(
       article,
@@ -80,4 +95,12 @@ export async function generateStaticParams() {
     }
     return params;
   });
+
+  // Next.js 16 with Cache Components requires generateStaticParams to return
+  // at least one result for build-time validation.
+  if (params.length === 0) {
+    return [{ uri: ["placeholder"] }];
+  }
+
+  return params;
 }
