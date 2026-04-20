@@ -3,7 +3,6 @@ import {
   existsSync,
   openSync,
   readFileSync,
-  rmdirSync,
   rmSync,
   writeFileSync,
 } from "fs";
@@ -274,7 +273,7 @@ export default errorHandler<{
   const { dirName } = args;
 
   if (existsSync(dirName)) {
-    rmdirSync(dirName, { recursive: true });
+    rmSync(dirName, { recursive: true, force: true });
   }
 });
 

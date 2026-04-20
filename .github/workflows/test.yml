@@ -11,7 +11,7 @@ on:
 
 jobs:
   test:
-    name: "${{ matrix.os }}, Shell: ${{ matrix.shell }}"
+    name: "${{ matrix.os }}, Shell: ${{ matrix.shell }}, Node: ${{ matrix.node-version }}"
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -21,10 +21,16 @@ jobs:
         include:
           - os: ubuntu-latest
             shell: bash
+            node-version: 20
+          - os: ubuntu-latest
+            shell: bash
+            node-version: 25
           - os: windows-latest
             shell: powershell
+            node-version: 20
           - os: windows-latest
             shell: cmd
+            node-version: 20
     env:
       PCC_SITE_ID: ${{ secrets.PCC_SITE_ID }}
       PCC_TOKEN: ${{ secrets.PCC_TOKEN }}
@@ -40,7 +46,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
-          node-version: 20
+          node-version: ${{ matrix.node-version }}
           cache: "pnpm"
 
       - name: Install dependencies
