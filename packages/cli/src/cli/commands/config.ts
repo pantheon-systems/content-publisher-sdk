@@ -1,11 +1,8 @@
 import { exit } from "process";
-import nunjucks from "nunjucks";
 import ora from "ora";
 import { getApiConfig } from "../../lib/apiConfig";
 import * as LocalStorage from "../../lib/localStorage";
 import { errorHandler } from "../exceptions";
-
-nunjucks.configure({ autoescape: true });
 
 export const setTargetEnvironment = errorHandler<string>(
   async (target: string) => {

@@ -8,7 +8,7 @@ import {
   UserNotLoggedIn,
 } from "../cli/exceptions";
 import { getApiConfig } from "./apiConfig";
-import { Auth0Provider, GoogleAuthProvider, PersistedTokens } from "./auth";
+import { Auth0Provider, PersistedTokens } from "./auth";
 import { toKebabCase } from "./utils";
 
 interface Auth0Config {
@@ -50,22 +50,31 @@ class AddOnApiHelper {
 
     throw new UserNotLoggedIn();
   }
-  static async getGoogleTokens(args: {
-    email: string;
-    scopes?: string[];
-  }): Promise<PersistedTokens> {
-    const { scopes, email } = args || {};
-    const provider = new GoogleAuthProvider(scopes);
-    let tokens = await provider.getTokens(email);
-    if (tokens) return tokens;
+  static async getAccessTokenForAccount(
+    accountId: string,
+  ): Promise<{ accessToken: string; expiresAt: string }> {
+    const { access_token: auth0AccessToken } = await this.getAuth0Tokens();
+    const resp = await axios.get(
+      `${(await getApiConfig()).ACCOUNT_ENDPOINT}/${accountId}/get-access-token`,
+      {
+        headers: {
+          Authorization: `Bearer ${auth0AccessToken}`,
+        },
+      },
+    );
+    return resp.data as { accessToken: string; expiresAt: string };
+  }
 
-    // Login user if token is not found
-    ora().clear();
-    await provider.login(email);
-    tokens = await provider.getTokens(email);
-    if (tokens) return tokens;
-
-    throw new UserNotLoggedIn();
+  static async getConnectedAccountAccessToken(email: string): Promise<string> {
+    const accounts = await this.listAccounts();
+    const account = accounts.find((a) => a.accountEmail === email);
+    if (!account) {
+      throw new Error(
+        `No connected account found for ${email}. Please run 'cpub account connect' first.`,
+      );
+    }
+    const { accessToken } = await this.getAccessTokenForAccount(account.id);
+    return accessToken;
   }
 
   static async getDocumentWithAuth0(
@@ -93,35 +102,18 @@ class AddOnApiHelper {
 
     return resp.data as Article;
   }
-  static async getDocumentWithGoogle(
+  static async getDocument(
     documentId: string,
-    accountEmail: string,
     insertIfMissing = false,
     withSiteData = false,
     title?: string,
   ): Promise<Article> {
-    const { access_token: accessToken, id_token: idToken } =
-      await this.getGoogleTokens({
-        email: accountEmail,
-      });
-    const resp = await axios.get(
-      `${(await getApiConfig()).DOCUMENT_ENDPOINT}/${documentId}`,
-      {
-        params: {
-          withSiteData: withSiteData ? "true" : "false",
-          ...(insertIfMissing && { insertIfMissing }),
-          ...(title && {
-            withMetadata: { title, slug: toKebabCase(title) },
-          }),
-        },
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-          "oauth-token": accessToken,
-        },
-      },
+    return this.getDocumentWithAuth0(
+      documentId,
+      insertIfMissing,
+      withSiteData,
+      title,
     );
-
-    return resp.data as Article;
   }
 
   static async addSiteMetadataField(
@@ -162,9 +154,6 @@ class AddOnApiHelper {
     verbose?: boolean,
   ): Promise<Article> {
     const { access_token: auth0AccessToken } = await this.getAuth0Tokens();
-    const { access_token: googleAccessToken } = await this.getGoogleTokens({
-      email: site.accessorAccount,
-    });
 
     if (verbose) {
       console.log("update document", {
@@ -189,7 +178,6 @@ class AddOnApiHelper {
       {
         headers: {
           Authorization: `Bearer ${auth0AccessToken}`,
-          "oauth-token": googleAccessToken,
           "Content-Type": "application/json",
         },
       },
@@ -198,12 +186,8 @@ class AddOnApiHelper {
     return resp.data as Article;
   }
 
-  static async publishDocument(documentId: string, accessorAccount: string) {
+  static async publishDocument(documentId: string) {
     const { access_token: auth0AccessToken } = await this.getAuth0Tokens();
-    const { access_token: googleAccessToken } = await this.getGoogleTokens({
-      scopes: ["https://www.googleapis.com/auth/drive.file"],
-      email: accessorAccount,
-    });
 
     const resp = await axios.post<{ url: string }>(
       `${(await getApiConfig()).DOCUMENT_ENDPOINT}/${documentId}/publish`,
@@ -212,7 +196,6 @@ class AddOnApiHelper {
         headers: {
           Authorization: `Bearer ${auth0AccessToken}`,
           "Content-Type": "application/json",
-          "oauth-token": googleAccessToken,
         },
       },
     );
@@ -239,14 +222,6 @@ class AddOnApiHelper {
     },
   ): Promise<string> {
     const { access_token: auth0AccessToken } = await this.getAuth0Tokens();
-    const {
-      site: { accessorAccount },
-    } = await this.getDocumentWithAuth0(docId, false, true);
-
-    const { access_token: googleAccessToken } = await this.getGoogleTokens({
-      scopes: ["https://www.googleapis.com/auth/drive"],
-      email: accessorAccount,
-    });
 
     const resp = await axios.post<{ url: string }>(
       `${(await getApiConfig()).DOCUMENT_ENDPOINT}/${docId}/preview`,
@@ -257,14 +232,11 @@ class AddOnApiHelper {
         headers: {
           Authorization: `Bearer ${auth0AccessToken}`,
           "Content-Type": "application/json",
-          "oauth-token": googleAccessToken,
         },
       },
     );
 
-    const previewURL = resp.data.url;
-
-    return previewURL;
+    return resp.data.url;
   }
 
   static async createApiKey({
@@ -284,22 +256,6 @@ class AddOnApiHelper {
       },
     );
     return resp.data.apiKey as string;
-  }
-
-  static async connectAccount(oauthToken: string): Promise<Account> {
-    const { access_token: accessToken } = await this.getAuth0Tokens();
-    const resp = await axios.post(
-      (await getApiConfig()).ACCOUNT_ENDPOINT,
-      null,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "oauth-token": oauthToken,
-        },
-      },
-    );
-
-    return resp.data as Account;
   }
 
   static async listAccounts(): Promise<Account[]> {

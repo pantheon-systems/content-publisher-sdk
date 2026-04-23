@@ -18,6 +18,7 @@ declare type Account = {
   name: string;
   accountEmail: string;
   userEmail: string;
+  accountProvider?: string;
   created: string;
 };
 

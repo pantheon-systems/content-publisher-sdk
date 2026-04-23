@@ -39,16 +39,14 @@ export const importFromMarkdown = errorHandler<MarkdownImportParams>(
     // Get site details
     const site = await AddOnApiHelper.getSite(siteId);
 
-    // Check user has required permission to create drive file
-    const tokens = await AddOnApiHelper.getGoogleTokens({
-      scopes: ["https://www.googleapis.com/auth/drive"],
-      email: site.accessorAccount,
-    });
+    const accessToken = await AddOnApiHelper.getConnectedAccountAccessToken(
+      site.accessorAccount,
+    );
 
     // Create Google Doc
     const spinner = ora("Creating document on the Google Drive...").start();
 
-    const drive = getAuthedDrive(tokens);
+    const drive = getAuthedDrive(accessToken);
 
     const converter = new showdown.Converter();
     const html = converter.makeHtml(content);
@@ -84,27 +82,15 @@ export const importFromMarkdown = errorHandler<MarkdownImportParams>(
     }
 
     // Create Content Publisher document
-    await AddOnApiHelper.getDocumentWithGoogle(
-      fileId,
-      site.accessorAccount,
-      true,
-      false,
-      title,
-    );
+    await AddOnApiHelper.getDocument(fileId, true, false, title);
     // Cannot set metadataFields(title,slug) in the same request since we reset metadataFields
     //  when changing the siteId.
     await AddOnApiHelper.updateDocument(fileId, site, title, [], null, verbose);
-    await AddOnApiHelper.getDocumentWithGoogle(
-      fileId,
-      site.accessorAccount,
-      false,
-      false,
-      title,
-    );
+    await AddOnApiHelper.getDocument(fileId, false, false, title);
 
     // Publish Content Publisher document
     if (publish) {
-      await AddOnApiHelper.publishDocument(fileId, site.accessorAccount);
+      await AddOnApiHelper.publishDocument(fileId);
     }
     spinner.succeed(
       `Successfully created document at below path${
