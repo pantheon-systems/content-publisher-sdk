@@ -154,6 +154,9 @@ class AddOnApiHelper {
     verbose?: boolean,
   ): Promise<Article> {
     const { access_token: auth0AccessToken } = await this.getAuth0Tokens();
+    const connectedAccountToken = await this.getConnectedAccountAccessToken(
+      site.accessorAccount,
+    );
 
     if (verbose) {
       console.log("update document", {
@@ -178,6 +181,7 @@ class AddOnApiHelper {
       {
         headers: {
           Authorization: `Bearer ${auth0AccessToken}`,
+          "oauth-token": connectedAccountToken,
           "Content-Type": "application/json",
         },
       },
@@ -189,6 +193,12 @@ class AddOnApiHelper {
   static async publishDocument(documentId: string) {
     const { access_token: auth0AccessToken } = await this.getAuth0Tokens();
 
+    const {
+      site: { accessorAccount },
+    } = await this.getDocumentWithAuth0(documentId, false, true);
+    const connectedAccountToken =
+      await this.getConnectedAccountAccessToken(accessorAccount);
+
     const resp = await axios.post<{ url: string }>(
       `${(await getApiConfig()).DOCUMENT_ENDPOINT}/${documentId}/publish`,
       null,
@@ -196,6 +206,7 @@ class AddOnApiHelper {
         headers: {
           Authorization: `Bearer ${auth0AccessToken}`,
           "Content-Type": "application/json",
+          "oauth-token": connectedAccountToken,
         },
       },
     );
@@ -223,6 +234,12 @@ class AddOnApiHelper {
   ): Promise<string> {
     const { access_token: auth0AccessToken } = await this.getAuth0Tokens();
 
+    const {
+      site: { accessorAccount },
+    } = await this.getDocumentWithAuth0(docId, false, true);
+    const connectedAccountToken =
+      await this.getConnectedAccountAccessToken(accessorAccount);
+
     const resp = await axios.post<{ url: string }>(
       `${(await getApiConfig()).DOCUMENT_ENDPOINT}/${docId}/preview`,
       {
@@ -232,6 +249,7 @@ class AddOnApiHelper {
         headers: {
           Authorization: `Bearer ${auth0AccessToken}`,
           "Content-Type": "application/json",
+          "oauth-token": connectedAccountToken,
         },
       },
     );
