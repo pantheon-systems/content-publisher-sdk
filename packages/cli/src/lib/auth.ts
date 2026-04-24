@@ -1,28 +1,15 @@
-import { readFileSync } from "fs";
-import http from "http";
-import { dirname, join } from "path";
-import url, { fileURLToPath } from "url";
 import { parseJwt } from "@pantheon-systems/cpub-sdk-core";
 import axios from "axios";
 import chalk from "chalk";
-import { OAuth2Client } from "google-auth-library";
-import nunjucks from "nunjucks";
 import open from "open";
 import ora from "ora";
 import queryString from "query-string";
-import destroyer from "server-destroy";
 import AddOnApiHelper from "./addonApiHelper";
-import { getApiConfig } from "./apiConfig";
 import * as LocalStorage from "./localStorage";
 
 export const AUTH0_PCC_CONTEXT_KEY = "pcc";
 const DEFAULT_AUTH0_SCOPES = ["openid", "profile", "offline_access"];
 const DEFAULT_AUTH0_API_SCOPES = ["create:session"];
-
-const DEFAULT_GOOGLE_SCOPES = [
-  "https://www.googleapis.com/auth/userinfo.email",
-  "https://www.googleapis.com/auth/userinfo.profile",
-];
 
 export interface PersistedTokens {
   id_token: string;
@@ -186,170 +173,6 @@ export class Auth0Provider extends BaseAuthProvider {
             `You are successfully logged in as ${tokenPayload[AUTH0_PCC_CONTEXT_KEY].email}`,
           );
           resolve();
-        } catch (e) {
-          spinner.fail();
-          reject(e);
-        }
-      },
-    );
-  }
-}
-
-export class GoogleAuthProvider extends BaseAuthProvider {
-  private scopes?: string[];
-  constructor(scopes?: string[]) {
-    super();
-    this.scopes = [...DEFAULT_GOOGLE_SCOPES, ...(scopes || [])];
-  }
-  async generateToken(code: string): Promise<PersistedTokens> {
-    const resp = await axios.post(
-      `${(await getApiConfig()).OAUTH_ENDPOINT}/token`,
-      {
-        code: code,
-      },
-    );
-    return resp.data as PersistedTokens;
-  }
-
-  async refreshToken(refreshToken: string): Promise<PersistedTokens> {
-    const resp = await axios.post(
-      `${(await getApiConfig()).OAUTH_ENDPOINT}/refresh`,
-      {
-        refreshToken,
-      },
-    );
-    return resp.data as PersistedTokens;
-  }
-
-  async getTokens(email: string): Promise<PersistedTokens | null> {
-    const credentials = await LocalStorage.getGoogleAuthDetails(email);
-    if (!credentials) return null;
-
-    // Return null if required scope is not present
-    const grantedScopes = new Set(credentials.scope?.split(" ") || []);
-    if (
-      this.scopes &&
-      this.scopes.length > 0 &&
-      !this.scopes.every((i) => grantedScopes.has(i))
-    ) {
-      return null;
-    }
-
-    const tokenPayload = parseJwt(credentials.id_token as string);
-    // Check if token is expired
-    if (tokenPayload.exp) {
-      const currentTime = await AddOnApiHelper.getCurrentTime();
-
-      if (currentTime < tokenPayload.exp * 1000) {
-        return credentials;
-      }
-    }
-
-    try {
-      const newCred = await this.refreshToken(
-        credentials.refresh_token as string,
-      );
-      await LocalStorage.persistGoogleAuthDetails(email, newCred);
-      return newCred;
-    } catch {
-      return null;
-    }
-  }
-
-  login(email?: string): Promise<void> {
-    return new Promise(
-      // eslint-disable-next-line no-async-promise-executor -- Handling promise rejection in the executor
-      async (resolve, reject) => {
-        const message = email
-          ? `Requesting access to ${email} account...`
-          : "Connecting Google account...";
-        const templateName = email
-          ? "../templates/accountAccessGranted.html"
-          : "../templates/accountConnectSuccess.html";
-        const spinner = ora(message).start();
-        try {
-          const apiConfig = await getApiConfig();
-          const oAuth2Client = new OAuth2Client({
-            clientId: apiConfig.googleClientId,
-            redirectUri: apiConfig.googleRedirectUri,
-          });
-
-          // Generate the url that will be used for the consent dialog.
-          const authorizeUrl = oAuth2Client.generateAuthUrl({
-            access_type: "offline",
-            prompt: "consent",
-            scope: this.scopes,
-            ...(email && { login_hint: email }),
-          });
-
-          const server = http.createServer(async (req, res) => {
-            try {
-              if (!req.url) {
-                throw new Error("No URL path provided");
-              }
-
-              if (req.url.indexOf("/oauth-redirect") > -1) {
-                const qs = new url.URL(req.url, "http://localhost:3030")
-                  .searchParams;
-                const code = qs.get("code");
-                const currDir = dirname(fileURLToPath(import.meta.url));
-                const content = readFileSync(join(currDir, templateName));
-                const credentials = await this.generateToken(code as string);
-
-                try {
-                  await AddOnApiHelper.connectAccount(credentials.access_token);
-                } catch (e) {
-                  if (
-                    (e as { response: { data: { message: string } } }).response
-                      ?.data.message ===
-                    "account_already_connected_to_other_user"
-                  ) {
-                    spinner.fail(
-                      "You cannot connect this account because it’s already linked to another Pantheon user.",
-                    );
-                    resolve();
-                    return;
-                  } else if (
-                    (e as { response: { data: { message: string } } }).response
-                      ?.data.message === "cannot_connect_gmail_account"
-                  ) {
-                    spinner.fail(
-                      "Only Google Workspace accounts are supported. Please connect your work email.",
-                    );
-                    resolve();
-                    return;
-                  }
-                }
-
-                const tokenPayload = parseJwt(credentials.id_token as string);
-                await LocalStorage.persistGoogleAuthDetails(
-                  tokenPayload.email,
-                  credentials,
-                );
-
-                res.end(
-                  nunjucks.renderString(content.toString(), {
-                    email: tokenPayload.email,
-                  }),
-                );
-                server.destroy();
-
-                spinner.succeed(
-                  `Successfully connected "${tokenPayload.email}" Google account.`,
-                );
-                resolve();
-              }
-            } catch (e) {
-              spinner.fail();
-              reject(e);
-            }
-          });
-
-          destroyer(server);
-
-          server.listen(3030, () => {
-            open(authorizeUrl, { wait: true }).then((cp) => cp.kill());
-          });
         } catch (e) {
           spinner.fail();
           reject(e);
