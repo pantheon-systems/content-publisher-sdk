@@ -10,7 +10,7 @@ const oembedURLs = {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const url = searchParams.get('url');
-  let type = searchParams.get('type');
+  const type = searchParams.get('type');
 
   if (!type) {
     return NextResponse.json({ error: "type query required" }, { status: 400 });

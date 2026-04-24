@@ -46,7 +46,8 @@
       "form-data": "^4.0.4",
       "axios": "^1.13.5",
       "image-size": "1.2.1",
-      "esbuild": ">=0.25.0"
+      "esbuild": ">=0.25.0",
+      "http-proxy-agent": "^7.0.0"
     }
   }
 }

@@ -154,9 +154,7 @@ function GridItemCoverImage({
 }) {
   return (
     <div className="relative h-full w-full">
-      {/* Fallback gradient - always rendered behind */}
       <div className="absolute inset-0 bg-gradient-to-t from-neutral-800 to-neutral-100" />
-      {/* Image sits on top, visible by default */}
       {imageSrc != null && (
         <img
           src={imageSrc}

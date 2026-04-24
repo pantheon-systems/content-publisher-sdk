@@ -1,4 +1,5 @@
 import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
+import { Suspense } from "react";
 import Layout from "../../../components/layout";
 import { PAGE_SIZE } from "../../../constants";
 import PaginatedArticleList from "./paginated-article-list";
@@ -16,7 +17,7 @@ async function fetchNextPages(cursor?: string | null | undefined) {
   };
 }
 
-export default async function ArticlesListTemplate() {
+async function PaginationContent() {
   // Fetch the articles and site in parallel
   const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
     PCCConvenienceFunctions.getPaginatedArticles({
@@ -26,15 +27,23 @@ export default async function ArticlesListTemplate() {
   ]);
 
   return (
+    <PaginatedArticleList
+      headerText="Paginated Articles"
+      articles={articles}
+      cursor={cursor}
+      totalCount={totalCount}
+      fetcher={fetchNextPages}
+      site={site}
+    />
+  );
+}
+
+export default function ArticlesListTemplate() {
+  return (
     <Layout>
-      <PaginatedArticleList
-        headerText="Paginated Articles"
-        articles={articles}
-        cursor={cursor}
-        totalCount={totalCount}
-        fetcher={fetchNextPages}
-        site={site}
-      />
+      <Suspense>
+        <PaginationContent />
+      </Suspense>
     </Layout>
   );
 }

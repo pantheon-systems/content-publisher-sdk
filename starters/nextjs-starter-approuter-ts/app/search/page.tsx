@@ -1,4 +1,5 @@
 import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
+import { Suspense } from "react";
 import Layout from "../../components/layout";
 import SearchResults from "./search-results";
 
@@ -6,26 +7,38 @@ interface Props {
   searchParams: Promise<{ q?: string | null | undefined }>;
 }
 
-export default async function SearchPage(props: Props) {
-  const searchParams = await props.searchParams;
+async function SearchContent({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string | null | undefined }>;
+}) {
+  const resolvedSearchParams = await searchParams;
   const searchResults = await PCCConvenienceFunctions.getAllArticlesWithSummary(
     {
       publishingLevel: "PRODUCTION",
     },
-    searchParams.q
+    resolvedSearchParams.q
       ? {
-          bodyContains: searchParams.q,
+          bodyContains: resolvedSearchParams.q,
         }
       : undefined,
     true,
   );
 
   return (
+    <SearchResults
+      searchResults={searchResults.articles}
+      summary={searchResults.summary}
+    />
+  );
+}
+
+export default function SearchPage(props: Props) {
+  return (
     <Layout>
-      <SearchResults
-        searchResults={searchResults.articles}
-        summary={searchResults.summary}
-      />
+      <Suspense>
+        <SearchContent searchParams={props.searchParams} />
+      </Suspense>
     </Layout>
   );
 }
