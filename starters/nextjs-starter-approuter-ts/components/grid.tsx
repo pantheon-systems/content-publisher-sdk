@@ -6,7 +6,6 @@ import type {
 } from "@pantheon-systems/cpub-react-sdk";
 import { getArticleURLFromSite } from "@pantheon-systems/cpub-react-sdk/server";
 import Link from "next/link";
-import { useState } from "react";
 import { cn } from "../lib/utils";
 import { Button } from "./ui/button";
 
@@ -153,25 +152,16 @@ function GridItemCoverImage({
   imageSrc: string | null;
   imageAltText?: string | null | undefined;
 }) {
-  const [hasLoaded, setHasLoaded] = useState(false);
-
   return (
-    <>
-      {imageSrc != null ? (
+    <div className="relative h-full w-full">
+      <div className="absolute inset-0 bg-gradient-to-t from-neutral-800 to-neutral-100" />
+      {imageSrc != null && (
         <img
           src={imageSrc}
           alt={imageAltText || undefined}
-          onLoad={() => setHasLoaded(true)}
-          className={cn("h-full w-full object-cover", {
-            block: hasLoaded,
-            hidden: !hasLoaded,
-          })}
+          className="relative h-full w-full object-cover"
         />
-      ) : null}
-
-      {imageSrc == null || !hasLoaded ? (
-        <div className="h-full w-full bg-gradient-to-t from-neutral-800 to-neutral-100" />
-      ) : null}
-    </>
+      )}
+    </div>
   );
 }
