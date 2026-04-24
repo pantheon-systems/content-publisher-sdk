@@ -2,7 +2,7 @@ import { ClassAttributes, HTMLAttributes } from "react";
 import ReactMarkdown, { ExtraProps } from "react-markdown";
 import { Components } from "react-markdown/lib";
 import rehypeRaw from "rehype-raw";
-import remarkHeaderId from "remark-heading-id";
+import remarkHeaderId from "remark-custom-heading-id";
 import type { Parent } from "unist";
 import { visit } from "unist-util-visit";
 import type { ComponentMap, SmartComponentMap } from ".";

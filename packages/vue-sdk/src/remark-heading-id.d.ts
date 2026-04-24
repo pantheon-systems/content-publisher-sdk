@@ -1,1 +1,1 @@
-declare module "remark-heading-id";
+declare module "remark-custom-heading-id";

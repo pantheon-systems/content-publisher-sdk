@@ -4,7 +4,6 @@ import {
   PantheonTreeNode,
   TreePantheonContent,
 } from "@pantheon-systems/cpub-sdk-core/types";
-import _ from "lodash";
 import { useMemo } from "react";
 
 export function getArticleTitle(article: Article | undefined): string | null {
@@ -24,17 +23,16 @@ export function getArticleTitle(article: Article | undefined): string | null {
       : article.resolvedContent;
 
   const content: Array<PantheonTreeNode> = Array.isArray(jsonContent)
-    ? _.flatMap(jsonContent, flattenDocumentTabs)
+    ? jsonContent.flatMap(flattenDocumentTabs)
     : jsonContent.children;
 
   const titleContent = content.find((x) => x.tag === "title");
 
   if (titleContent != null) {
     const flatMap = titleContent.children
-      ? _.flatMapDeep(
-          titleContent.children,
-          (x: PantheonTreeNode | TreePantheonContent) => x.data,
-        )
+      ? titleContent.children
+          .map((x: PantheonTreeNode | TreePantheonContent) => x.data)
+          .flat(Infinity)
       : [];
 
     return titleContent.data + flatMap.join("");

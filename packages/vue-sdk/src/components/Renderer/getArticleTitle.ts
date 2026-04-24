@@ -4,8 +4,6 @@ import {
   PantheonTreeNode,
   TreePantheonContent,
 } from "@pantheon-systems/pcc-sdk-core/types";
-import _ from "lodash";
-
 export function getArticleTitle(article: Article | undefined) {
   if (!article?.content) {
     return null;
@@ -31,10 +29,9 @@ export function getArticleTitle(article: Article | undefined) {
 
   if (titleContent != null) {
     const flatMap = titleContent.children
-      ? _.flatMapDeep(
-          titleContent.children,
-          (x: PantheonTreeNode | TreePantheonContent) => x.data,
-        )
+      ? titleContent.children
+          .map((x: PantheonTreeNode | TreePantheonContent) => x.data)
+          .flat(Infinity)
       : [];
 
     return titleContent.data + flatMap.join("");

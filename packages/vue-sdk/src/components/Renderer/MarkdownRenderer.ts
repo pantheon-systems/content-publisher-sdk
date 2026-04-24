@@ -10,7 +10,7 @@ import type { ComponentMap, ExperimentalFlags, SmartComponentMap } from "./";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
-import remarkHeadingId from "remark-heading-id";
+import remarkHeadingId from "remark-custom-heading-id";
 import rehypeRaw from "rehype-raw";
 import { toJsxRuntime, Jsx } from "hast-util-to-jsx-runtime";
 import { Fragment, jsx } from "vue/jsx-runtime";
