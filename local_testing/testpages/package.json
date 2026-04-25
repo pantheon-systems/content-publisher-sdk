@@ -11,7 +11,7 @@
   "dependencies": {
     "@pantheon-systems/cpub-browser-sdk": "workspace:*",
     "@pantheon-systems/cpub-react-sample-library": "workspace:*",
-    "next": "16.2.3",
+    "next": "16.2.4",
     "react": "19.1.2",
     "react-dom": "19.1.2"
   },
@@ -22,7 +22,7 @@
     "autoprefixer": "^10.4.17",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.1.1",
-    "postcss": "^8.4.35",
+    "postcss": "^8.5.10",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.4"
   }
