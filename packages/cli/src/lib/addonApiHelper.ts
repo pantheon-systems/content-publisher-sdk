@@ -54,15 +54,23 @@ class AddOnApiHelper {
     accountId: string,
   ): Promise<{ accessToken: string; expiresAt: string }> {
     const { access_token: auth0AccessToken } = await this.getAuth0Tokens();
-    const resp = await axios.get(
-      `${(await getApiConfig()).ACCOUNT_ENDPOINT}/${accountId}/get-access-token`,
-      {
-        headers: {
-          Authorization: `Bearer ${auth0AccessToken}`,
+    try {
+      const resp = await axios.get(
+        `${(await getApiConfig()).ACCOUNT_ENDPOINT}/${accountId}/get-access-token`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth0AccessToken}`,
+          },
         },
-      },
-    );
-    return resp.data as { accessToken: string; expiresAt: string };
+      );
+      return resp.data as { accessToken: string; expiresAt: string };
+    } catch {
+      throw new Error(
+        "Unable to retrieve credentials for this account. " +
+          "This can happen if the account was connected before credential storage was introduced. " +
+          "Please disconnect and reconnect the account to resolve this.",
+      );
+    }
   }
 
   static async getConnectedAccountAccessToken(email: string): Promise<string> {
