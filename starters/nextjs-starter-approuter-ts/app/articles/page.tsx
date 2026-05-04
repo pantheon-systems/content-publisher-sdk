@@ -2,6 +2,7 @@ import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server
 import { Suspense } from "react";
 import ArticleList from "../../components/article-list";
 import Layout from "../../components/layout";
+import { SkeletonArticleList } from "../../components/skeleton-article-list";
 import { PAGE_SIZE } from "../../constants";
 
 async function fetchNextPages(cursor?: string | null | undefined) {
@@ -41,7 +42,7 @@ async function ArticlesContent() {
 export default function ArticlesListTemplate() {
   return (
     <Layout>
-      <Suspense>
+      <Suspense fallback={<SkeletonArticleList headerText="Articles" />}>
         <ArticlesContent />
       </Suspense>
     </Layout>

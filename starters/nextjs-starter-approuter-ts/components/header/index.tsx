@@ -19,7 +19,19 @@ export default function Header() {
               height={40}
             />
           </Link>
-          <Suspense>
+          <Suspense
+            fallback={
+              <ul className="hidden items-center gap-8 lg:flex">
+                {navItems.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="hover:underline">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            }
+          >
             <ul className="hidden items-center gap-8 lg:flex">
               {navItems.links.map((link) => (
                 <NavItem key={link.href} href={link.href}>
@@ -31,7 +43,11 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Suspense>
+          <Suspense
+            fallback={
+              <div className="hidden h-10 w-10 shrink-0 lg:block" />
+            }
+          >
             <SearchBar />
           </Suspense>
 
@@ -45,7 +61,13 @@ export default function Header() {
             ))}
           </nav>
 
-          <Suspense>
+          <Suspense
+            fallback={
+              <div className="flex shrink-0 lg:hidden">
+                <div className="h-10 w-10" />
+              </div>
+            }
+          >
             <div className="flex shrink-0 lg:hidden">
               <NavMenu />
             </div>

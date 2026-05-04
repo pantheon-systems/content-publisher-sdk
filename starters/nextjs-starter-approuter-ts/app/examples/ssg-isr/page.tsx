@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import ArticleList from "../../../components/article-list";
 import Layout from "../../../components/layout";
+import { SkeletonArticleList } from "../../../components/skeleton-article-list";
 import { PAGE_SIZE } from "../../../constants";
 
 export const metadata: Metadata = {
@@ -60,7 +61,11 @@ async function SSGISRContent() {
 export default function SSGISRExampleTemplate() {
   return (
     <Layout>
-      <Suspense>
+      <Suspense
+          fallback={
+            <SkeletonArticleList headerText="SSG and ISR Example" />
+          }
+        >
         <SSGISRContent />
       </Suspense>
     </Layout>

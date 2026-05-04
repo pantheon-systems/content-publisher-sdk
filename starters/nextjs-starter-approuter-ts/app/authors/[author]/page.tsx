@@ -11,6 +11,7 @@ import { MdEmail } from "react-icons/md";
 import { PiMediumLogoFill } from "react-icons/pi";
 import ArticleList from "../../../components/article-list";
 import Layout from "../../../components/layout";
+import { SkeletonArticleList } from "../../../components/skeleton-article-list";
 import { PAGE_SIZE } from "../../../constants";
 
 function fetchNextPages(author?: string | null | undefined) {
@@ -115,7 +116,7 @@ export default function ArticlesListTemplate(props: {
 }) {
   return (
     <Layout>
-      <Suspense>
+      <Suspense fallback={<SkeletonArticleList />}>
         <AuthorContent params={props.params} />
       </Suspense>
     </Layout>

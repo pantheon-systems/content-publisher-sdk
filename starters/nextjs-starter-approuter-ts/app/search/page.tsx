@@ -1,5 +1,6 @@
 import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
 import { Suspense } from "react";
+import "react-loading-skeleton/dist/skeleton.css";
 import Layout from "../../components/layout";
 import SearchResults from "./search-results";
 
@@ -36,7 +37,9 @@ async function SearchContent({
 export default function SearchPage(props: Props) {
   return (
     <Layout>
-      <Suspense>
+      <Suspense
+          fallback={<SearchResults isLoading={true} searchResults={null} />}
+        >
         <SearchContent searchParams={props.searchParams} />
       </Suspense>
     </Layout>

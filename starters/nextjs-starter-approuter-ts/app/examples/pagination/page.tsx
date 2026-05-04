@@ -1,6 +1,7 @@
 import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
 import { Suspense } from "react";
 import Layout from "../../../components/layout";
+import { SkeletonArticleList } from "../../../components/skeleton-article-list";
 import { PAGE_SIZE } from "../../../constants";
 import PaginatedArticleList from "./paginated-article-list";
 
@@ -41,7 +42,9 @@ async function PaginationContent() {
 export default function ArticlesListTemplate() {
   return (
     <Layout>
-      <Suspense>
+      <Suspense
+          fallback={<SkeletonArticleList headerText="Paginated Articles" />}
+        >
         <PaginationContent />
       </Suspense>
     </Layout>

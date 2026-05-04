@@ -43,7 +43,7 @@ export default function ComponentPreviewPage(props: {
   searchParams: Promise<{ attrs: string }>;
 }) {
   return (
-    <Suspense>
+    <Suspense fallback={null}>
       <PreviewContent params={props.params} searchParams={props.searchParams} />
     </Suspense>
   );
