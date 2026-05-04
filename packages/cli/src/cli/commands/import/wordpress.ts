@@ -131,12 +131,11 @@ export const importFromWordPress = errorHandler<WordPressImportParams>(
     // Get site details
     const site = await AddOnApiHelper.getSite(siteId);
 
-    const tokens = await AddOnApiHelper.getGoogleTokens({
-      scopes: ["https://www.googleapis.com/auth/drive.file"],
-      email: site.accessorAccount,
-    });
+    const accessToken = await AddOnApiHelper.getConnectedAccountAccessToken(
+      site.accessorAccount,
+    );
 
-    const drive = getAuthedDrive(tokens);
+    const drive = getAuthedDrive(accessToken);
     const folder = await createFolder(
       drive,
       `Content Publisher Import from WordPress on ${new Date().toLocaleDateString()} unique id: ${randomUUID()}`,
@@ -212,11 +211,7 @@ export const importFromWordPress = errorHandler<WordPressImportParams>(
         }
 
         // Add it to the Content Publisher site.
-        await AddOnApiHelper.getDocumentWithGoogle(
-          fileId,
-          site.accessorAccount,
-          true,
-        );
+        await AddOnApiHelper.getDocument(fileId, true);
 
         try {
           await AddOnApiHelper.updateDocument(
@@ -232,7 +227,7 @@ export const importFromWordPress = errorHandler<WordPressImportParams>(
           );
 
           if (publish) {
-            await AddOnApiHelper.publishDocument(fileId, site.accessorAccount);
+            await AddOnApiHelper.publishDocument(fileId);
           }
         } catch (e) {
           console.error(e instanceof AxiosError ? e.response?.data : e);
