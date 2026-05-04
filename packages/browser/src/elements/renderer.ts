@@ -8,7 +8,6 @@ import {
   TabTree,
   TreePantheonContent,
 } from "@pantheon-systems/cpub-sdk-core/types";
-import _ from "lodash";
 
 export type RendererConfig = {
   disableStyles?: boolean;
@@ -40,7 +39,7 @@ export function renderArticleToElement(
       : article.resolvedContent;
 
   const content: PantheonTreeNode[] = Array.isArray(jsonContent)
-    ? _.flatMap(jsonContent as TabTree<PantheonTree>[], flattenDocumentTabs)
+    ? (jsonContent as TabTree<PantheonTree>[]).flatMap(flattenDocumentTabs)
     : jsonContent.children;
 
   // Parent node to be added to the DOM
