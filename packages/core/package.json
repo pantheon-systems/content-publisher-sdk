@@ -61,10 +61,10 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.21",
-    "@vitest/coverage-v8": "^1.6.1",
+    "@vitest/coverage-v8": "^4.1.0",
     "eslint": "^9.39.2",
     "eslint-config-pcc-custom": "workspace:*",
     "tsup": "^8.2.4",
-    "vitest": "^1.6.1"
+    "vitest": "^4.0.0"
   }
 }
