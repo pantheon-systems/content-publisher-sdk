@@ -4,4 +4,4 @@ const UseCacheHandler = createUseCacheHandler({
   type: "auto",
 });
 
-export default UseCacheHandler;
+export default new UseCacheHandler();

@@ -241,4 +241,12 @@ describe("useCacheHandler", () => {
     expect(UseCacheHandler).toBeDefined();
     expect(UseCacheHandler.prototype.get).toBeTypeOf("function");
   });
+
+  it("instantiated handler has get and set methods", () => {
+    const UseCacheHandler = createUseCacheHandler({ type: "file" });
+    const handler = new UseCacheHandler();
+    expect(handler).toBeDefined();
+    expect(handler.get).toBeTypeOf("function");
+    expect(handler.set).toBeTypeOf("function");
+  });
 });

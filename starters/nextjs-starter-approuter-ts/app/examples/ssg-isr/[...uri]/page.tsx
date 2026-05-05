@@ -3,6 +3,7 @@ import {
   PCCConvenienceFunctions,
 } from "@pantheon-systems/cpub-react-sdk/server";
 import { Metadata } from "next";
+import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { StaticArticleView } from "../../../../components/article-view";
@@ -14,13 +15,19 @@ interface ArticlePageProps {
   params: Promise<{ uri: string[]; tabId: string }>;
 }
 
+async function fetchArticle(slug: string) {
+  "use cache";
+  cacheLife({ revalidate: 21600 });
+  return PCCConvenienceFunctions.getArticleBySlugOrId(slug);
+}
+
 async function ArticleContent({
   params,
 }: {
   params: Promise<{ uri: string[]; tabId: string }>;
 }) {
   const resolvedParams = await params;
-  const article = await PCCConvenienceFunctions.getArticleBySlugOrId(
+  const article = await fetchArticle(
     resolvedParams.uri[resolvedParams.uri.length - 1],
   );
 
