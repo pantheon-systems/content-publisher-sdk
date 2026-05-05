@@ -1,7 +1,6 @@
 import type { GaxiosResponse } from "gaxios";
 import { OAuth2Client } from "google-auth-library";
 import { drive_v3, google } from "googleapis";
-import { PersistedTokens } from "../../../lib/auth";
 
 export function preprocessBaseURL(originalBaseURL: string) {
   let baseURL: string | null = originalBaseURL;
@@ -28,9 +27,9 @@ export function preprocessBaseURL(originalBaseURL: string) {
   }
 }
 
-export function getAuthedDrive(tokens: PersistedTokens) {
+export function getAuthedDrive(accessToken: string) {
   const oauth2Client = new OAuth2Client();
-  oauth2Client.setCredentials(tokens);
+  oauth2Client.setCredentials({ access_token: accessToken });
   return google.drive({
     version: "v3",
     auth: oauth2Client,
