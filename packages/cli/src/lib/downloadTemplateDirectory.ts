@@ -1,6 +1,5 @@
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
-import axios, { AxiosError } from "axios";
 import { Octokit } from "octokit";
 
 const octokit = new Octokit();
@@ -81,18 +80,21 @@ async function fetchFiles(
     // Use the ref for the raw file download
     const url = `https://raw.githubusercontent.com/${owner}/${repo}/${treeSha}/${filePath}`;
 
-    async function attemptDownload(url: string, retryAllowed: boolean) {
+    async function attemptDownload(
+      url: string,
+      retryAllowed: boolean,
+    ): Promise<File> {
       try {
-        const { data } = await axios.get(url, {
-          responseType: "arraybuffer",
-        });
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error(`Download failed: ${resp.status}`);
+        const data = Buffer.from(await resp.arrayBuffer());
 
         return {
           path: filePath.replace(directory, ""),
           contents: data,
         };
       } catch (e) {
-        if (e instanceof AxiosError && e.code === "ENOTFOUND" && retryAllowed) {
+        if (retryAllowed) {
           console.error(
             `Failed to download ${url}, but reattempting one time.`,
           );

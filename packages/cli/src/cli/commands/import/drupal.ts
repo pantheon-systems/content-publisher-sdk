@@ -1,12 +1,11 @@
 import { randomUUID } from "crypto";
 import { exit } from "process";
-import axios, { AxiosError } from "axios";
 import Promise from "bluebird";
 import chalk from "chalk";
 import type { GaxiosResponse } from "gaxios";
 import type { drive_v3 } from "googleapis";
 import queryString from "query-string";
-import AddOnApiHelper from "../../../lib/addonApiHelper";
+import AddOnApiHelper, { HttpError } from "../../../lib/addonApiHelper";
 import { Logger } from "../../../lib/logger";
 import { errorHandler } from "../../exceptions";
 import { createFolder, getAuthedDrive, preprocessBaseURL } from "./utils";
@@ -60,7 +59,9 @@ interface DrupalIncludedData {
 async function getDrupalPosts(url: string) {
   try {
     console.log(`Importing from ${url}`);
-    const result = (await axios.get(url)).data;
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error(`Request failed: ${resp.status}`);
+    const result = await resp.json();
 
     return {
       nextURL: result.links?.next?.href,
@@ -199,7 +200,7 @@ export const importFromDrupal = errorHandler<DrupalImportParams>(
             await AddOnApiHelper.publishDocument(fileId);
           }
         } catch (e) {
-          console.error(e instanceof AxiosError ? e.response?.data : e);
+          console.error(e instanceof HttpError ? e.responseData : e);
           throw e;
         }
       },

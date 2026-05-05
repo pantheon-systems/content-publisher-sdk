@@ -1,12 +1,11 @@
 import { randomUUID } from "crypto";
 import { exit } from "process";
-import axios, { AxiosError } from "axios";
 import Promise from "bluebird";
 import chalk from "chalk";
 import type { GaxiosResponse } from "gaxios";
 import { drive_v3 } from "googleapis";
 import queryString from "query-string";
-import AddOnApiHelper from "../../../lib/addonApiHelper";
+import AddOnApiHelper, { HttpError } from "../../../lib/addonApiHelper";
 import { Logger } from "../../../lib/logger";
 import { errorHandler } from "../../exceptions";
 import { createFolder, getAuthedDrive, preprocessBaseURL } from "./utils";
@@ -56,7 +55,9 @@ interface WPTag {
 async function getWPPosts(url: string) {
   try {
     console.log(`Importing from ${url}`);
-    const result = (await axios.get<WPPost[]>(url)).data;
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error(`Request failed: ${resp.status}`);
+    const result = (await resp.json()) as WPPost[];
 
     const { url: parsedURL, query } = queryString.parseUrl(url);
 
@@ -96,9 +97,11 @@ async function getWPPosts(url: string) {
 async function getTagInfo(baseURL: string, tags: number[]) {
   if (!tags?.length) return [];
 
-  const { data } = await axios.get<WPTag[]>(
+  const resp = await fetch(
     new URL(`/wp-json/wp/v2/tags?include=${tags.join()}`, baseURL).href,
   );
+  if (!resp.ok) throw new Error(`Failed to fetch tags: ${resp.status}`);
+  const data = (await resp.json()) as WPTag[];
 
   return data.map((x) => ({
     id: x.id,
@@ -230,7 +233,7 @@ export const importFromWordPress = errorHandler<WordPressImportParams>(
             await AddOnApiHelper.publishDocument(fileId);
           }
         } catch (e) {
-          console.error(e instanceof AxiosError ? e.response?.data : e);
+          console.error(e instanceof HttpError ? e.responseData : e);
           throw e;
         }
       },

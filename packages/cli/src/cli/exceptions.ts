@@ -1,6 +1,6 @@
 import { exit } from "process";
-import axios from "axios";
 import chalk from "chalk";
+import { HttpError } from "../lib/addonApiHelper";
 
 export class UnhandledError extends Error {
   constructor(message: string) {
@@ -42,14 +42,12 @@ export function errorHandler<T>(
         console.log(chalk.red("\nError: User is not logged in."));
         console.log(chalk.yellow('\nPlease run "cpub login" to login.'));
       } else {
-        if (
-          axios.isAxiosError(e) &&
-          (e.response?.status ?? 500) < 500 && // Treat internal server errors as unhandled errors
-          e.response?.data
-        ) {
+        if (e instanceof HttpError && e.status < 500 && e.responseData) {
           // Operational error
           console.log(
-            chalk.red(`\nError: ${e.response.data.message || e.response.data}`),
+            chalk.red(
+              `\nError: ${(e.responseData as { message?: string }).message || e.responseData}`,
+            ),
           );
         } else {
           // Unhandled error

@@ -1,5 +1,4 @@
 import { parseJwt } from "@pantheon-systems/cpub-sdk-core";
-import axios from "axios";
 import chalk from "chalk";
 import open from "open";
 import ora from "ora";
@@ -29,14 +28,21 @@ export class Auth0Provider extends BaseAuthProvider {
   async refreshToken(refreshToken: string): Promise<PersistedTokens> {
     const auth0Config = await AddOnApiHelper.getAuth0Config();
     const url = `${auth0Config.issuerBaseUrl}/oauth/token`;
-    const response = await axios.post(url, {
-      grant_type: "refresh_token",
-      client_id: auth0Config.clientId,
-      refresh_token: refreshToken,
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        grant_type: "refresh_token",
+        client_id: auth0Config.clientId,
+        refresh_token: refreshToken,
+      }),
     });
+    if (!response.ok)
+      throw new Error(`Token refresh failed: ${response.status}`);
+    const data = await response.json();
     return {
       refresh_token: refreshToken,
-      ...response.data,
+      ...data,
     } as PersistedTokens;
   }
 
@@ -88,17 +94,26 @@ export class Auth0Provider extends BaseAuthProvider {
 
           const auth0Config = await AddOnApiHelper.getAuth0Config();
 
-          const deviceResp = await axios.post(
+          const deviceCodeResp = await fetch(
             `${auth0Config.issuerBaseUrl}/oauth/device/code`,
             {
-              client_id: auth0Config.clientId,
-              scope: [
-                ...DEFAULT_AUTH0_SCOPES,
-                ...DEFAULT_AUTH0_API_SCOPES,
-              ].join(" "),
-              audience: auth0Config.audience,
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                client_id: auth0Config.clientId,
+                scope: [
+                  ...DEFAULT_AUTH0_SCOPES,
+                  ...DEFAULT_AUTH0_API_SCOPES,
+                ].join(" "),
+                audience: auth0Config.audience,
+              }),
             },
           );
+          if (!deviceCodeResp.ok)
+            throw new Error(
+              `Device code request failed: ${deviceCodeResp.status}`,
+            );
+          const deviceCodeData = await deviceCodeResp.json();
 
           const {
             device_code,
@@ -106,7 +121,7 @@ export class Auth0Provider extends BaseAuthProvider {
             user_code: userCode,
             verification_uri_complete: verificationUriComplete,
             interval,
-          } = deviceResp.data;
+          } = deviceCodeData;
 
           // Optionally auto-open browser
           if (verificationUriComplete) {
@@ -137,34 +152,34 @@ export class Auth0Provider extends BaseAuthProvider {
           let credentials: PersistedTokens;
 
           while (true) {
-            try {
-              const resp = await axios.post(
-                `${auth0Config.issuerBaseUrl}/oauth/token`,
-                queryString.stringify({
+            const resp = await fetch(
+              `${auth0Config.issuerBaseUrl}/oauth/token`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: queryString.stringify({
                   grant_type: "urn:ietf:params:oauth:grant-type:device_code",
                   device_code,
                   client_id: auth0Config.clientId,
                 }),
-                {
-                  headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                  },
-                },
-              );
-              credentials = resp.data as PersistedTokens;
-              break;
-            } catch (err) {
-              if (
-                (err as { response: { data: { error: string } } }).response
-                  ?.data?.error === "authorization_pending"
-              ) {
-                // still waiting
+              },
+            );
+
+            if (!resp.ok) {
+              const errorData = (await resp.json()) as {
+                error?: string;
+              };
+              if (errorData.error === "authorization_pending") {
                 await new Promise((r) => setTimeout(r, (interval || 5) * 1000));
                 continue;
-              } else {
-                throw err;
               }
+              throw new Error(`Auth failed: ${resp.status}`);
             }
+
+            credentials = (await resp.json()) as PersistedTokens;
+            break;
           }
 
           const tokenPayload = parseJwt(credentials.access_token as string);

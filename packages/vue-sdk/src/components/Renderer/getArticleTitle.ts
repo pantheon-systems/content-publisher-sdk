@@ -3,7 +3,7 @@ import {
   PantheonTree,
   PantheonTreeNode,
   TreePantheonContent,
-} from "@pantheon-systems/pcc-sdk-core/types";
+} from "@pantheon-systems/cpub-sdk-core/types";
 export function getArticleTitle(article: Article | undefined) {
   if (!article?.content) {
     return null;

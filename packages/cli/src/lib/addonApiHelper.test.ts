@@ -1,7 +1,7 @@
-import axios from "axios";
 import AddOnApiHelper from "./addonApiHelper";
 
-jest.mock("axios");
+const fetchMock = jest.spyOn(global, "fetch");
+
 jest.mock("./apiConfig", () => ({
   getApiConfig: jest.fn().mockResolvedValue({
     ACCOUNT_ENDPOINT: "https://test-jest.example/addOnApi/accounts",
@@ -18,27 +18,35 @@ jest.mock("./auth", () => ({
   })),
 }));
 
-const mockedAxios = axios as jest.Mocked<typeof axios>;
-
 describe("getConnectedAccountAccessToken", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it("returns access token for a matching account", async () => {
-    mockedAxios.get.mockImplementation((url: string) => {
+    fetchMock.mockImplementation((input: string | URL | Request) => {
+      const url = input.toString();
       if (url.endsWith("/accounts")) {
-        return Promise.resolve({
-          data: [
-            { id: "acc-1", accountEmail: "user@company.com", name: "Test" },
-            { id: "acc-2", accountEmail: "other@company.com", name: "Other" },
-          ],
-        });
+        return Promise.resolve(
+          new Response(
+            JSON.stringify([
+              { id: "acc-1", accountEmail: "user@company.com", name: "Test" },
+              { id: "acc-2", accountEmail: "other@company.com", name: "Other" },
+            ]),
+            { status: 200 },
+          ),
+        );
       }
       if (url.includes("/acc-1/get-access-token")) {
-        return Promise.resolve({
-          data: { accessToken: "goog-token-123", expiresAt: "2026-01-01" },
-        });
+        return Promise.resolve(
+          new Response(
+            JSON.stringify({
+              accessToken: "goog-token-123",
+              expiresAt: "2026-01-01",
+            }),
+            { status: 200 },
+          ),
+        );
       }
       return Promise.reject(new Error(`Unexpected URL: ${url}`));
     });
@@ -49,13 +57,17 @@ describe("getConnectedAccountAccessToken", () => {
   });
 
   it("throws when no account matches the email", async () => {
-    mockedAxios.get.mockImplementation((url: string) => {
+    fetchMock.mockImplementation((input: string | URL | Request) => {
+      const url = input.toString();
       if (url.endsWith("/accounts")) {
-        return Promise.resolve({
-          data: [
-            { id: "acc-1", accountEmail: "other@company.com", name: "Other" },
-          ],
-        });
+        return Promise.resolve(
+          new Response(
+            JSON.stringify([
+              { id: "acc-1", accountEmail: "other@company.com", name: "Other" },
+            ]),
+            { status: 200 },
+          ),
+        );
       }
       return Promise.reject(new Error(`Unexpected URL: ${url}`));
     });
@@ -66,9 +78,12 @@ describe("getConnectedAccountAccessToken", () => {
   });
 
   it("includes guidance to run 'cpub account connect' in the error", async () => {
-    mockedAxios.get.mockImplementation((url: string) => {
+    fetchMock.mockImplementation((input: string | URL | Request) => {
+      const url = input.toString();
       if (url.endsWith("/accounts")) {
-        return Promise.resolve({ data: [] });
+        return Promise.resolve(
+          new Response(JSON.stringify([]), { status: 200 }),
+        );
       }
       return Promise.reject(new Error(`Unexpected URL: ${url}`));
     });

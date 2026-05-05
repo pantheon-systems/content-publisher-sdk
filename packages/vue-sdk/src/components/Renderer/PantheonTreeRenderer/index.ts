@@ -1,4 +1,4 @@
-import { TreePantheonContent } from "@pantheon-systems/pcc-sdk-core/types";
+import { TreePantheonContent } from "@pantheon-systems/cpub-sdk-core/types";
 import { defineComponent, h, PropType } from "vue-demi";
 import { SmartComponentMap } from "../index";
 import TreeRenderer from "./TreeRenderer";

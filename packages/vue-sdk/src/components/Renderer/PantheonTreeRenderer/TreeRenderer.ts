@@ -1,7 +1,7 @@
 import {
   TreePantheonContent,
   TreePantheonContentSmartComponent,
-} from "@pantheon-systems/pcc-sdk-core/types";
+} from "@pantheon-systems/cpub-sdk-core/types";
 import { defineComponent, h, PropType, resolveComponent } from "vue-demi";
 import {
   getStyleObjectFromString,

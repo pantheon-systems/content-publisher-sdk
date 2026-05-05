@@ -1,7 +1,7 @@
 import {
   PantheonClient,
   PantheonClientConfig,
-} from "@pantheon-systems/pcc-sdk-core";
+} from "@pantheon-systems/cpub-sdk-core";
 import { DefaultApolloClient } from "@vue/apollo-composable";
 import type { App } from "vue";
 

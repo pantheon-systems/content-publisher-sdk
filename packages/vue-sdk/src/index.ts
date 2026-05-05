@@ -1,4 +1,4 @@
-export type { PantheonClientConfig } from "@pantheon-systems/pcc-sdk-core";
+export type { PantheonClientConfig } from "@pantheon-systems/cpub-sdk-core";
 
 export {
   getArticles,
@@ -6,8 +6,8 @@ export {
   getArticle,
   getAllTags,
   PCCConvenienceFunctions,
-} from "@pantheon-systems/pcc-sdk-core";
-export * from "@pantheon-systems/pcc-sdk-core";
+} from "@pantheon-systems/cpub-sdk-core";
+export * from "@pantheon-systems/cpub-sdk-core";
 
 export { plugin as pccPlugin } from "./plugin";
 

@@ -9,7 +9,7 @@ import IconShare from "./assets/IconShare.vue";
 import LivePreviewIndicator from "./LivePreviewIndicator.vue";
 import HoverButton from "../Common/HoverButton.vue";
 import { getCookie } from "../../utils/cookies";
-import { Article } from "@pantheon-systems/pcc-sdk-core/types";
+import { Article } from "@pantheon-systems/cpub-sdk-core/types";
 
 const props = defineProps({
   article: Object as PropType<Article>,

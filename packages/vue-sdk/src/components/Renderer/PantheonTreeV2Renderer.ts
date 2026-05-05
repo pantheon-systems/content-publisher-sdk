@@ -1,4 +1,4 @@
-import { PantheonTreeNode } from "@pantheon-systems/pcc-sdk-core/types";
+import { PantheonTreeNode } from "@pantheon-systems/cpub-sdk-core/types";
 import { defineComponent, h, PropType } from "vue-demi";
 import { getStyleObjectFromString } from "../../utils/renderer";
 import { ComponentMap, SmartComponentMap, ExperimentalFlags } from "./index";

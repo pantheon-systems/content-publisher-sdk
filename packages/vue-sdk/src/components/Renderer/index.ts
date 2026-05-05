@@ -2,7 +2,7 @@ import {
   Article,
   PantheonTree,
   TreePantheonContent,
-} from "@pantheon-systems/pcc-sdk-core/types";
+} from "@pantheon-systems/cpub-sdk-core/types";
 import {
   DefineComponent,
   defineComponent,
