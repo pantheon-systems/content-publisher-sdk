@@ -1,5 +1,12 @@
 # @pantheon-systems/pcc-vue-sdk
 
+## 5.3.0
+
+### Patch Changes
+
+- @pantheon-systems/cpub-sdk-core@5.3.0
+- @pantheon-systems/cpub-react-sdk@5.3.0
+
 ## 5.2.1
 
 ### Patch Changes

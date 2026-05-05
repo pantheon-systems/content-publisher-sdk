@@ -1,5 +1,7 @@
 # @pantheon-systems/pcc-sdk-core
 
+## 5.3.0
+
 ## 5.2.1
 
 ### Patch Changes
