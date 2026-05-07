@@ -1,5 +1,15 @@
 # @pantheon-systems/pcc-cpub
 
+## 5.3.0-beta.0
+
+### Minor Changes
+
+- f8aebbb: Auth now facilitated by Connected Accounts
+
+### Patch Changes
+
+- @pantheon-systems/cpub-sdk-core@5.3.0-beta.0
+
 ## 5.2.1
 
 ### Patch Changes
