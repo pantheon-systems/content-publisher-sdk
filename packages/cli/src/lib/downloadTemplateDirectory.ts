@@ -94,7 +94,7 @@ async function fetchFiles(
           contents: data,
         };
       } catch (e) {
-        if (retryAllowed) {
+        if (e instanceof TypeError && retryAllowed) {
           console.error(
             `Failed to download ${url}, but reattempting one time.`,
           );

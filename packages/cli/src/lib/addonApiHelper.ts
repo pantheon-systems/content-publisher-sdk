@@ -27,7 +27,7 @@ export class HttpError extends Error {
   }
 }
 
-async function apiFetch<T = unknown>(
+export async function apiFetch<T = unknown>(
   url: string,
   options: {
     method?: string;
@@ -53,25 +53,23 @@ async function apiFetch<T = unknown>(
   const resp = await fetch(fullUrl, {
     method: options.method ?? "GET",
     headers: {
-      ...(options.body !== undefined
-        ? { "Content-Type": "application/json" }
-        : {}),
+      ...(options.body != null ? { "Content-Type": "application/json" } : {}),
       ...options.headers,
     },
-    ...(options.body !== undefined
-      ? { body: JSON.stringify(options.body) }
-      : {}),
+    ...(options.body != null ? { body: JSON.stringify(options.body) } : {}),
   });
   if (!resp.ok) {
+    const text = await resp.text();
     let responseData: unknown;
     try {
-      responseData = await resp.json();
+      responseData = JSON.parse(text);
     } catch {
-      responseData = await resp.text();
+      responseData = text;
     }
     throw new HttpError(resp.status, responseData);
   }
-  const data = (await resp.json()) as T;
+  const data =
+    resp.status === 204 ? (undefined as T) : ((await resp.json()) as T);
   return { data, response: resp };
 }
 
@@ -275,7 +273,6 @@ class AddOnApiHelper {
       `${(await getApiConfig()).DOCUMENT_ENDPOINT}/${documentId}/publish`,
       {
         method: "POST",
-        body: null,
         headers: {
           Authorization: `Bearer ${auth0AccessToken}`,
           "oauth-token": connectedAccountToken,
@@ -551,6 +548,7 @@ class AddOnApiHelper {
     });
   }
 
+  // fetch body on DELETE may be ignored in some environments — if issues arise, move email to query params
   static async removeAdmin(id: string, email: string): Promise<void> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
@@ -597,6 +595,7 @@ class AddOnApiHelper {
     );
   }
 
+  // fetch body on DELETE may be ignored in some environments — if issues arise, move email to query params
   static async removeCollaborator(id: string, email: string): Promise<void> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
