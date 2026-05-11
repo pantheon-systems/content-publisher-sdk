@@ -1,7 +1,9 @@
 import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
 import { Metadata } from "next";
+import { Suspense } from "react";
 import ArticleList from "../../../components/article-list";
 import Layout from "../../../components/layout";
+import { SkeletonArticleList } from "../../../components/skeleton-article-list";
 import { PAGE_SIZE } from "../../../constants";
 
 export const metadata: Metadata = {
@@ -23,7 +25,7 @@ async function fetchNextPages(cursor?: string | null | undefined) {
   };
 }
 
-export default async function SSGISRExampleTemplate() {
+async function SSGISRContent() {
   // Fetch the articles and site in parallel
   const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
     PCCConvenienceFunctions.getPaginatedArticles({
@@ -33,27 +35,39 @@ export default async function SSGISRExampleTemplate() {
   ]);
 
   return (
+    <ArticleList
+      headerText={"SSG and ISR Example"}
+      articles={articles}
+      totalCount={totalCount}
+      cursor={cursor}
+      fetcher={fetchNextPages}
+      site={site}
+      additionalHeader={
+        <div className="prose lg:prose-xl my-10 flex flex-col">
+          <p>
+            <em>
+              By default, this starter kit is optimized for SSR and Edge
+              Caching on Pantheon. This example instead uses Incremental
+              Static Regeneration and is provided as a reference for cases
+              where Next.js static generation options would be beneficial.
+            </em>
+          </p>
+        </div>
+      }
+    />
+  );
+}
+
+export default function SSGISRExampleTemplate() {
+  return (
     <Layout>
-      <ArticleList
-        headerText={"SSG and ISR Example"}
-        articles={articles}
-        totalCount={totalCount}
-        cursor={cursor}
-        fetcher={fetchNextPages}
-        site={site}
-        additionalHeader={
-          <div className="prose lg:prose-xl my-10 flex flex-col">
-            <p>
-              <em>
-                By default, this starter kit is optimized for SSR and Edge
-                Caching on Pantheon. This example instead uses Incremental
-                Static Regeneration and is provided as a reference for cases
-                where Next.js static generation options would be beneficial.
-              </em>
-            </p>
-          </div>
-        }
-      />
+      <Suspense
+          fallback={
+            <SkeletonArticleList headerText="SSG and ISR Example" />
+          }
+        >
+        <SSGISRContent />
+      </Suspense>
     </Layout>
   );
 }
