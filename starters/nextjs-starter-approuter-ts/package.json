@@ -25,14 +25,15 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@pantheon-systems/cpub-react-sdk": "~5.2.1",
+    "@pantheon-systems/cpub-react-sdk": "~5.3.0-beta.0",
+    "@pantheon-systems/nextjs-cache-handler": "^0.6.0",
     "@radix-ui/react-popover": "1.1.6",
     "@tailwindcss/typography": "0.5.10",
     "@types/node": "20.19.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "dotenv": "16.4.7",
-    "next": "16.2.4",
+    "next": "16.2.6",
     "query-string": "8.2.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -61,10 +62,11 @@
     "eslint": "^9.39.2",
     "eslint-config-next": "16.2.1",
     "jsdom": "^26.1.0",
-    "postcss": "8.5.11",
+    "postcss": "8.5.12",
     "prettier": "3.2.5",
     "tailwindcss": "3.4.1",
     "typescript": "5.5.4",
+    "typescript-eslint": "^8.33.1",
     "vite": "^8.0.5",
     "vitest": "^4.0.0"
   }
