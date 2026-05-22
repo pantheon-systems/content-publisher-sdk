@@ -122,6 +122,12 @@ jobs:
       - name: Build CLI for testing
         run: pnpm --filter '*cli*' build:test
 
+      - name: Pack SDK packages for local testing
+        run: |
+          mkdir -p /tmp/sdk-tarballs
+          cd packages/core && pnpm pack --pack-destination /tmp/sdk-tarballs
+          cd ../../packages/react-sdk && pnpm pack --pack-destination /tmp/sdk-tarballs
+
       - name: Test pcc init
         run: |
           # Explicitly mask secrets to prevent accidental exposure in logs
@@ -134,7 +140,8 @@ jobs:
           rm -rf "$TEST_DIR"
 
           # Build the init command with package manager and feature flags
-          INIT_CMD="node packages/cli/dist/index.js init $TEST_DIR --template=nextjs --non-interactive --site-id=\"$PCC_SITE_ID\" --git-ref=\"${{ github.sha }}\""
+          # Use --noInstall so we can patch dependencies before installing
+          INIT_CMD="node packages/cli/dist/index.js init $TEST_DIR --template=nextjs --non-interactive --noInstall --site-id=\"$PCC_SITE_ID\" --git-ref=\"${{ github.sha }}\""
 
           if [ -n "${{ matrix.package_manager.flag }}" ]; then
             INIT_CMD="$INIT_CMD ${{ matrix.package_manager.flag }}"
@@ -148,6 +155,36 @@ jobs:
           eval $INIT_CMD
           cd $TEST_DIR
 
+          # Replace SDK dependencies with local tarballs so tests don't
+          # depend on the version being published to NPM already.
+          # Uses overrides/resolutions so transitive deps also resolve.
+          CORE_TGZ=$(ls /tmp/sdk-tarballs/pantheon-systems-cpub-sdk-core-*.tgz)
+          REACT_TGZ=$(ls /tmp/sdk-tarballs/pantheon-systems-cpub-react-sdk-*.tgz)
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            const sdkOverrides = {
+              '@pantheon-systems/cpub-react-sdk': 'file:${REACT_TGZ}',
+              '@pantheon-systems/cpub-sdk-core': 'file:${CORE_TGZ}',
+            };
+            Object.assign(pkg.dependencies, sdkOverrides);
+            pkg.overrides = { ...pkg.overrides, ...sdkOverrides };
+            pkg.resolutions = { ...pkg.resolutions, ...sdkOverrides };
+            pkg.pnpm = pkg.pnpm || {};
+            pkg.pnpm.overrides = { ...pkg.pnpm.overrides, ...sdkOverrides };
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+          "
+
+          # Install dependencies with the appropriate package manager
+          PM_FLAG="${{ matrix.package_manager.flag }}"
+          if [[ "$PM_FLAG" == *"pnpm"* ]]; then
+            pnpm install --no-frozen-lockfile
+          elif [[ "$PM_FLAG" == *"yarn"* ]]; then
+            yarn install
+          else
+            npm install
+          fi
+
           # Write PCC_TOKEN to .env.local file (using printf to avoid shell expansion in logs)
           printf "PCC_TOKEN=%s\n" "$PCC_TOKEN" >> .env.local
 
@@ -158,8 +195,6 @@ jobs:
           fi
 
           # Build the project to verify it works
-          # Determine which package manager to use for build based on the flag used
-          PM_FLAG="${{ matrix.package_manager.flag }}"
           if [[ "$PM_FLAG" == *"pnpm"* ]]; then
             pnpm build
           elif [[ "$PM_FLAG" == *"yarn"* ]]; then

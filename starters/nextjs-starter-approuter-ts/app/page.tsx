@@ -1,12 +1,13 @@
 import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import { HomepageArticleGrid } from "../components/grid";
 import Layout from "../components/layout";
+import { SkeletonHomepageGrid } from "../components/skeleton-article-list";
 import { Button } from "../components/ui/button";
 
-export default async function Home() {
-  // Fetch the articles and site in parallel
+async function HomeArticles() {
   const [{ data: articles }, site] = await Promise.all([
     PCCConvenienceFunctions.getPaginatedArticles({
       pageSize: 3,
@@ -14,6 +15,14 @@ export default async function Home() {
     PCCConvenienceFunctions.getSite(),
   ]);
 
+  return (
+    <section className="max-w-screen-3xl mx-auto mt-32 flex justify-center px-4 sm:px-6 lg:px-0">
+      <HomepageArticleGrid articles={articles} site={site} />
+    </section>
+  );
+}
+
+export default function Home() {
   return (
     <Layout>
       <section className="bg-neutral-100">
@@ -52,9 +61,9 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="max-w-screen-3xl mx-auto mt-32 flex justify-center px-4 sm:px-6 lg:px-0">
-        <HomepageArticleGrid articles={articles} site={site} />
-      </section>
+      <Suspense fallback={<SkeletonHomepageGrid />}>
+        <HomeArticles />
+      </Suspense>
     </Layout>
   );
 }
