@@ -26,7 +26,7 @@
     "eslint": "^9.39.2",
     "eslint-config-pcc-custom": "workspace:*",
     "husky": "^9.1.7",
-    "turbo": "^1.13.4"
+    "turbo": "^2.9.14"
   },
   "pnpm": {
     "overrides": {
@@ -39,7 +39,7 @@
       "@pantheon-systems/cpub-react-sdk>prettier": "^3.0.0",
       "webpack-dev-middleware": "^7.2.1",
       "@pantheon-systems/pcc-vue-sdk>ufo": "1.5.3",
-      "next": "16.2.4",
+      "next": "16.2.6",
       "@babel/core": "7.26.0",
       "path-to-regexp": "0.1.12",
       "serialize-javascript": "^7.0.3",
@@ -47,7 +47,11 @@
       "axios": "^1.13.5",
       "image-size": "1.2.1",
       "esbuild": ">=0.25.0",
-      "http-proxy-agent": "^7.0.0"
+      "http-proxy-agent": "^7.0.0",
+      "postcss": ">=8.5.10",
+      "qs": ">=6.15.2",
+      "uuid": ">=11.1.1",
+      "ws": ">=8.20.1"
     }
   }
 }
