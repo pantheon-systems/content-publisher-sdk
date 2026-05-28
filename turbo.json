@@ -1,6 +1,12 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
+  "globalPassThroughEnv": [
+    "PCC_SITE_ID",
+    "PCC_TOKEN",
+    "IS_CICD",
+    "NPM_TOKEN"
+  ],
+  "tasks": {
     "build": {
       // A package's `build` script depends on that package's
       // dependencies and devDependencies
