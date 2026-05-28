@@ -1,6 +1,7 @@
+import crypto from "crypto";
 import fs, { readFileSync } from "fs";
+import os from "os";
 import path from "path";
-import tmp from "tmp";
 import { sh } from "../../lib/utils";
 
 jest.setTimeout(180000);
@@ -24,7 +25,7 @@ const executePCC = async (command: string, args: string[]) => {
 };
 
 test("should be able to init starter kit for nextjs template", async () => {
-  const appFolder = tmp.tmpNameSync();
+  const appFolder = path.join(os.tmpdir(), `pcc-test-${crypto.randomUUID()}`);
 
   await executePCC("init", [appFolder, "--template", "nextjs", "--use-pnpm"]);
 
@@ -47,7 +48,7 @@ test("should be able to init starter kit for nextjs template", async () => {
 });
 
 test("should be able to init starter kit for nextjs template with typescript", async () => {
-  const appFolder = tmp.tmpNameSync();
+  const appFolder = path.join(os.tmpdir(), `pcc-test-${crypto.randomUUID()}`);
 
   await executePCC("init", [
     appFolder,
@@ -76,7 +77,7 @@ test("should be able to init starter kit for nextjs template with typescript", a
 });
 
 test("should be able to init starter kit with eslint and app name", async () => {
-  const appFolder = tmp.tmpNameSync();
+  const appFolder = path.join(os.tmpdir(), `pcc-test-${crypto.randomUUID()}`);
 
   await executePCC("init", [
     appFolder,
@@ -102,7 +103,7 @@ test("should be able to init starter kit with eslint and app name", async () => 
 });
 
 test("should raise error when project directory already exists", async () => {
-  const appFolder = tmp.tmpNameSync();
+  const appFolder = path.join(os.tmpdir(), `pcc-test-${crypto.randomUUID()}`);
   fs.mkdirSync(appFolder);
 
   let error = false;
@@ -120,7 +121,7 @@ test("should raise error when project directory already exists", async () => {
 });
 
 test("should raise error when template name is incorrect", async () => {
-  const appFolder = tmp.tmpNameSync();
+  const appFolder = path.join(os.tmpdir(), `pcc-test-${crypto.randomUUID()}`);
 
   let error = 0;
   try {
@@ -146,7 +147,7 @@ test("should raise error when template name is incorrect", async () => {
 });
 
 test("should be able to init starter kit with default git ref (latest tag)", async () => {
-  const appFolder = tmp.tmpNameSync();
+  const appFolder = path.join(os.tmpdir(), `pcc-test-${crypto.randomUUID()}`);
 
   await executePCC("init", [appFolder, "--template", "nextjs"]);
 
@@ -168,7 +169,7 @@ test("should be able to init starter kit with default git ref (latest tag)", asy
 });
 
 test("should be able to init starter kit with a specific git ref (5.2.0)", async () => {
-  const appFolder = tmp.tmpNameSync();
+  const appFolder = path.join(os.tmpdir(), `pcc-test-${crypto.randomUUID()}`);
 
   await executePCC("init", [
     appFolder,

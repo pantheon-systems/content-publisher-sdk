@@ -5,10 +5,8 @@ package-lock.json
 tsup.config.*.mjs
 *.tsbuildinfo
 
-.env.local
-.env.development
-.env.production
 
 .turbo
 .DS_Store
 .pnpm-store/
+config.bat

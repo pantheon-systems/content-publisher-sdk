@@ -74,13 +74,11 @@
     "@types/nunjucks": "^3.2.6",
     "@types/server-destroy": "^1.0.3",
     "@types/showdown": "^2.0.6",
-    "@types/tmp": "^0.2.6",
     "@types/yargs": "^17.0.33",
     "babel-jest": "^29.7.0",
     "eslint": "^9.39.2",
     "eslint-config-pcc-custom": "workspace:*",
     "jest": "29.5.0",
-    "tmp": "^0.2.5",
     "ts-jest": "29.1.0",
     "tsup": "^8.2.4"
   }
