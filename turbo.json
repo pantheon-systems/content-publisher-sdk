@@ -8,11 +8,19 @@
   ],
   "tasks": {
     "build": {
+      // A package's `build` script depends on that package's
+      // dependencies and devDependencies
+      // `build` tasks  being completed first
+      // (the `^` symbol signifies `upstream`).
       "dependsOn": [
         "^build"
       ]
+      // Outputs configured in each workspace's config
     },
     "deploy": {
+      // A package's `deploy` script depends on the `build`,
+      // `test`, and `lint` scripts of the same package
+      // being completed. It also has no filesystem outputs.
       "dependsOn": [
         "build",
         "test",
@@ -20,10 +28,14 @@
       ]
     },
     "test": {
+      // A package's `test` script depends on that package's
+      // own `build` script being completed first.
       "dependsOn": [
         "build",
         "^build"
       ],
+      // A package's `test` script should only be rerun when
+      // either a `.tsx` or `.ts` file has changed in `src` or `test` folders.
       "inputs": [
         "src/**/*.tsx",
         "src/**/*.ts",
@@ -31,6 +43,8 @@
         "test/**/*.tsx"
       ]
     },
+    // A package's `lint` script has no dependencies and
+    // can be run whenever. It also has no filesystem outputs.
     "lint": {},
     "lint:fix": {
       "cache": false,
@@ -39,7 +53,7 @@
     "dev": {
       "dependsOn": [
         "^build"
-      ],
+      ], // `dev` depends on `build` of dependencies being completed
       "cache": false,
       "persistent": true,
       "outputs": [
