@@ -2,12 +2,17 @@ import { exit } from "process";
 import chalk from "chalk";
 
 // Helper to check if error is from a fetch HTTP response
-function isFetchError(error: unknown): error is { status?: number; data?: any } {
+interface FetchErrorResponse {
+  status?: number;
+  data?: unknown;
+}
+
+function isFetchError(error: unknown): error is FetchErrorResponse {
   return (
     error !== null &&
     typeof error === "object" &&
     "status" in error &&
-    typeof (error as any).status === "number"
+    typeof (error as FetchErrorResponse).status === "number"
   );
 }
 
@@ -57,9 +62,7 @@ export function errorHandler<T>(
           e.data
         ) {
           // Operational error (4xx client errors)
-          console.log(
-            chalk.red(`\nError: ${e.data.message || e.data}`),
-          );
+          console.log(chalk.red(`\nError: ${e.data.message || e.data}`));
         } else {
           // Unhandled error
           console.log(

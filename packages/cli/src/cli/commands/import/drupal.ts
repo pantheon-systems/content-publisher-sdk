@@ -65,7 +65,11 @@ async function getDrupalPosts(url: string) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const result: any = await response.json();
+    const result = (await response.json()) as {
+      links?: { next?: { href: string } };
+      data: unknown;
+      included: unknown;
+    };
 
     return {
       nextURL: result.links?.next?.href,
@@ -206,7 +210,7 @@ export const importFromDrupal = errorHandler<DrupalImportParams>(
         } catch (e) {
           // Check if error has response data (from fetch errors)
           if (e && typeof e === "object" && "data" in e) {
-            console.error((e as any).data);
+            console.error((e as { data: unknown }).data);
           } else {
             console.error(e);
           }

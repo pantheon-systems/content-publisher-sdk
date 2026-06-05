@@ -33,16 +33,21 @@ describe("getConnectedAccountAccessToken", () => {
       if (urlString.endsWith("/accounts")) {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve([
-            { id: "acc-1", accountEmail: "user@company.com", name: "Test" },
-            { id: "acc-2", accountEmail: "other@company.com", name: "Other" },
-          ]),
+          json: () =>
+            Promise.resolve([
+              { id: "acc-1", accountEmail: "user@company.com", name: "Test" },
+              { id: "acc-2", accountEmail: "other@company.com", name: "Other" },
+            ]),
         } as Response);
       }
       if (urlString.includes("/acc-1/get-access-token")) {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve({ accessToken: "goog-token-123", expiresAt: "2026-01-01" }),
+          json: () =>
+            Promise.resolve({
+              accessToken: "goog-token-123",
+              expiresAt: "2026-01-01",
+            }),
         } as Response);
       }
       return Promise.reject(new Error(`Unexpected URL: ${urlString}`));
@@ -60,9 +65,10 @@ describe("getConnectedAccountAccessToken", () => {
       if (urlString.endsWith("/accounts")) {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve([
-            { id: "acc-1", accountEmail: "other@company.com", name: "Other" },
-          ]),
+          json: () =>
+            Promise.resolve([
+              { id: "acc-1", accountEmail: "other@company.com", name: "Other" },
+            ]),
         } as Response);
       }
       return Promise.reject(new Error(`Unexpected URL: ${urlString}`));

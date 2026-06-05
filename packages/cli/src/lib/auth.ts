@@ -29,15 +29,17 @@ export class Auth0Provider extends BaseAuthProvider {
     const auth0Config = await AddOnApiHelper.getAuth0Config();
     const url = `${auth0Config.issuerBaseUrl}/oauth/token`;
     const response = await fetch(url, {
-	method: "POST",
-	body: JSON.stringify({
-	      grant_type: "refresh_token",
-	      client_id: auth0Config.clientId,
-	      refresh_token: refreshToken,
-	    })
-})
-	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
-	.catch(() => null);
+      method: "POST",
+      body: JSON.stringify({
+        grant_type: "refresh_token",
+        client_id: auth0Config.clientId,
+        refresh_token: refreshToken,
+      }),
+    })
+      .then(async (resp) =>
+        Object.assign(resp, { data: (await resp.json()) as unknown }),
+      )
+      .catch(() => null);
     return {
       refresh_token: refreshToken,
       ...response!.data,
@@ -92,19 +94,24 @@ export class Auth0Provider extends BaseAuthProvider {
 
           const auth0Config = await AddOnApiHelper.getAuth0Config();
 
-          const deviceResp = await fetch(`${auth0Config.issuerBaseUrl}/oauth/device/code`, {
-	method: "POST",
-	body: JSON.stringify({
-	              client_id: auth0Config.clientId,
-	              scope: [
-	                ...DEFAULT_AUTH0_SCOPES,
-	                ...DEFAULT_AUTH0_API_SCOPES,
-	              ].join(" "),
-	              audience: auth0Config.audience,
-	            })
-})
-	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
-	.catch(() => null);
+          const deviceResp = await fetch(
+            `${auth0Config.issuerBaseUrl}/oauth/device/code`,
+            {
+              method: "POST",
+              body: JSON.stringify({
+                client_id: auth0Config.clientId,
+                scope: [
+                  ...DEFAULT_AUTH0_SCOPES,
+                  ...DEFAULT_AUTH0_API_SCOPES,
+                ].join(" "),
+                audience: auth0Config.audience,
+              }),
+            },
+          )
+            .then(async (resp) =>
+              Object.assign(resp, { data: (await resp.json()) as unknown }),
+            )
+            .catch(() => null);
 
           const {
             device_code,
@@ -144,19 +151,27 @@ export class Auth0Provider extends BaseAuthProvider {
 
           while (true) {
             try {
-              const resp = await fetch(`${auth0Config.issuerBaseUrl}/oauth/token`, {
-	method: "POST",
-	headers: {
+              const resp = await fetch(
+                `${auth0Config.issuerBaseUrl}/oauth/token`,
+                {
+                  method: "POST",
+                  headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
                   },
-	body: JSON.stringify(queryString.stringify({
-	                  grant_type: "urn:ietf:params:oauth:grant-type:device_code",
-	                  device_code,
-	                  client_id: auth0Config.clientId,
-	                }))
-})
-	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
-	.catch(() => null);
+                  body: JSON.stringify(
+                    queryString.stringify({
+                      grant_type:
+                        "urn:ietf:params:oauth:grant-type:device_code",
+                      device_code,
+                      client_id: auth0Config.clientId,
+                    }),
+                  ),
+                },
+              )
+                .then(async (resp) =>
+                  Object.assign(resp, { data: (await resp.json()) as unknown }),
+                )
+                .catch(() => null);
               credentials = resp!.data as PersistedTokens;
               break;
             } catch (err) {
