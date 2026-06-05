@@ -1,6 +1,5 @@
 import { randomUUID } from "crypto";
 import { exit } from "process";
-import axios, { AxiosError } from "axios";
 import Promise from "bluebird";
 import chalk from "chalk";
 import type { GaxiosResponse } from "gaxios";
@@ -56,7 +55,13 @@ interface WPTag {
 async function getWPPosts(url: string) {
   try {
     console.log(`Importing from ${url}`);
-    const result = (await axios.get<WPPost[]>(url)).data;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json() as WPPost[];
 
     const { url: parsedURL, query } = queryString.parseUrl(url);
 
@@ -96,9 +101,14 @@ async function getWPPosts(url: string) {
 async function getTagInfo(baseURL: string, tags: number[]) {
   if (!tags?.length) return [];
 
-  const { data } = await axios.get<WPTag[]>(
-    new URL(`/wp-json/wp/v2/tags?include=${tags.join()}`, baseURL).href,
-  );
+  const url = new URL(`/wp-json/wp/v2/tags?include=${tags.join()}`, baseURL).href;
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const data = await response.json() as WPTag[];
 
   return data.map((x) => ({
     id: x.id,
@@ -230,7 +240,12 @@ export const importFromWordPress = errorHandler<WordPressImportParams>(
             await AddOnApiHelper.publishDocument(fileId);
           }
         } catch (e) {
-          console.error(e instanceof AxiosError ? e.response?.data : e);
+          // Check if error has response data (from fetch errors)
+          if (e && typeof e === "object" && "data" in e) {
+            console.error((e as any).data);
+          } else {
+            console.error(e);
+          }
           throw e;
         }
       },

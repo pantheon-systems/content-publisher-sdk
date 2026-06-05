@@ -1,5 +1,4 @@
 import { SmartComponentMapZod } from "@pantheon-systems/cpub-sdk-core/types";
-import axios, { AxiosError, HttpStatusCode } from "axios";
 import ora from "ora";
 import queryString from "query-string";
 import {
@@ -11,6 +10,11 @@ import { getApiConfig } from "./apiConfig";
 import { Auth0Provider, PersistedTokens } from "./auth";
 import { toKebabCase } from "./utils";
 
+// HTTP Status codes
+const HttpStatus = {
+  NotFound: 404,
+} as const;
+
 interface Auth0Config {
   clientId: string;
   redirectUri: string;
@@ -18,13 +22,57 @@ interface Auth0Config {
   audience: string;
 }
 
+// Custom error type for fetch errors with response data
+interface FetchError extends Error {
+  status?: number;
+  statusText?: string;
+  data?: any;
+}
+
+// Helper function to handle fetch with axios-like error behavior
+async function fetchWithErrorHandling(
+  url: string,
+  options?: RequestInit
+): Promise<Response> {
+  try {
+    const response = await fetch(url, options);
+
+    // Unlike axios, fetch doesn't throw on HTTP errors
+    if (!response.ok) {
+      const error = new Error(`HTTP error! status: ${response.status}`) as FetchError;
+      error.status = response.status;
+      error.statusText = response.statusText;
+
+      // Try to parse error response body
+      try {
+        error.data = await response.json();
+      } catch {
+        try {
+          error.data = await response.text();
+        } catch {
+          // If we can't parse the body, just use the status text
+          error.data = response.statusText;
+        }
+      }
+
+      throw error;
+    }
+
+    return response;
+  } catch (error) {
+    // Re-throw network errors or our thrown HTTP errors
+    throw error;
+  }
+}
+
 class AddOnApiHelper {
   static async getCurrentTime(): Promise<number> {
     try {
-      const resp = await axios.get(
-        `${(await getApiConfig()).addOnApiEndpoint}/ping`,
+      const response = await fetchWithErrorHandling(
+        `${(await getApiConfig()).addOnApiEndpoint}/ping`
       );
-      return Number(resp.data.timestamp);
+      const data = await response.json() as { timestamp: number };
+      return Number(data.timestamp);
     } catch {
       // If ping fails, return current time
       return Date.now();
@@ -33,8 +81,8 @@ class AddOnApiHelper {
 
   static async getAuth0Config(): Promise<Auth0Config> {
     const apiConfig = await getApiConfig();
-    const resp = await axios.get(`${apiConfig.AUTH0_ENDPOINT}/config`);
-    return resp.data as Auth0Config;
+    const response = await fetchWithErrorHandling(`${apiConfig.AUTH0_ENDPOINT}/config`);
+    return await response.json() as Auth0Config;
   }
 
   static async getAuth0Tokens(): Promise<PersistedTokens> {
@@ -55,15 +103,15 @@ class AddOnApiHelper {
   ): Promise<{ accessToken: string; expiresAt: string }> {
     const { access_token: auth0AccessToken } = await this.getAuth0Tokens();
     try {
-      const resp = await axios.get(
+      const response = await fetchWithErrorHandling(
         `${(await getApiConfig()).ACCOUNT_ENDPOINT}/${accountId}/get-access-token`,
         {
           headers: {
             Authorization: `Bearer ${auth0AccessToken}`,
           },
-        },
+        }
       );
-      return resp.data as { accessToken: string; expiresAt: string };
+      return await response.json() as { accessToken: string; expiresAt: string };
     } catch {
       throw new Error(
         "Unable to retrieve credentials for this account. " +
@@ -92,23 +140,25 @@ class AddOnApiHelper {
     title?: string,
   ): Promise<Article> {
     const { access_token: auth0AccessToken } = await this.getAuth0Tokens();
-    const resp = await axios.get(
-      `${(await getApiConfig()).DOCUMENT_ENDPOINT}/${documentId}`,
-      {
-        params: {
-          withSiteData: withSiteData ? "true" : "false",
-          ...(insertIfMissing && { insertIfMissing }),
-          ...(title && {
-            withMetadata: { title, slug: toKebabCase(title) },
-          }),
-        },
-        headers: {
-          Authorization: `Bearer ${auth0AccessToken}`,
-        },
-      },
-    );
 
-    return resp.data as Article;
+    const url = queryString.stringifyUrl({
+      url: `${(await getApiConfig()).DOCUMENT_ENDPOINT}/${documentId}`,
+      query: {
+        withSiteData: withSiteData ? "true" : "false",
+        ...(insertIfMissing && { insertIfMissing: "true" }),
+        ...(title && {
+          withMetadata: JSON.stringify({ title, slug: toKebabCase(title) }),
+        }),
+      },
+    });
+
+    const response = await fetchWithErrorHandling(url, {
+      headers: {
+        Authorization: `Bearer ${auth0AccessToken}`,
+      },
+    });
+
+    return await response.json() as Article;
   }
   static async getDocument(
     documentId: string,
@@ -132,22 +182,22 @@ class AddOnApiHelper {
   ): Promise<void> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    await axios.post(
-      `${(await getApiConfig()).SITE_ENDPOINT}/${siteId}/metadata`,
-      {
-        contentType,
-        field: {
-          title: fieldTitle,
-          type: fieldType,
-        },
-      },
-      {
-        headers: {
+    await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${siteId}/metadata`, {
+	method: "POST",
+	headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
-      },
-    );
+	body: JSON.stringify({
+	        contentType,
+	        field: {
+	          title: fieldTitle,
+	          type: fieldType,
+	        },
+	      })
+})
+	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
+	.catch(() => null);
   }
 
   static async updateDocument(
@@ -176,26 +226,26 @@ class AddOnApiHelper {
       });
     }
 
-    const resp = await axios.patch(
-      `${(await getApiConfig()).DOCUMENT_ENDPOINT}/${documentId}`,
-      {
-        siteId: site.id,
-        tags,
-        title,
-        ...(metadataFields && {
-          metadataFields,
-        }),
-      },
-      {
-        headers: {
+    const resp = await fetch(`${(await getApiConfig()).DOCUMENT_ENDPOINT}/${documentId}`, {
+	method: "PATCH",
+	headers: {
           Authorization: `Bearer ${auth0AccessToken}`,
           "oauth-token": connectedAccountToken,
           "Content-Type": "application/json",
         },
-      },
-    );
+	body: JSON.stringify({
+	        siteId: site.id,
+	        tags,
+	        title,
+	        ...(metadataFields && {
+	          metadataFields,
+	        }),
+	      })
+})
+	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
+	.catch(() => null);
 
-    return resp.data as Article;
+    return resp!.data as Article;
   }
 
   static async publishDocument(documentId: string) {
@@ -207,27 +257,29 @@ class AddOnApiHelper {
     const connectedAccountToken =
       await this.getConnectedAccountAccessToken(accessorAccount);
 
-    const resp = await axios.post<{ url: string }>(
+    const response = await fetchWithErrorHandling(
       `${(await getApiConfig()).DOCUMENT_ENDPOINT}/${documentId}/publish`,
-      null,
       {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${auth0AccessToken}`,
           "Content-Type": "application/json",
           "oauth-token": connectedAccountToken,
         },
+        body: JSON.stringify(null),
       },
     );
 
-    const publishUrl = resp.data.url;
+    const data = await response.json() as { url: string };
+    const publishUrl = data.url;
 
     try {
-      const resp = await axios.get(publishUrl);
+      const publishResponse = await fetch(publishUrl);
 
-      // Get the published URL
-      console.log("Published to ", resp.request.res.responseUrl);
+      // Get the published URL from the final redirect
+      console.log("Published to ", publishResponse.url);
     } catch (e) {
-      if (e instanceof AxiosError) console.error(e, e.code, e.message);
+      console.error(e);
       throw e;
     }
   }
@@ -248,21 +300,21 @@ class AddOnApiHelper {
     const connectedAccountToken =
       await this.getConnectedAccountAccessToken(accessorAccount);
 
-    const resp = await axios.post<{ url: string }>(
+    const response = await fetchWithErrorHandling(
       `${(await getApiConfig()).DOCUMENT_ENDPOINT}/${docId}/preview`,
       {
-        baseUrl,
-      },
-      {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${auth0AccessToken}`,
           "Content-Type": "application/json",
           "oauth-token": connectedAccountToken,
         },
+        body: JSON.stringify({ baseUrl }),
       },
     );
 
-    return resp.data.url;
+    const data = await response.json() as { url: string };
+    return data.url;
   }
 
   static async createApiKey({
@@ -270,57 +322,59 @@ class AddOnApiHelper {
   }: { siteId?: string } = {}): Promise<string> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    const resp = await axios.post(
-      (await getApiConfig()).API_KEY_ENDPOINT,
-      {
-        siteId,
-      },
-      {
-        headers: {
+    const resp = await fetch((await getApiConfig()).API_KEY_ENDPOINT, {
+	method: "POST",
+	headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      },
-    );
-    return resp.data.apiKey as string;
+	body: JSON.stringify({
+	        siteId,
+	      })
+})
+	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
+	.catch(() => null);
+    return resp!.data.apiKey as string;
   }
 
   static async listAccounts(): Promise<Account[]> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    const resp = await axios.get((await getApiConfig()).ACCOUNT_ENDPOINT, {
-      headers: {
+    const resp = await fetch((await getApiConfig()).ACCOUNT_ENDPOINT, { headers: {
         Authorization: `Bearer ${accessToken}`,
-      },
-    });
+      } })
+	.then(async (res) => Object.assign(res, { data: await res.json() }))
+	.catch(() => null);
 
-    return resp.data as Account[];
+    return resp!.data as Account[];
   }
 
   static async listApiKeys(): Promise<ApiKey[]> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    const resp = await axios.get((await getApiConfig()).API_KEY_ENDPOINT, {
-      headers: {
+    const resp = await fetch((await getApiConfig()).API_KEY_ENDPOINT, { headers: {
         Authorization: `Bearer ${accessToken}`,
-      },
-    });
+      } })
+	.then(async (res) => Object.assign(res, { data: await res.json() }))
+	.catch(() => null);
 
-    return resp.data as ApiKey[];
+    return resp!.data as ApiKey[];
   }
 
   static async revokeApiKey(id: string): Promise<void> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
     try {
-      await axios.delete(`${(await getApiConfig()).API_KEY_ENDPOINT}/${id}`, {
-        headers: {
+      await fetch(`${(await getApiConfig()).API_KEY_ENDPOINT}/${id}`, {
+	method: "DELETE",
+	headers: {
           Authorization: `Bearer ${accessToken}`,
-        },
-      });
+        }
+})
+	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
+	.catch(() => null);
     } catch (err) {
       if (
-        (err as { response: { status: number } }).response.status ===
-        HttpStatusCode.NotFound
+        (err as { status?: number }).status === HttpStatus.NotFound
       )
         throw new HTTPNotFound();
     }
@@ -333,16 +387,16 @@ class AddOnApiHelper {
 
     const { access_token: auth0AccessToken } = await this.getAuth0Tokens();
 
-    const resp = await axios.post(
-      (await getApiConfig()).SITE_ENDPOINT,
-      { name: "", url, emailList: "", accountId },
-      {
-        headers: {
+    const resp = await fetch((await getApiConfig()).SITE_ENDPOINT, {
+	method: "POST",
+	headers: {
           Authorization: `Bearer ${auth0AccessToken}`,
         },
-      },
-    );
-    return resp.data.id as string;
+	body: JSON.stringify({ name: "", url, emailList: "", accountId })
+})
+	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
+	.catch(() => null);
+    return resp!.data.id as string;
   }
 
   static async deleteSite(
@@ -352,21 +406,21 @@ class AddOnApiHelper {
   ): Promise<string> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    const resp = await axios.delete(
-      queryString.stringifyUrl({
+    const resp = await fetch(queryString.stringifyUrl({
         url: `${(await getApiConfig()).SITE_ENDPOINT}/${id}`,
         query: {
           transferToSiteId,
           force,
         },
-      }),
-      {
-        headers: {
+      }), {
+	method: "DELETE",
+	headers: {
           Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
-    return resp.data.id as string;
+        }
+})
+	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
+	.catch(() => null);
+    return resp!.data.id as string;
   }
 
   static async listSites({
@@ -376,58 +430,49 @@ class AddOnApiHelper {
   }): Promise<Site[]> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    const resp = await axios.get((await getApiConfig()).SITE_ENDPOINT, {
-      headers: {
+    const resp = await fetch((await getApiConfig()).SITE_ENDPOINT, { headers: {
         Authorization: `Bearer ${accessToken}`,
-      },
-      params: {
-        withConnectionStatus,
-      },
-    });
+      } })
+	.then(async (res) => Object.assign(res, { data: await res.json() }))
+	.catch(() => null);
 
-    return resp.data as Site[];
+    return resp!.data as Site[];
   }
 
   static async getSite(siteId: string): Promise<Site> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    const resp = await axios.get(
-      `${(await getApiConfig()).SITE_ENDPOINT}/${siteId}`,
-      {
-        headers: {
+    const resp = await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${siteId}`, { headers: {
           Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+        } })
+	.then(async (res) => Object.assign(res, { data: await res.json() }))
+	.catch(() => null);
 
-    return resp.data as Site;
+    return resp!.data as Site;
   }
 
   static async updateSite(id: string, url: string): Promise<void> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    await axios.patch(
-      `${(await getApiConfig()).SITE_ENDPOINT}/${id}`,
-      { url },
-      {
-        headers: {
+    await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${id}`, {
+	method: "PATCH",
+	headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      },
-    );
+	body: JSON.stringify({ url })
+})
+	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
+	.catch(() => null);
   }
 
   static async getServersideComponentSchema(id: string): Promise<void> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    await axios.get(
-      `${(await getApiConfig()).SITE_ENDPOINT}/${id}/components`,
-      {
-        headers: {
+    await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${id}/components`, { headers: {
           Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+        } })
+	.then(async (res) => Object.assign(res, { data: await res.json() }))
+	.catch(() => null);
   }
 
   static async pushComponentSchema(
@@ -436,118 +481,112 @@ class AddOnApiHelper {
   ): Promise<void> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    await axios.post(
-      `${(await getApiConfig()).SITE_ENDPOINT}/${id}/components`,
-      {
-        componentSchema,
-      },
-      {
-        headers: {
+    await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${id}/components`, {
+	method: "POST",
+	headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      },
-    );
+	body: JSON.stringify({
+	        componentSchema,
+	      })
+})
+	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
+	.catch(() => null);
   }
 
   static async removeComponentSchema(id: string): Promise<void> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    await axios.delete(
-      `${(await getApiConfig()).SITE_ENDPOINT}/${id}/components`,
-      {
-        headers: {
+    await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${id}/components`, {
+	method: "DELETE",
+	headers: {
           Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+        }
+})
+	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
+	.catch(() => null);
   }
 
-  static async listAdmins(id: string): Promise<void> {
+  static async listAdmins(id: string): Promise<any> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
     return (
-      await axios.get(`${(await getApiConfig()).SITE_ENDPOINT}/${id}/admins`, {
-        headers: {
+      await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${id}/admins`, { headers: {
           Authorization: `Bearer ${accessToken}`,
-        },
-      })
-    ).data;
+        } })
+	.then(async (res) => Object.assign(res, { data: await res.json() as any }))
+	.catch(() => null)
+    )!.data;
   }
 
   static async addAdmin(id: string, email: string): Promise<void> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    await axios.patch(
-      `${(await getApiConfig()).SITE_ENDPOINT}/${id}/admins`,
-      {
-        email,
-      },
-      {
-        headers: {
+    await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${id}/admins`, {
+	method: "PATCH",
+	headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      },
-    );
+	body: JSON.stringify({
+	        email,
+	      })
+})
+	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
+	.catch(() => null);
   }
 
   static async removeAdmin(id: string, email: string): Promise<void> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    await axios.delete(`${(await getApiConfig()).SITE_ENDPOINT}/${id}/admins`, {
-      headers: {
+    await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${id}/admins`, {
+	method: "DELETE",
+	headers: {
         Authorization: `Bearer ${accessToken}`,
-      },
-      data: {
-        email,
-      },
-    });
+      }
+})
+	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
+	.catch(() => null);
   }
 
-  static async listCollaborators(id: string): Promise<void> {
+  static async listCollaborators(id: string): Promise<any> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
     return (
-      await axios.get(
-        `${(await getApiConfig()).SITE_ENDPOINT}/${id}/collaborators`,
-        {
-          headers: {
+      await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${id}/collaborators`, { headers: {
             Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      )
-    ).data;
+          } })
+	.then(async (res) => Object.assign(res, { data: await res.json() as any }))
+	.catch(() => null)
+    )!.data;
   }
 
   static async addCollaborator(id: string, email: string): Promise<void> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    await axios.patch(
-      `${(await getApiConfig()).SITE_ENDPOINT}/${id}/collaborators`,
-      {
-        email,
-      },
-      {
-        headers: {
+    await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${id}/collaborators`, {
+	method: "PATCH",
+	headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      },
-    );
+	body: JSON.stringify({
+	        email,
+	      })
+})
+	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
+	.catch(() => null);
   }
 
   static async removeCollaborator(id: string, email: string): Promise<void> {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    await axios.delete(
-      `${(await getApiConfig()).SITE_ENDPOINT}/${id}/collaborators`,
-      {
-        headers: {
+    await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${id}/collaborators`, {
+	method: "DELETE",
+	headers: {
           Authorization: `Bearer ${accessToken}`,
-        },
-        data: {
-          email,
-        },
-      },
-    );
+        }
+})
+	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
+	.catch(() => null);
   }
 
   static async updateSiteConfig(
@@ -568,24 +607,24 @@ class AddOnApiHelper {
 
     const configuredWebhook = webhookUrl || webhookSecret || preferredEvents;
 
-    await axios.patch(
-      `${(await getApiConfig()).SITE_ENDPOINT}/${id}`,
-      {
-        ...(url && { url: url }),
-        ...(configuredWebhook && {
-          webhookConfig: {
-            ...(webhookUrl && { webhookUrl: webhookUrl }),
-            ...(webhookSecret && { webhookSecret: webhookSecret }),
-            ...(preferredEvents && { preferredEvents }),
-          },
-        }),
-      },
-      {
-        headers: {
+    await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${id}`, {
+	method: "PATCH",
+	headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      },
-    );
+	body: JSON.stringify({
+	        ...(url && { url: url }),
+	        ...(configuredWebhook && {
+	          webhookConfig: {
+	            ...(webhookUrl && { webhookUrl: webhookUrl }),
+	            ...(webhookSecret && { webhookSecret: webhookSecret }),
+	            ...(preferredEvents && { preferredEvents }),
+	          },
+	        }),
+	      })
+})
+	.then(async (resp) => Object.assign(resp, { data: await resp.json() as any }))
+	.catch(() => null);
   }
 
   static async fetchWebhookLogs(
@@ -600,35 +639,25 @@ class AddOnApiHelper {
   ) {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    const resp = await axios.get(
-      `${(await getApiConfig()).SITE_ENDPOINT}/${siteId}/webhookLogs`,
-      {
-        headers: {
+    const resp = await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${siteId}/webhookLogs`, { headers: {
           Authorization: `Bearer ${accessToken}`,
-        },
-        params: {
-          limit,
-          offset,
-        },
-      },
-    );
+        } })
+	.then(async (res) => Object.assign(res, { data: await res.json() }))
+	.catch(() => null);
 
-    return resp.data as WebhookDeliveryLog[];
+    return resp!.data as WebhookDeliveryLog[];
   }
 
   static async fetchAvailableWebhookEvents(siteId: string) {
     const { access_token: accessToken } = await this.getAuth0Tokens();
 
-    const resp = await axios.get(
-      `${(await getApiConfig()).SITE_ENDPOINT}/${siteId}/availableWebhookEvents`,
-      {
-        headers: {
+    const resp = await fetch(`${(await getApiConfig()).SITE_ENDPOINT}/${siteId}/availableWebhookEvents`, { headers: {
           Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+        } })
+	.then(async (res) => Object.assign(res, { data: await res.json() }))
+	.catch(() => null);
 
-    return resp.data as string[];
+    return resp!.data as string[];
   }
 }
 

@@ -1,6 +1,5 @@
 import { randomUUID } from "crypto";
 import { exit } from "process";
-import axios, { AxiosError } from "axios";
 import Promise from "bluebird";
 import chalk from "chalk";
 import type { GaxiosResponse } from "gaxios";
@@ -60,7 +59,13 @@ interface DrupalIncludedData {
 async function getDrupalPosts(url: string) {
   try {
     console.log(`Importing from ${url}`);
-    const result = (await axios.get(url)).data;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result: any = await response.json();
 
     return {
       nextURL: result.links?.next?.href,
@@ -199,7 +204,12 @@ export const importFromDrupal = errorHandler<DrupalImportParams>(
             await AddOnApiHelper.publishDocument(fileId);
           }
         } catch (e) {
-          console.error(e instanceof AxiosError ? e.response?.data : e);
+          // Check if error has response data (from fetch errors)
+          if (e && typeof e === "object" && "data" in e) {
+            console.error((e as any).data);
+          } else {
+            console.error(e);
+          }
           throw e;
         }
       },
