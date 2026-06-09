@@ -60,6 +60,14 @@ export const getStaticProps = async ({ params: { uri } }) => {
 };
 
 export const getStaticPaths = async (uri) => {
+  // Skip pre-rendering in CI/CD environments
+  if (process.env.IS_CICD === "true") {
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
+
   // Get all the published articles and the site in parallel
   const [publishedArticles, site] = await Promise.all([
     PCCConvenienceFunctions.getAllArticles(

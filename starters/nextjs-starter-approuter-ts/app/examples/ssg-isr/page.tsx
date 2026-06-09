@@ -26,6 +26,32 @@ async function fetchNextPages(cursor?: string | null | undefined) {
 }
 
 async function SSGISRContent() {
+  // Skip pre-rendering in CI/CD environments
+  if (process.env.IS_CICD === "true") {
+    return (
+      <ArticleList
+        headerText={"SSG and ISR Example"}
+        articles={[]}
+        totalCount={0}
+        cursor={""}
+        fetcher={fetchNextPages}
+        site={{} as unknown}
+        additionalHeader={
+          <div className="prose lg:prose-xl my-10 flex flex-col">
+            <p>
+              <em>
+                By default, this starter kit is optimized for SSR and Edge
+                Caching on Pantheon. This example instead uses Incremental
+                Static Regeneration and is provided as a reference for cases
+                where Next.js static generation options would be beneficial.
+              </em>
+            </p>
+          </div>
+        }
+      />
+    );
+  }
+
   // Fetch the articles and site in parallel
   const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
     PCCConvenienceFunctions.getPaginatedArticles({

@@ -8,6 +8,15 @@ import { SkeletonHomepageGrid } from "../components/skeleton-article-list";
 import { Button } from "../components/ui/button";
 
 async function HomeArticles() {
+  // Skip pre-rendering in CI/CD environments
+  if (process.env.IS_CICD === "true") {
+    return (
+      <section className="max-w-screen-3xl mx-auto mt-32 flex justify-center px-4 sm:px-6 lg:px-0">
+        <HomepageArticleGrid articles={[]} site={{} as unknown} />
+      </section>
+    );
+  }
+
   const [{ data: articles }, site] = await Promise.all([
     PCCConvenienceFunctions.getPaginatedArticles({
       pageSize: 3,

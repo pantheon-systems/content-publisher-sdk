@@ -28,6 +28,10 @@ export const ArticleView = async ({
     searchParams,
   });
 
+  if (!article) {
+    return notFound();
+  }
+
   return (
     <ClientsideArticleView
       article={article}
@@ -57,6 +61,14 @@ export async function getServersideArticle({
 
   const slugOrId = uri[uri.length - 1];
   const grant = pccGrant || (await cookies()).get("PCC-GRANT")?.value || null;
+
+  // Skip pre-rendering in CI/CD environments
+  if (process.env.IS_CICD === "true") {
+    return {
+      article: null,
+      grant: null,
+    };
+  }
 
   // Fetch the article and site in parallel
   const [article, site] = await Promise.all([

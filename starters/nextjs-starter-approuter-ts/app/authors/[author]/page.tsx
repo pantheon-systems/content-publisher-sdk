@@ -46,6 +46,15 @@ async function AuthorContent({
     ? decodeURIComponent(resolvedParams.author)
     : undefined;
 
+  // Skip pre-rendering in CI/CD environments
+  if (process.env.IS_CICD === "true") {
+    return (
+      <section className="max-w-screen-3xl mx-auto px-4 pt-16 sm:w-4/5 md:w-3/4 lg:w-4/5 2xl:w-3/4">
+        <div>Could not find any articles by {author}</div>
+      </section>
+    );
+  }
+
   const [site, { data: articles, cursor, totalCount }] = await Promise.all([
     PCCConvenienceFunctions.getSite(),
     PCCConvenienceFunctions.getPaginatedArticles({

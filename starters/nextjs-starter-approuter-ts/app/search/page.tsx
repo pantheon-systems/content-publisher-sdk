@@ -13,6 +13,11 @@ async function SearchContent({
 }: {
   searchParams: Promise<{ q?: string | null | undefined }>;
 }) {
+  // Skip pre-rendering in CI/CD environments
+  if (process.env.IS_CICD === "true") {
+    return <SearchResults searchResults={[]} summary={null} />;
+  }
+
   const resolvedSearchParams = await searchParams;
   const searchResults = await PCCConvenienceFunctions.getAllArticlesWithSummary(
     {

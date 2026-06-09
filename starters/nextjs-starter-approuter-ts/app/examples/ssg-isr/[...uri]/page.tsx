@@ -18,6 +18,10 @@ interface ArticlePageProps {
 async function fetchArticle(slug: string) {
   "use cache";
   cacheLife({ revalidate: 21600 });
+  // Skip pre-rendering in CI/CD environments
+  if (process.env.IS_CICD === "true") {
+    return null;
+  }
   return PCCConvenienceFunctions.getArticleBySlugOrId(slug);
 }
 
@@ -58,6 +62,14 @@ export default function ArticlePage(props: ArticlePageProps) {
 export async function generateMetadata(
   props: ArticlePageProps,
 ): Promise<Metadata> {
+  // Skip pre-rendering in CI/CD environments
+  if (process.env.IS_CICD === "true") {
+    return {
+      title: "Article",
+      description: "Article page",
+    };
+  }
+
   const params = await props.params;
   const article = await PCCConvenienceFunctions.getArticleBySlugOrId(
     params.uri[params.uri.length - 1],
@@ -67,6 +79,11 @@ export async function generateMetadata(
 }
 
 export async function generateStaticParams() {
+  // Skip pre-rendering in CI/CD environments
+  if (process.env.IS_CICD === "true") {
+    return [{ uri: ["placeholder"] }];
+  }
+
   // Get all published articles and the site in prallel
   const [publishedArticles, site] = await Promise.all([
     PCCConvenienceFunctions.getAllArticles(

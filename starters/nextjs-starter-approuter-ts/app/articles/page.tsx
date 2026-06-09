@@ -19,6 +19,20 @@ async function fetchNextPages(cursor?: string | null | undefined) {
 }
 
 async function ArticlesContent() {
+  // Skip pre-rendering in CI/CD environments
+  if (process.env.IS_CICD === "true") {
+    return (
+      <ArticleList
+        headerText={"All Articles"}
+        articles={[]}
+        totalCount={0}
+        cursor={""}
+        fetcher={fetchNextPages}
+        site={{} as unknown}
+      />
+    );
+  }
+
   // Fetch the articles and site in parallel
   const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
     PCCConvenienceFunctions.getPaginatedArticles({
