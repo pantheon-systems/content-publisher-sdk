@@ -1,4 +1,7 @@
-import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
+import {
+  PCCConvenienceFunctions,
+  type Site,
+} from "@pantheon-systems/cpub-react-sdk/server";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import ArticleList from "../../../components/article-list";
@@ -35,7 +38,7 @@ async function SSGISRContent() {
         totalCount={0}
         cursor={""}
         fetcher={fetchNextPages}
-        site={{} as unknown}
+        site={{} as Site}
         additionalHeader={
           <div className="prose lg:prose-xl my-10 flex flex-col">
             <p>

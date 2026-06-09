@@ -1,4 +1,7 @@
-import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
+import {
+  PCCConvenienceFunctions,
+  type Site,
+} from "@pantheon-systems/cpub-react-sdk/server";
 import { Suspense } from "react";
 import ArticleList from "../../components/article-list";
 import Layout from "../../components/layout";
@@ -28,7 +31,7 @@ async function ArticlesContent() {
         totalCount={0}
         cursor={""}
         fetcher={fetchNextPages}
-        site={{} as unknown}
+        site={{} as Site}
       />
     );
   }

@@ -1,4 +1,7 @@
-import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
+import {
+  PCCConvenienceFunctions,
+  type Site,
+} from "@pantheon-systems/cpub-react-sdk/server";
 import { Suspense } from "react";
 import Layout from "../../../components/layout";
 import { SkeletonArticleList } from "../../../components/skeleton-article-list";
@@ -28,7 +31,7 @@ async function PaginationContent() {
         totalCount={0}
         cursor={""}
         fetcher={fetchNextPages}
-        site={{} as unknown}
+        site={{} as Site}
         additionalHeader={
           <div className="prose lg:prose-xl my-10 flex flex-col">
             <p>
