@@ -4,7 +4,7 @@ import chalk from "chalk";
 // Helper to check if error is from a fetch HTTP response
 interface FetchErrorResponse {
   status?: number;
-  data?: unknown;
+  data?: Record<string, unknown>;
 }
 
 function isFetchError(error: unknown): error is FetchErrorResponse {

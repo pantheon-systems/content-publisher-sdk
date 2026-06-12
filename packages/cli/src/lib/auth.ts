@@ -30,19 +30,17 @@ export class Auth0Provider extends BaseAuthProvider {
     const url = `${auth0Config.issuerBaseUrl}/oauth/token`;
     const response = await fetch(url, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         grant_type: "refresh_token",
         client_id: auth0Config.clientId,
         refresh_token: refreshToken,
       }),
-    })
-      .then(async (resp) =>
-        Object.assign(resp, { data: (await resp.json()) as unknown }),
-      )
-      .catch(() => null);
+    });
+    const data = (await response.json()) as Record<string, unknown>;
     return {
       refresh_token: refreshToken,
-      ...response!.data,
+      ...data,
     } as PersistedTokens;
   }
 
@@ -94,10 +92,11 @@ export class Auth0Provider extends BaseAuthProvider {
 
           const auth0Config = await AddOnApiHelper.getAuth0Config();
 
-          const deviceResp = await fetch(
+          const deviceResponse = await fetch(
             `${auth0Config.issuerBaseUrl}/oauth/device/code`,
             {
               method: "POST",
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 client_id: auth0Config.clientId,
                 scope: [
@@ -107,11 +106,14 @@ export class Auth0Provider extends BaseAuthProvider {
                 audience: auth0Config.audience,
               }),
             },
-          )
-            .then(async (resp) =>
-              Object.assign(resp, { data: (await resp.json()) as unknown }),
-            )
-            .catch(() => null);
+          );
+          const deviceData = (await deviceResponse.json()) as {
+            device_code: string;
+            verification_uri: string;
+            user_code: string;
+            verification_uri_complete?: string;
+            interval?: number;
+          };
 
           const {
             device_code,
@@ -119,7 +121,7 @@ export class Auth0Provider extends BaseAuthProvider {
             user_code: userCode,
             verification_uri_complete: verificationUriComplete,
             interval,
-          } = deviceResp!.data;
+          } = deviceData;
 
           // Optionally auto-open browser
           if (verificationUriComplete) {
@@ -150,42 +152,34 @@ export class Auth0Provider extends BaseAuthProvider {
           let credentials: PersistedTokens;
 
           while (true) {
-            try {
-              const resp = await fetch(
-                `${auth0Config.issuerBaseUrl}/oauth/token`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                  },
-                  body: JSON.stringify(
-                    queryString.stringify({
-                      grant_type:
-                        "urn:ietf:params:oauth:grant-type:device_code",
-                      device_code,
-                      client_id: auth0Config.clientId,
-                    }),
-                  ),
+            const resp = await fetch(
+              `${auth0Config.issuerBaseUrl}/oauth/token`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
                 },
-              )
-                .then(async (resp) =>
-                  Object.assign(resp, { data: (await resp.json()) as unknown }),
-                )
-                .catch(() => null);
-              credentials = resp!.data as PersistedTokens;
-              break;
-            } catch (err) {
-              if (
-                (err as { response: { data: { error: string } } }).response
-                  ?.data?.error === "authorization_pending"
-              ) {
-                // still waiting
+                body: queryString.stringify({
+                  grant_type: "urn:ietf:params:oauth:grant-type:device_code",
+                  device_code,
+                  client_id: auth0Config.clientId,
+                }),
+              },
+            );
+            const data = (await resp.json()) as
+              | PersistedTokens
+              | { error: string; error_description?: string };
+
+            if ("error" in data) {
+              if (data.error === "authorization_pending") {
                 await new Promise((r) => setTimeout(r, (interval || 5) * 1000));
                 continue;
-              } else {
-                throw err;
               }
+              throw new Error(data.error_description || data.error);
             }
+
+            credentials = data;
+            break;
           }
 
           const tokenPayload = parseJwt(credentials.access_token as string);
