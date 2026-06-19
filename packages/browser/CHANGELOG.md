@@ -1,5 +1,11 @@
 # @pantheon-systems/pcc-browser-sdk
 
+## 5.3.0
+
+### Patch Changes
+
+- @pantheon-systems/cpub-sdk-core@5.3.0
+
 ## 5.3.0-beta.0
 
 ### Patch Changes
