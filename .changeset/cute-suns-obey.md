@@ -2,4 +2,4 @@
 "@pantheon-systems/cpub-cli": minor
 ---
 
-Auth now facilitated by Connected Accounts.
+Auth now facilitated by Connected Accounts
