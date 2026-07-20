@@ -49,9 +49,6 @@
     "tailwind-merge": "2.6.0",
     "tailwindcss-animate": "1.0.7"
   },
-  "resolutions": {
-    "vite": "^8.0.5"
-  },
   "devDependencies": {
     "@playwright/test": "1.57.0",
     "@testing-library/react": "16.3.0",
