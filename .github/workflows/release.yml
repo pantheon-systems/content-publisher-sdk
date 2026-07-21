@@ -35,6 +35,14 @@ jobs:
           cache: "pnpm"
           registry-url: "https://registry.npmjs.org/"
 
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@2dc316deee8e90f13e1a351ab510b4d5bc0c82cd
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -75,7 +83,8 @@ jobs:
           fi
 
       - name: Tag release branch as 'stable'
-        if: steps.changesets.outputs.published == 'true' &&
+        if:
+          steps.changesets.outputs.published == 'true' &&
           steps.prerelease_check.outputs.is_prerelease == 'false'
         run: |
           VERSION=$(echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -r '.[0].version')
