@@ -178,6 +178,17 @@ jobs:
           # Install dependencies with the appropriate package manager
           PM_FLAG="${{ matrix.package_manager.flag }}"
           if [[ "$PM_FLAG" == *"pnpm"* ]]; then
+            # pnpm 11 requires explicit build approval and reads overrides
+            # from pnpm-workspace.yaml rather than package.json
+            cat > pnpm-workspace.yaml <<YAML
+          allowBuilds:
+            sharp: true
+            unrs-resolver: true
+            esbuild: true
+          overrides:
+            "@pantheon-systems/cpub-react-sdk": "file:${REACT_TGZ}"
+            "@pantheon-systems/cpub-sdk-core": "file:${CORE_TGZ}"
+          YAML
             pnpm install --no-frozen-lockfile
           elif [[ "$PM_FLAG" == *"yarn"* ]]; then
             yarn install
