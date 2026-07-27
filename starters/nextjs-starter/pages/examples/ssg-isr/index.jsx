@@ -65,21 +65,29 @@ export default function SSGISRExampleTemplate({
 }
 
 export async function getStaticProps() {
-  // Fetch the articles and site in parallel
-  const [{ data: articles, totalCount, cursor }, site] = await Promise.all([
-    PCCConvenienceFunctions.getPaginatedArticles({
-      pageSize: PAGE_SIZE,
-    }),
-    PCCConvenienceFunctions.getSite(),
-  ]);
+  try {
+    // Fetch the articles and site in parallel
+    const [{ data: articles, totalCount, cursor }, site] = await Promise.all([
+      PCCConvenienceFunctions.getPaginatedArticles({
+        pageSize: PAGE_SIZE,
+      }),
+      PCCConvenienceFunctions.getSite(),
+    ]);
 
-  return {
-    props: {
-      articles,
-      totalCount,
-      cursor,
-      site,
-    },
-    revalidate: 60,
-  };
+    return {
+      props: {
+        articles,
+        totalCount,
+        cursor,
+        site,
+      },
+      revalidate: 60,
+    };
+  } catch (e) {
+    console.error(e);
+
+    return {
+      notFound: true,
+    };
+  }
 }
