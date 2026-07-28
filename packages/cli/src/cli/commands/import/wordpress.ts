@@ -6,6 +6,7 @@ import type { GaxiosResponse } from "gaxios";
 import { drive_v3 } from "googleapis";
 import queryString from "query-string";
 import AddOnApiHelper from "../../../lib/addonApiHelper";
+import { fetchWithErrorHandling } from "../../../lib/fetchWithErrorHandling";
 import { Logger } from "../../../lib/logger";
 import { errorHandler } from "../../exceptions";
 import { createFolder, getAuthedDrive, preprocessBaseURL } from "./utils";
@@ -55,12 +56,7 @@ interface WPTag {
 async function getWPPosts(url: string) {
   try {
     console.log(`Importing from ${url}`);
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
+    const response = await fetchWithErrorHandling(url);
     const result = (await response.json()) as WPPost[];
 
     const { url: parsedURL, query } = queryString.parseUrl(url);
@@ -103,12 +99,7 @@ async function getTagInfo(baseURL: string, tags: number[]) {
 
   const url = new URL(`/wp-json/wp/v2/tags?include=${tags.join()}`, baseURL)
     .href;
-  const response = await fetch(url);
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-
+  const response = await fetchWithErrorHandling(url);
   const data = (await response.json()) as WPTag[];
 
   return data.map((x) => ({
@@ -241,7 +232,6 @@ export const importFromWordPress = errorHandler<WordPressImportParams>(
             await AddOnApiHelper.publishDocument(fileId);
           }
         } catch (e) {
-          // Check if error has response data (from fetch errors)
           if (e && typeof e === "object" && "data" in e) {
             console.error((e as { data: unknown }).data);
           } else {

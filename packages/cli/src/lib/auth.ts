@@ -37,6 +37,19 @@ export class Auth0Provider extends BaseAuthProvider {
         refresh_token: refreshToken,
       }),
     });
+
+    if (!response.ok) {
+      const raw = await response.text();
+      let message = `HTTP error! status: ${response.status}`;
+      try {
+        const body = JSON.parse(raw);
+        message = body.error_description || body.error || message;
+      } catch {
+        if (raw) message = raw;
+      }
+      throw new Error(message);
+    }
+
     const data = (await response.json()) as Record<string, unknown>;
     return {
       refresh_token: refreshToken,
@@ -107,6 +120,14 @@ export class Auth0Provider extends BaseAuthProvider {
               }),
             },
           );
+
+          if (!deviceResponse.ok) {
+            const raw = await deviceResponse.text();
+            throw new Error(
+              `Failed to initiate device login (HTTP ${deviceResponse.status}): ${raw || deviceResponse.statusText}`,
+            );
+          }
+
           const deviceData = (await deviceResponse.json()) as {
             device_code: string;
             verification_uri: string;
@@ -166,6 +187,31 @@ export class Auth0Provider extends BaseAuthProvider {
                 }),
               },
             );
+
+            if (!resp.ok) {
+              const raw = await resp.text();
+              let parsed: {
+                error?: string;
+                error_description?: string;
+              } | null = null;
+              try {
+                parsed = JSON.parse(raw);
+              } catch {
+                throw new Error(
+                  `Token poll failed (HTTP ${resp.status}): ${raw || resp.statusText}`,
+                );
+              }
+              if (parsed?.error === "authorization_pending") {
+                await new Promise((r) => setTimeout(r, (interval || 5) * 1000));
+                continue;
+              }
+              throw new Error(
+                parsed?.error_description ||
+                  parsed?.error ||
+                  `HTTP ${resp.status}`,
+              );
+            }
+
             const data = (await resp.json()) as
               | PersistedTokens
               | { error: string; error_description?: string };

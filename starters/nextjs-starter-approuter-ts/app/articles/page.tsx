@@ -22,11 +22,28 @@ async function fetchNextPages(cursor?: string | null | undefined) {
 }
 
 async function ArticlesContent() {
-  // Skip pre-rendering in CI/CD environments
-  if (process.env.IS_CICD === "true") {
+  try {
+    const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
+      PCCConvenienceFunctions.getPaginatedArticles({
+        pageSize: PAGE_SIZE,
+      }),
+      PCCConvenienceFunctions.getSite(),
+    ]);
+
     return (
       <ArticleList
-        headerText={"All Articles"}
+        headerText="Articles"
+        articles={articles}
+        cursor={cursor}
+        totalCount={totalCount}
+        fetcher={fetchNextPages}
+        site={site}
+      />
+    );
+  } catch {
+    return (
+      <ArticleList
+        headerText={"Articles"}
         articles={[]}
         totalCount={0}
         cursor={""}
@@ -35,25 +52,6 @@ async function ArticlesContent() {
       />
     );
   }
-
-  // Fetch the articles and site in parallel
-  const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
-    PCCConvenienceFunctions.getPaginatedArticles({
-      pageSize: PAGE_SIZE,
-    }),
-    PCCConvenienceFunctions.getSite(),
-  ]);
-
-  return (
-    <ArticleList
-      headerText="Articles"
-      articles={articles}
-      cursor={cursor}
-      totalCount={totalCount}
-      fetcher={fetchNextPages}
-      site={site}
-    />
-  );
 }
 
 export default function ArticlesListTemplate() {

@@ -22,8 +22,25 @@ async function fetchNextPages(cursor?: string | null | undefined) {
 }
 
 async function PaginationContent() {
-  // Skip pre-rendering in CI/CD environments
-  if (process.env.IS_CICD === "true") {
+  try {
+    const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
+      PCCConvenienceFunctions.getPaginatedArticles({
+        pageSize: PAGE_SIZE,
+      }),
+      PCCConvenienceFunctions.getSite(),
+    ]);
+
+    return (
+      <PaginatedArticleList
+        headerText="Paginated Articles"
+        articles={articles}
+        cursor={cursor}
+        totalCount={totalCount}
+        fetcher={fetchNextPages}
+        site={site}
+      />
+    );
+  } catch {
     return (
       <PaginatedArticleList
         headerText={"Pagination Example"}
@@ -32,38 +49,9 @@ async function PaginationContent() {
         cursor={""}
         fetcher={fetchNextPages}
         site={{} as Site}
-        additionalHeader={
-          <div className="prose lg:prose-xl my-10 flex flex-col">
-            <p>
-              <em>
-                This example uses the &quot;view more&quot; pattern to load
-                additional content using client side data fetching.
-              </em>
-            </p>
-          </div>
-        }
       />
     );
   }
-
-  // Fetch the articles and site in parallel
-  const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
-    PCCConvenienceFunctions.getPaginatedArticles({
-      pageSize: PAGE_SIZE,
-    }),
-    PCCConvenienceFunctions.getSite(),
-  ]);
-
-  return (
-    <PaginatedArticleList
-      headerText="Paginated Articles"
-      articles={articles}
-      cursor={cursor}
-      totalCount={totalCount}
-      fetcher={fetchNextPages}
-      site={site}
-    />
-  );
 }
 
 export default function ArticlesListTemplate() {

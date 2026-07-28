@@ -29,8 +29,39 @@ async function fetchNextPages(cursor?: string | null | undefined) {
 }
 
 async function SSGISRContent() {
-  // Skip pre-rendering in CI/CD environments
-  if (process.env.IS_CICD === "true") {
+  const additionalHeader = (
+    <div className="prose lg:prose-xl my-10 flex flex-col">
+      <p>
+        <em>
+          By default, this starter kit is optimized for SSR and Edge
+          Caching on Pantheon. This example instead uses Incremental
+          Static Regeneration and is provided as a reference for cases
+          where Next.js static generation options would be beneficial.
+        </em>
+      </p>
+    </div>
+  );
+
+  try {
+    const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
+      PCCConvenienceFunctions.getPaginatedArticles({
+        pageSize: PAGE_SIZE,
+      }),
+      PCCConvenienceFunctions.getSite(),
+    ]);
+
+    return (
+      <ArticleList
+        headerText={"SSG and ISR Example"}
+        articles={articles}
+        totalCount={totalCount}
+        cursor={cursor}
+        fetcher={fetchNextPages}
+        site={site}
+        additionalHeader={additionalHeader}
+      />
+    );
+  } catch {
     return (
       <ArticleList
         headerText={"SSG and ISR Example"}
@@ -39,52 +70,10 @@ async function SSGISRContent() {
         cursor={""}
         fetcher={fetchNextPages}
         site={{} as Site}
-        additionalHeader={
-          <div className="prose lg:prose-xl my-10 flex flex-col">
-            <p>
-              <em>
-                By default, this starter kit is optimized for SSR and Edge
-                Caching on Pantheon. This example instead uses Incremental
-                Static Regeneration and is provided as a reference for cases
-                where Next.js static generation options would be beneficial.
-              </em>
-            </p>
-          </div>
-        }
+        additionalHeader={additionalHeader}
       />
     );
   }
-
-  // Fetch the articles and site in parallel
-  const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
-    PCCConvenienceFunctions.getPaginatedArticles({
-      pageSize: PAGE_SIZE,
-    }),
-    PCCConvenienceFunctions.getSite(),
-  ]);
-
-  return (
-    <ArticleList
-      headerText={"SSG and ISR Example"}
-      articles={articles}
-      totalCount={totalCount}
-      cursor={cursor}
-      fetcher={fetchNextPages}
-      site={site}
-      additionalHeader={
-        <div className="prose lg:prose-xl my-10 flex flex-col">
-          <p>
-            <em>
-              By default, this starter kit is optimized for SSR and Edge
-              Caching on Pantheon. This example instead uses Incremental
-              Static Regeneration and is provided as a reference for cases
-              where Next.js static generation options would be beneficial.
-            </em>
-          </p>
-        </div>
-      }
-    />
-  );
 }
 
 export default function SSGISRExampleTemplate() {

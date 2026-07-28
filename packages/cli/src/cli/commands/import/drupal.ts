@@ -6,6 +6,7 @@ import type { GaxiosResponse } from "gaxios";
 import type { drive_v3 } from "googleapis";
 import queryString from "query-string";
 import AddOnApiHelper from "../../../lib/addonApiHelper";
+import { fetchWithErrorHandling } from "../../../lib/fetchWithErrorHandling";
 import { Logger } from "../../../lib/logger";
 import { errorHandler } from "../../exceptions";
 import { createFolder, getAuthedDrive, preprocessBaseURL } from "./utils";
@@ -59,12 +60,7 @@ interface DrupalIncludedData {
 async function getDrupalPosts(url: string) {
   try {
     console.log(`Importing from ${url}`);
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
+    const response = await fetchWithErrorHandling(url);
     const result = (await response.json()) as {
       links?: { next?: { href: string } };
       data: unknown;
@@ -208,7 +204,6 @@ export const importFromDrupal = errorHandler<DrupalImportParams>(
             await AddOnApiHelper.publishDocument(fileId);
           }
         } catch (e) {
-          // Check if error has response data (from fetch errors)
           if (e && typeof e === "object" && "data" in e) {
             console.error((e as { data: unknown }).data);
           } else {

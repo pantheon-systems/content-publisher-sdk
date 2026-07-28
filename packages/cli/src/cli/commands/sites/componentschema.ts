@@ -5,6 +5,7 @@ import {
 import chalk from "chalk";
 import ora, { Ora } from "ora";
 import AddOnApiHelper from "../../../lib/addonApiHelper";
+import { fetchWithErrorHandling } from "../../../lib/fetchWithErrorHandling";
 import { errorHandler } from "../../exceptions";
 
 type pushComponentSchemaParams = {
@@ -60,12 +61,7 @@ export const getComponentSchema = async (
     apiPath || "/api/pantheoncloud/component_schema"
   }`;
 
-  const response = await fetch(schemaEndpoint);
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-
+  const response = await fetchWithErrorHandling(schemaEndpoint);
   const result = await response.json();
 
   spinner.succeed(

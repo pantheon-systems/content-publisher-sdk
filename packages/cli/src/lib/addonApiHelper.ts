@@ -8,6 +8,7 @@ import {
 } from "../cli/exceptions";
 import { getApiConfig } from "./apiConfig";
 import { Auth0Provider, PersistedTokens } from "./auth";
+import { fetchWithErrorHandling } from "./fetchWithErrorHandling";
 import { toKebabCase } from "./utils";
 
 // HTTP Status codes
@@ -20,46 +21,6 @@ interface Auth0Config {
   redirectUri: string;
   issuerBaseUrl: string;
   audience: string;
-}
-
-// Custom error type for fetch errors with response data
-interface FetchError extends Error {
-  status?: number;
-  statusText?: string;
-  data?: unknown;
-}
-
-// Helper function to handle fetch with axios-like error behavior
-async function fetchWithErrorHandling(
-  url: string,
-  options?: RequestInit,
-): Promise<Response> {
-  const response = await fetch(url, options);
-
-  // Unlike axios, fetch doesn't throw on HTTP errors
-  if (!response.ok) {
-    const error = new Error(
-      `HTTP error! status: ${response.status}`,
-    ) as FetchError;
-    error.status = response.status;
-    error.statusText = response.statusText;
-
-    // Try to parse error response body
-    try {
-      error.data = await response.json();
-    } catch {
-      try {
-        error.data = await response.text();
-      } catch {
-        // If we can't parse the body, just use the status text
-        error.data = response.statusText;
-      }
-    }
-
-    throw error;
-  }
-
-  return response;
 }
 
 class AddOnApiHelper {
@@ -149,7 +110,8 @@ class AddOnApiHelper {
         withSiteData: withSiteData ? "true" : "false",
         ...(insertIfMissing && { insertIfMissing: "true" }),
         ...(title && {
-          withMetadata: JSON.stringify({ title, slug: toKebabCase(title) }),
+          "withMetadata[title]": title,
+          "withMetadata[slug]": toKebabCase(title),
         }),
       },
     });
@@ -722,4 +684,5 @@ class AddOnApiHelper {
   }
 }
 
+export { fetchWithErrorHandling } from "./fetchWithErrorHandling";
 export default AddOnApiHelper;

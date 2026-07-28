@@ -53,21 +53,20 @@ export default function ArticlePage(props: ArticleViewProps) {
 }
 
 export async function generateMetadata(props: ArticleViewProps) {
-  // Skip pre-rendering in CI/CD environments
-  if (process.env.IS_CICD === "true") {
+  try {
+    const params = await props.params;
+    const searchParams = await props.searchParams;
+    const slugOrId = params.uri[params.uri.length - 1];
+    const article = await PCCConvenienceFunctions.getArticleBySlugOrId(slugOrId, {
+      publishingLevel: searchParams.publishingLevel,
+      versionId: searchParams.versionId,
+    });
+
+    return getSeoMetadata(article);
+  } catch {
     return {
       title: "Article",
       description: "Article page",
     };
   }
-
-  const params = await props.params;
-  const searchParams = await props.searchParams;
-  const slugOrId = params.uri[params.uri.length - 1];
-  const article = await PCCConvenienceFunctions.getArticleBySlugOrId(slugOrId, {
-    publishingLevel: searchParams.publishingLevel,
-    versionId: searchParams.versionId,
-  });
-
-  return getSeoMetadata(article);
 }

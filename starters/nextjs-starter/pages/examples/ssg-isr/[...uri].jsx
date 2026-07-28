@@ -60,66 +60,60 @@ export const getStaticProps = async ({ params: { uri } }) => {
 };
 
 export const getStaticPaths = async (uri) => {
-  // Skip pre-rendering in CI/CD environments
-  if (process.env.IS_CICD === "true") {
+  try {
+    const [publishedArticles, site] = await Promise.all([
+      PCCConvenienceFunctions.getAllArticles(
+        {
+          publishingLevel: "PRODUCTION",
+        },
+        {
+          publishStatus: "published",
+        },
+      ),
+      PCCConvenienceFunctions.getSite(),
+    ]);
+
+    const pagePaths = publishedArticles.map((article) => {
+      const articlePath = getArticlePathComponentsFromContentStructure(
+        article,
+        site,
+      );
+
+      const id = article.id;
+      const slug = article.metadata.slug;
+
+      articlePath.push(id);
+
+      const paths = [
+        {
+          params: {
+            uri: articlePath.slice(),
+          },
+        },
+      ];
+
+      if (slug) {
+        articlePath[articlePath.length - 1] = String(slug);
+        paths.push({
+          params: {
+            uri: articlePath,
+          },
+        });
+      }
+
+      return paths;
+    });
+
+    return {
+      paths: pagePaths.flat(),
+      fallback: "blocking",
+    };
+  } catch (e) {
+    console.error(e);
+
     return {
       paths: [],
       fallback: "blocking",
     };
   }
-
-  // Get all the published articles and the site in parallel
-  const [publishedArticles, site] = await Promise.all([
-    PCCConvenienceFunctions.getAllArticles(
-      {
-        publishingLevel: "PRODUCTION",
-      },
-      {
-        publishStatus: "published",
-      },
-    ),
-    PCCConvenienceFunctions.getSite(),
-  ]);
-
-  const pagePaths = publishedArticles.map((article) => {
-    // Generate the article path
-    const articlePath = getArticlePathComponentsFromContentStructure(
-      article,
-      site,
-    );
-
-    const id = article.id;
-    const slug = article.metadata.slug;
-
-    // Add the ID to the article path
-    articlePath.push(id);
-
-    // Generate both slug and id paths for each article
-    const paths = [
-      {
-        params: {
-          // Add a copy of the articlePath to the uri as we will add the slug to the end of the uri
-          uri: articlePath.slice(),
-        },
-      },
-    ];
-
-    if (slug) {
-      // Change the id to the slug
-      articlePath[articlePath.length - 1] = String(slug);
-      // Add the slug to the uri
-      paths.push({
-        params: {
-          uri: articlePath,
-        },
-      });
-    }
-
-    return paths;
-  });
-
-  return {
-    paths: pagePaths.flat(),
-    fallback: "blocking",
-  };
 };

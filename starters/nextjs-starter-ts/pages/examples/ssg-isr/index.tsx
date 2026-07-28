@@ -73,18 +73,6 @@ export default function SSGISRExampleTemplate({
 }
 
 export async function getStaticProps() {
-  // Skip pre-rendering in CI/CD environments
-  if (process.env.IS_CICD === "true") {
-    return {
-      props: {
-        articles: [],
-        totalCount: 0,
-        cursor: null,
-        site: null,
-      },
-    };
-  }
-
   try {
     // Fetch the articles and site in parallel
     const [{ data: articles, totalCount, cursor }, site] = await Promise.all([

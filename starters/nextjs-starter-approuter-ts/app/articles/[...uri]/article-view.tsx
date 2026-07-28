@@ -62,51 +62,39 @@ export async function getServersideArticle({
   const slugOrId = uri[uri.length - 1];
   const grant = pccGrant || (await cookies()).get("PCC-GRANT")?.value || null;
 
-  // Skip pre-rendering in CI/CD environments
-  if (process.env.IS_CICD === "true") {
+  let article, site;
+  try {
+    [article, site] = await Promise.all([
+      PCCConvenienceFunctions.getArticleBySlugOrId(slugOrId, {
+        publishingLevel,
+        versionId,
+      }),
+      PCCConvenienceFunctions.getSite(),
+    ]);
+  } catch {
     return {
       article: null,
       grant: null,
     };
   }
 
-  // Fetch the article and site in parallel
-  const [article, site] = await Promise.all([
-    PCCConvenienceFunctions.getArticleBySlugOrId(slugOrId, {
-      publishingLevel,
-      versionId,
-    }),
-    PCCConvenienceFunctions.getSite(),
-  ]);
-
   if (!article) {
     return notFound();
   }
 
-  // Get the article path from the content structure
   const articlePath = getArticlePathComponentsFromContentStructure(
     article,
     site,
   );
 
   if (
-    // Only redirect if this is a published article
     article.publishingLevel === "PRODUCTION" &&
-    // Check if the article has a slug
     ((article.slug?.trim().length &&
-      // Check if the slug is not the same as the slugOrId
       article.slug.toLowerCase() !== slugOrId?.trim().toLowerCase()) ||
-      // Check if the article path is not the same as the uri
       articlePath.length !== uri.length - 1 ||
-      // Check if the article path (with all the components together) is not the same as the uri
       articlePath.join("/") !== uri.slice(0, -1).join("/")) &&
-    // Check if resolvePath in pantheon API options is not null
     pantheonAPIOptions.resolvePath != null
   ) {
-    // If the article was accessed by the id rather than the slug - then redirect to the canonical
-    // link (mostly for SEO purposes than anything else).
-    // If the article path is not the same as the uri ie. if it is being accessed by a path without the content structure
-    // then redirect to the canonical link.
     redirect(
       queryString.stringifyUrl({
         url: pantheonAPIOptions.resolvePath(article, site),

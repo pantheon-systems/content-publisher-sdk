@@ -13,30 +13,30 @@ async function SearchContent({
 }: {
   searchParams: Promise<{ q?: string | null | undefined }>;
 }) {
-  // Skip pre-rendering in CI/CD environments
-  if (process.env.IS_CICD === "true") {
+  const resolvedSearchParams = await searchParams;
+
+  try {
+    const searchResults = await PCCConvenienceFunctions.getAllArticlesWithSummary(
+      {
+        publishingLevel: "PRODUCTION",
+      },
+      resolvedSearchParams.q
+        ? {
+            bodyContains: resolvedSearchParams.q,
+          }
+        : undefined,
+      true,
+    );
+
+    return (
+      <SearchResults
+        searchResults={searchResults.articles}
+        summary={searchResults.summary}
+      />
+    );
+  } catch {
     return <SearchResults searchResults={[]} summary={null} />;
   }
-
-  const resolvedSearchParams = await searchParams;
-  const searchResults = await PCCConvenienceFunctions.getAllArticlesWithSummary(
-    {
-      publishingLevel: "PRODUCTION",
-    },
-    resolvedSearchParams.q
-      ? {
-          bodyContains: resolvedSearchParams.q,
-        }
-      : undefined,
-    true,
-  );
-
-  return (
-    <SearchResults
-      searchResults={searchResults.articles}
-      summary={searchResults.summary}
-    />
-  );
 }
 
 export default function SearchPage(props: Props) {
