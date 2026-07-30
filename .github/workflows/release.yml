@@ -60,6 +60,11 @@ jobs:
           commit: "Release v${{steps.prep_commit.outputs.NEW_VERSION}}"
           version: pnpm ci:version
           publish: pnpm ci:publish
+          # Push the "Version Packages" commit via the GitHub API so it is
+          # GPG-signed by GitHub (verified), satisfying the "require signed
+          # commits" branch protection on main. Default "git-cli" pushes an
+          # unsigned bot commit, which the rule blocks.
+          commitMode: github-api
         env:
           HUSKY: "0"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -75,7 +80,8 @@ jobs:
           fi
 
       - name: Tag release branch as 'stable'
-        if: steps.changesets.outputs.published == 'true' &&
+        if:
+          steps.changesets.outputs.published == 'true' &&
           steps.prerelease_check.outputs.is_prerelease == 'false'
         run: |
           VERSION=$(echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -r '.[0].version')
