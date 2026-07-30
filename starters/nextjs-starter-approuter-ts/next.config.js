@@ -23,7 +23,7 @@ function ensureEnvVariable(name) {
 ensureEnvVariable("PCC_SITE_ID");
 ensureEnvVariable("PCC_TOKEN");
 
-module.exports = async () => {
+async function buildConfig() {
   if (process.env.IS_CICD === "true") {
     const { startMockServer } = require("./mocks/mock-fetch");
     await startMockServer();
@@ -43,4 +43,6 @@ module.exports = async () => {
       NEXT_PUBLIC_PCC_HOST: process.env.PCC_HOST,
     },
   };
-};
+}
+
+module.exports = buildConfig;
