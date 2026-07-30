@@ -25,11 +25,10 @@ ensureEnvVariable("PCC_TOKEN");
 
 async function buildConfig() {
   if (process.env.IS_CICD === "true") {
-    const { startMockServer } = require("./mocks/mock-fetch");
-    await startMockServer();
+    await require("./mocks/mock-fetch").startMockServer();
   }
 
-  return {
+  const config = {
     reactStrictMode: true,
     output: "standalone",
     cacheHandler: path.resolve(__dirname, "./cacheHandler.mjs"),
@@ -43,6 +42,7 @@ async function buildConfig() {
       NEXT_PUBLIC_PCC_HOST: process.env.PCC_HOST,
     },
   };
+  return config;
 }
 
 module.exports = buildConfig;
