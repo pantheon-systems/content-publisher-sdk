@@ -64,6 +64,12 @@ importers:
 
   configs/eslint:
     dependencies:
+      '@eslint/eslintrc':
+        specifier: ^3.3.3
+        version: 3.3.5(supports-color@8.1.1)
+      '@eslint/js':
+        specifier: ^9.39.2
+        version: 9.39.4
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.1.1
         version: 4.7.1(@vue/compiler-sfc@3.4.27)(prettier@3.2.5)(supports-color@8.1.1)
@@ -97,6 +103,9 @@ importers:
       prettier:
         specifier: 3.2.5
         version: 3.2.5
+      typescript-eslint:
+        specifier: ^8.33.1
+        version: 8.57.1(eslint@9.39.4(jiti@2.6.1)(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.5.4)
     devDependencies:
       prettier-plugin-tailwindcss:
         specifier: ^0.6.6
