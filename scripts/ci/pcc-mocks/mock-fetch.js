@@ -26,8 +26,10 @@ function handleGraphQL(operationName, variables, query) {
         return {
           data: {
             articlesv3: {
+              __typename: "PaginatedArticles",
               articles: MOCK_ARTICLES_WITHOUT_CONTENT,
               pageInfo: {
+                __typename: "PageInfo",
                 totalCount: MOCK_ARTICLES_WITHOUT_CONTENT.length,
                 nextCursor: null,
               },
@@ -38,6 +40,7 @@ function handleGraphQL(operationName, variables, query) {
       return {
         data: {
           articlesv3: {
+            __typename: "ArticlesResponse",
             articles: MOCK_ARTICLES_WITHOUT_CONTENT,
             summary: null,
           },

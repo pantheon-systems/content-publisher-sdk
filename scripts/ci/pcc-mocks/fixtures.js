@@ -1,4 +1,5 @@
 const MOCK_SITE = {
+  __typename: "Site",
   id: "mock-site-id",
   name: "Mock PCC Site",
   url: "https://example.com",
@@ -10,6 +11,7 @@ const MOCK_SITE = {
 
 const MOCK_ARTICLES = [
   {
+    __typename: "Article",
     id: "article-001",
     title: "Getting Started with PCC",
     slug: "getting-started",
@@ -31,6 +33,7 @@ const MOCK_ARTICLES = [
     site: MOCK_SITE,
   },
   {
+    __typename: "Article",
     id: "article-002",
     title: "Advanced Content Modeling",
     slug: "advanced-content-modeling",

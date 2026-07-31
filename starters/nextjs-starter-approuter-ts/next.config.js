@@ -23,26 +23,17 @@ function ensureEnvVariable(name) {
 ensureEnvVariable("PCC_SITE_ID");
 ensureEnvVariable("PCC_TOKEN");
 
-async function buildConfig() {
-  if (process.env.IS_CICD === "true") {
-    await require("./mocks/mock-fetch").startMockServer();
-  }
-
-  const config = {
-    reactStrictMode: true,
-    output: "standalone",
-    cacheHandler: path.resolve(__dirname, "./cacheHandler.mjs"),
-    cacheHandlers: {
-      default: path.resolve(__dirname, "./useCacheHandler.mjs"),
-    },
-    cacheMaxMemorySize: 0,
-    cacheComponents: true,
-    env: {
-      NEXT_PUBLIC_PCC_SITE_ID: process.env.PCC_SITE_ID,
-      NEXT_PUBLIC_PCC_HOST: process.env.PCC_HOST,
-    },
-  };
-  return config;
-}
-
-module.exports = buildConfig;
+module.exports = {
+  reactStrictMode: true,
+  output: "standalone",
+  cacheHandler: path.resolve(__dirname, "./cacheHandler.mjs"),
+  cacheHandlers: {
+    default: path.resolve(__dirname, "./useCacheHandler.mjs"),
+  },
+  cacheMaxMemorySize: 0,
+  cacheComponents: true,
+  env: {
+    NEXT_PUBLIC_PCC_SITE_ID: process.env.PCC_SITE_ID,
+    NEXT_PUBLIC_PCC_HOST: process.env.PCC_HOST,
+  },
+};
