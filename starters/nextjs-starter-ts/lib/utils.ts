@@ -117,7 +117,8 @@ export function parseAsTabTree(
     return JSON.parse(raw) as TabTree<
       PantheonTree | string | undefined | null
     >[];
-  } catch {
+  } catch (e) {
+    console.error(e);
     return null;
   }
 }

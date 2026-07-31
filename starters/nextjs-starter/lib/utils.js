@@ -91,7 +91,8 @@ export function parseAsTabTree(raw) {
 
   try {
     return JSON.parse(raw);
-  } catch {
+  } catch (e) {
+    console.error(e);
     return null;
   }
 }

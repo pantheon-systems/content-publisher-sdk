@@ -67,20 +67,14 @@ export const serverSmartComponentMap = {
 export const clientSmartComponentMap: SmartComponentMap = {
   MEDIA_PREVIEW: {
     ...serverSmartComponentMap.MEDIA_PREVIEW,
-    reactComponent: withSmartComponentErrorBoundary(
-      MediaPreview as unknown as React.ComponentType<Record<string, unknown>>,
-    ) as (props: unknown) => React.JSX.Element,
+    reactComponent: withSmartComponentErrorBoundary(MediaPreview),
   },
   LEAD_CAPTURE: {
     ...serverSmartComponentMap.LEAD_CAPTURE,
-    reactComponent: withSmartComponentErrorBoundary(
-      LeadCapture as unknown as React.ComponentType<Record<string, unknown>>,
-    ) as (props: unknown) => React.JSX.Element,
+    reactComponent: withSmartComponentErrorBoundary(LeadCapture),
   },
   TILE_NAVIGATION: {
     ...serverSmartComponentMap.TILE_NAVIGATION,
-    reactComponent: withSmartComponentErrorBoundary(
-      TileNavigation as unknown as React.ComponentType<Record<string, unknown>>,
-    ) as (props: unknown) => React.JSX.Element,
+    reactComponent: withSmartComponentErrorBoundary(TileNavigation),
   },
 };

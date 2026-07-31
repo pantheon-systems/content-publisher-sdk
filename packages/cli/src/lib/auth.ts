@@ -66,7 +66,8 @@ export class Auth0Provider extends BaseAuthProvider {
       );
       await LocalStorage.persistAuthDetails(newCred);
       return newCred;
-    } catch {
+    } catch (e) {
+      console.error(e);
       return null;
     }
   }

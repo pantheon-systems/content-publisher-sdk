@@ -8,7 +8,8 @@ export default async function handler(req, res) {
   let pageSize;
   try {
     pageSize = parseInt(req.query.pageSize);
-  } catch {
+  } catch (e) {
+    console.error(e);
     return res.status(400).json("Invalid pageSize");
   }
 

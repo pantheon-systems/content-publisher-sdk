@@ -82,8 +82,8 @@ function withImageSizeParams(
     u.searchParams.set("width", width.toString());
     u.searchParams.set("height", height.toString());
     return u.toString();
-  } catch {
-    // If url is not valid, return as is
+  } catch (e) {
+    console.error(e);
     return url;
   }
 }
