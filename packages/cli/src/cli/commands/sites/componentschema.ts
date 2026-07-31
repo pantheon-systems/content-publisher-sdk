@@ -2,10 +2,10 @@ import {
   SmartComponentMapZod,
   validateComponentSchema,
 } from "@pantheon-systems/cpub-sdk-core";
-import axios from "axios";
 import chalk from "chalk";
 import ora, { Ora } from "ora";
 import AddOnApiHelper from "../../../lib/addonApiHelper";
+import { fetchWithErrorHandling } from "../../../lib/fetchWithErrorHandling";
 import { errorHandler } from "../../exceptions";
 
 type pushComponentSchemaParams = {
@@ -60,7 +60,9 @@ export const getComponentSchema = async (
   const schemaEndpoint = `${url}${
     apiPath || "/api/pantheoncloud/component_schema"
   }`;
-  const result = (await axios.get(schemaEndpoint)).data;
+
+  const response = await fetchWithErrorHandling(schemaEndpoint);
+  const result = await response.json();
 
   spinner.succeed(
     `Retrieved component schema from ${schemaEndpoint}. Now checking its validity`,

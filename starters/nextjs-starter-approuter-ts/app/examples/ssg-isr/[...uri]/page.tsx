@@ -18,7 +18,12 @@ interface ArticlePageProps {
 async function fetchArticle(slug: string) {
   "use cache";
   cacheLife({ revalidate: 21600 });
-  return PCCConvenienceFunctions.getArticleBySlugOrId(slug);
+  try {
+    return await PCCConvenienceFunctions.getArticleBySlugOrId(slug);
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
 }
 
 async function ArticleContent({
@@ -58,56 +63,60 @@ export default function ArticlePage(props: ArticlePageProps) {
 export async function generateMetadata(
   props: ArticlePageProps,
 ): Promise<Metadata> {
-  const params = await props.params;
-  const article = await PCCConvenienceFunctions.getArticleBySlugOrId(
-    params.uri[params.uri.length - 1],
-  );
+  try {
+    const params = await props.params;
+    const article = await PCCConvenienceFunctions.getArticleBySlugOrId(
+      params.uri[params.uri.length - 1],
+    );
 
-  return getSeoMetadata(article);
+    return getSeoMetadata(article);
+  } catch (e) {
+    console.error(e);
+    return {
+      title: "Article",
+      description: "Article page",
+    };
+  }
 }
 
 export async function generateStaticParams() {
-  // Get all published articles and the site in prallel
-  const [publishedArticles, site] = await Promise.all([
-    PCCConvenienceFunctions.getAllArticles(
-      {
-        publishingLevel: "PRODUCTION",
-      },
-      {
-        publishStatus: "published",
-      },
-    ),
-    PCCConvenienceFunctions.getSite(),
-  ]);
+  try {
+    const [publishedArticles, site] = await Promise.all([
+      PCCConvenienceFunctions.getAllArticles(
+        {
+          publishingLevel: "PRODUCTION",
+        },
+        {
+          publishStatus: "published",
+        },
+      ),
+      PCCConvenienceFunctions.getSite(),
+    ]);
 
-  const params = publishedArticles.flatMap((article) => {
-    // Generate the article path from the contnet structure
-    const articlePath = getArticlePathComponentsFromContentStructure(
-      article,
-      site,
-    );
+    const params = publishedArticles.flatMap((article) => {
+      const articlePath = getArticlePathComponentsFromContentStructure(
+        article,
+        site,
+      );
 
-    const id = article.id;
+      const id = article.id;
+      articlePath.push(id);
 
-    // Add the ID to the article path
-    articlePath.push(id);
+      const params = [{ uri: articlePath.slice() }];
+      if (article.metadata?.slug) {
+        articlePath[articlePath.length - 1] = String(article.metadata.slug);
+        params.push({ uri: articlePath });
+      }
+      return params;
+    });
 
-    // Add a copy of the article path with the slug
-    const params = [{ uri: articlePath.slice() }];
-    if (article.metadata?.slug) {
-      // Change the ID in the article path to the slug
-      articlePath[articlePath.length - 1] = String(article.metadata.slug);
-
-      params.push({ uri: articlePath });
+    if (params.length === 0) {
+      return [{ uri: ["placeholder"] }];
     }
-    return params;
-  });
 
-  // Next.js 16 with Cache Components requires generateStaticParams to return
-  // at least one result for build-time validation.
-  if (params.length === 0) {
+    return params;
+  } catch (e) {
+    console.error(e);
     return [{ uri: ["placeholder"] }];
   }
-
-  return params;
 }

@@ -1,6 +1,20 @@
 import { exit } from "process";
-import axios from "axios";
 import chalk from "chalk";
+
+// Helper to check if error is from a fetch HTTP response
+interface FetchErrorResponse {
+  status?: number;
+  data?: Record<string, unknown>;
+}
+
+function isFetchError(error: unknown): error is FetchErrorResponse {
+  return (
+    error !== null &&
+    typeof error === "object" &&
+    "status" in error &&
+    typeof (error as FetchErrorResponse).status === "number"
+  );
+}
 
 export class UnhandledError extends Error {
   constructor(message: string) {
@@ -43,14 +57,12 @@ export function errorHandler<T>(
         console.log(chalk.yellow('\nPlease run "cpub login" to login.'));
       } else {
         if (
-          axios.isAxiosError(e) &&
-          (e.response?.status ?? 500) < 500 && // Treat internal server errors as unhandled errors
-          e.response?.data
+          isFetchError(e) &&
+          (e.status ?? 500) < 500 && // Treat internal server errors as unhandled errors
+          e.data
         ) {
-          // Operational error
-          console.log(
-            chalk.red(`\nError: ${e.response.data.message || e.response.data}`),
-          );
+          // Operational error (4xx client errors)
+          console.log(chalk.red(`\nError: ${e.data.message || e.data}`));
         } else {
           // Unhandled error
           console.log(

@@ -19,24 +19,36 @@ async function fetchNextPages(cursor?: string | null | undefined) {
 }
 
 async function PaginationContent() {
-  // Fetch the articles and site in parallel
-  const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
-    PCCConvenienceFunctions.getPaginatedArticles({
-      pageSize: PAGE_SIZE,
-    }),
-    PCCConvenienceFunctions.getSite(),
-  ]);
+  try {
+    const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
+      PCCConvenienceFunctions.getPaginatedArticles({
+        pageSize: PAGE_SIZE,
+      }),
+      PCCConvenienceFunctions.getSite(),
+    ]);
 
-  return (
-    <PaginatedArticleList
-      headerText="Paginated Articles"
-      articles={articles}
-      cursor={cursor}
-      totalCount={totalCount}
-      fetcher={fetchNextPages}
-      site={site}
-    />
-  );
+    return (
+      <PaginatedArticleList
+        headerText="Paginated Articles"
+        articles={articles}
+        cursor={cursor}
+        totalCount={totalCount}
+        fetcher={fetchNextPages}
+        site={site}
+      />
+    );
+  } catch (e) {
+    console.error(e);
+    return (
+      <PaginatedArticleList
+        headerText={"Pagination Example"}
+        articles={[]}
+        totalCount={0}
+        cursor={""}
+        fetcher={fetchNextPages}
+      />
+    );
+  }
 }
 
 export default function ArticlesListTemplate() {

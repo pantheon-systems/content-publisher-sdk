@@ -1,6 +1,5 @@
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
-import axios, { AxiosError } from "axios";
 import { Octokit } from "octokit";
 
 const octokit = new Octokit();
@@ -83,16 +82,21 @@ async function fetchFiles(
 
     async function attemptDownload(url: string, retryAllowed: boolean) {
       try {
-        const { data } = await axios.get(url, {
-          responseType: "arraybuffer",
-        });
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.arrayBuffer();
 
         return {
           path: filePath.replace(directory, ""),
-          contents: data,
+          contents: Buffer.from(data),
         };
       } catch (e) {
-        if (e instanceof AxiosError && e.code === "ENOTFOUND" && retryAllowed) {
+        // Check for network errors (TypeError from fetch)
+        if (e instanceof TypeError && retryAllowed) {
           console.error(
             `Failed to download ${url}, but reattempting one time.`,
           );

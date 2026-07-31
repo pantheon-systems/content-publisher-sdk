@@ -46,15 +46,25 @@ async function AuthorContent({
     ? decodeURIComponent(resolvedParams.author)
     : undefined;
 
-  const [site, { data: articles, cursor, totalCount }] = await Promise.all([
-    PCCConvenienceFunctions.getSite(),
-    PCCConvenienceFunctions.getPaginatedArticles({
-      pageSize: PAGE_SIZE,
-      metadataFilters: {
-        author,
-      },
-    }),
-  ]);
+  let site, articles, cursor, totalCount;
+  try {
+    [site, { data: articles, cursor, totalCount }] = await Promise.all([
+      PCCConvenienceFunctions.getSite(),
+      PCCConvenienceFunctions.getPaginatedArticles({
+        pageSize: PAGE_SIZE,
+        metadataFilters: {
+          author,
+        },
+      }),
+    ]);
+  } catch (e) {
+    console.error(e);
+    return (
+      <section className="max-w-screen-3xl mx-auto px-4 pt-16 sm:w-4/5 md:w-3/4 lg:w-4/5 2xl:w-3/4">
+        <div>Could not find any articles by {author}</div>
+      </section>
+    );
+  }
 
   if (totalCount === 0) {
     return (

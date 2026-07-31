@@ -3,7 +3,6 @@
   "globalPassThroughEnv": [
     "PCC_SITE_ID",
     "PCC_TOKEN",
-    "IS_CICD",
     "NPM_TOKEN"
   ],
   "tasks": {

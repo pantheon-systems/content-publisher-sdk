@@ -20,10 +20,8 @@ function ensureEnvVariable(name) {
   }
 }
 
-if (process.env.IS_CICD !== "true") {
-  ensureEnvVariable("PCC_SITE_ID");
-  ensureEnvVariable("PCC_TOKEN");
-}
+ensureEnvVariable("PCC_SITE_ID");
+ensureEnvVariable("PCC_TOKEN");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

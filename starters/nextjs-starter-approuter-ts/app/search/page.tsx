@@ -14,24 +14,30 @@ async function SearchContent({
   searchParams: Promise<{ q?: string | null | undefined }>;
 }) {
   const resolvedSearchParams = await searchParams;
-  const searchResults = await PCCConvenienceFunctions.getAllArticlesWithSummary(
-    {
-      publishingLevel: "PRODUCTION",
-    },
-    resolvedSearchParams.q
-      ? {
-          bodyContains: resolvedSearchParams.q,
-        }
-      : undefined,
-    true,
-  );
 
-  return (
-    <SearchResults
-      searchResults={searchResults.articles}
-      summary={searchResults.summary}
-    />
-  );
+  try {
+    const searchResults = await PCCConvenienceFunctions.getAllArticlesWithSummary(
+      {
+        publishingLevel: "PRODUCTION",
+      },
+      resolvedSearchParams.q
+        ? {
+            bodyContains: resolvedSearchParams.q,
+          }
+        : undefined,
+      true,
+    );
+
+    return (
+      <SearchResults
+        searchResults={searchResults.articles}
+        summary={searchResults.summary}
+      />
+    );
+  } catch (e) {
+    console.error(e);
+    return <SearchResults searchResults={[]} summary={null} />;
+  }
 }
 
 export default function SearchPage(props: Props) {

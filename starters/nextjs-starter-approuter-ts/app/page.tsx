@@ -8,18 +8,27 @@ import { SkeletonHomepageGrid } from "../components/skeleton-article-list";
 import { Button } from "../components/ui/button";
 
 async function HomeArticles() {
-  const [{ data: articles }, site] = await Promise.all([
-    PCCConvenienceFunctions.getPaginatedArticles({
-      pageSize: 3,
-    }),
-    PCCConvenienceFunctions.getSite(),
-  ]);
+  try {
+    const [{ data: articles }, site] = await Promise.all([
+      PCCConvenienceFunctions.getPaginatedArticles({
+        pageSize: 3,
+      }),
+      PCCConvenienceFunctions.getSite(),
+    ]);
 
-  return (
-    <section className="max-w-screen-3xl mx-auto mt-32 flex justify-center px-4 sm:px-6 lg:px-0">
-      <HomepageArticleGrid articles={articles} site={site} />
-    </section>
-  );
+    return (
+      <section className="max-w-screen-3xl mx-auto mt-32 flex justify-center px-4 sm:px-6 lg:px-0">
+        <HomepageArticleGrid articles={articles} site={site} />
+      </section>
+    );
+  } catch (e) {
+    console.error(e);
+    return (
+      <section className="max-w-screen-3xl mx-auto mt-32 flex justify-center px-4 sm:px-6 lg:px-0">
+        <HomepageArticleGrid articles={[]} />
+      </section>
+    );
+  }
 }
 
 export default function Home() {

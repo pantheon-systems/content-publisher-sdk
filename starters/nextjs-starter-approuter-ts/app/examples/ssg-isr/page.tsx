@@ -26,36 +26,51 @@ async function fetchNextPages(cursor?: string | null | undefined) {
 }
 
 async function SSGISRContent() {
-  // Fetch the articles and site in parallel
-  const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
-    PCCConvenienceFunctions.getPaginatedArticles({
-      pageSize: PAGE_SIZE,
-    }),
-    PCCConvenienceFunctions.getSite(),
-  ]);
-
-  return (
-    <ArticleList
-      headerText={"SSG and ISR Example"}
-      articles={articles}
-      totalCount={totalCount}
-      cursor={cursor}
-      fetcher={fetchNextPages}
-      site={site}
-      additionalHeader={
-        <div className="prose lg:prose-xl my-10 flex flex-col">
-          <p>
-            <em>
-              By default, this starter kit is optimized for SSR and Edge
-              Caching on Pantheon. This example instead uses Incremental
-              Static Regeneration and is provided as a reference for cases
-              where Next.js static generation options would be beneficial.
-            </em>
-          </p>
-        </div>
-      }
-    />
+  const additionalHeader = (
+    <div className="prose lg:prose-xl my-10 flex flex-col">
+      <p>
+        <em>
+          By default, this starter kit is optimized for SSR and Edge
+          Caching on Pantheon. This example instead uses Incremental
+          Static Regeneration and is provided as a reference for cases
+          where Next.js static generation options would be beneficial.
+        </em>
+      </p>
+    </div>
   );
+
+  try {
+    const [{ data: articles, cursor, totalCount }, site] = await Promise.all([
+      PCCConvenienceFunctions.getPaginatedArticles({
+        pageSize: PAGE_SIZE,
+      }),
+      PCCConvenienceFunctions.getSite(),
+    ]);
+
+    return (
+      <ArticleList
+        headerText={"SSG and ISR Example"}
+        articles={articles}
+        totalCount={totalCount}
+        cursor={cursor}
+        fetcher={fetchNextPages}
+        site={site}
+        additionalHeader={additionalHeader}
+      />
+    );
+  } catch (e) {
+    console.error(e);
+    return (
+      <ArticleList
+        headerText={"SSG and ISR Example"}
+        articles={[]}
+        totalCount={0}
+        cursor={""}
+        fetcher={fetchNextPages}
+        additionalHeader={additionalHeader}
+      />
+    );
+  }
 }
 
 export default function SSGISRExampleTemplate() {
