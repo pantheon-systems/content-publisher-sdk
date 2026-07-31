@@ -205,11 +205,11 @@ jobs:
             exit 1
           fi
 
-          # Build the project to verify it works
+          # Build the project to verify it works (mock server provides PCC API)
           if [[ "$PM_FLAG" == *"pnpm"* ]]; then
-            pnpm build
+            node "$GITHUB_WORKSPACE/scripts/ci/with-mock-pcc-server.js" pnpm build
           elif [[ "$PM_FLAG" == *"yarn"* ]]; then
-            yarn build
+            node "$GITHUB_WORKSPACE/scripts/ci/with-mock-pcc-server.js" yarn build
           else
-            npm run build
+            node "$GITHUB_WORKSPACE/scripts/ci/with-mock-pcc-server.js" npm run build
           fi

@@ -12,7 +12,7 @@
     "lint": "turbo run lint --filter=./packages/* --filter=!./packages/vue-sdk --filter=./starters/nextjs*",
     "lint:fix": "turbo run lint:fix --filter=./packages/* --filter=!./packages/vue-sdk --filter=./starters/nextjs*",
     "test": "turbo run test --filter=./packages/* --filter=!./packages/vue-sdk --filter=./starters/nextjs*",
-    "build:starters": "turbo run build --filter=./starters/nextjs*",
+    "build:starters": "turbo run build --filter=./starters/nextjs-starter --filter=./starters/nextjs-starter-ts && node scripts/ci/with-mock-pcc-server.js pnpm turbo run build --filter=./starters/nextjs-starter-approuter-ts",
     "lint:starters": "turbo run lint --filter=./starters/nextjs*",
     "ci:version": "changeset version",
     "ci:publish": "changeset publish",

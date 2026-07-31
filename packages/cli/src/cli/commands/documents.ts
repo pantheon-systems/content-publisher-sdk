@@ -17,9 +17,9 @@ const GDOCS_URL_REGEX =
 function isCredentialsNotFoundError(e: unknown): boolean {
   const data = (
     e as {
-      response?: { data?: { data?: { errorCode?: string } } };
+      data?: { data?: { errorCode?: string } };
     }
-  )?.response?.data?.data;
+  )?.data?.data;
   return data?.errorCode === "ACCOUNT_CREDENTIALS_NOT_FOUND";
 }
 

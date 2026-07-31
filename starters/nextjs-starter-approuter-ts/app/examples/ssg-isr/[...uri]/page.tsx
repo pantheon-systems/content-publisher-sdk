@@ -18,7 +18,12 @@ interface ArticlePageProps {
 async function fetchArticle(slug: string) {
   "use cache";
   cacheLife({ revalidate: 21600 });
-  return PCCConvenienceFunctions.getArticleBySlugOrId(slug);
+  try {
+    return await PCCConvenienceFunctions.getArticleBySlugOrId(slug);
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
 }
 
 async function ArticleContent({
@@ -58,17 +63,24 @@ export default function ArticlePage(props: ArticlePageProps) {
 export async function generateMetadata(
   props: ArticlePageProps,
 ): Promise<Metadata> {
-  const params = await props.params;
-  const article = await PCCConvenienceFunctions.getArticleBySlugOrId(
-    params.uri[params.uri.length - 1],
-  );
+  try {
+    const params = await props.params;
+    const article = await PCCConvenienceFunctions.getArticleBySlugOrId(
+      params.uri[params.uri.length - 1],
+    );
 
-  return getSeoMetadata(article);
+    return getSeoMetadata(article);
+  } catch (e) {
+    console.error(e);
+    return {
+      title: "Article",
+      description: "Article page",
+    };
+  }
 }
 
 export async function generateStaticParams() {
   try {
-    // Get all published articles and the site in parallel
     const [publishedArticles, site] = await Promise.all([
       PCCConvenienceFunctions.getAllArticles(
         {
@@ -82,30 +94,23 @@ export async function generateStaticParams() {
     ]);
 
     const params = publishedArticles.flatMap((article) => {
-      // Generate the article path from the content structure
       const articlePath = getArticlePathComponentsFromContentStructure(
         article,
         site,
       );
 
       const id = article.id;
-
-      // Add the ID to the article path
       articlePath.push(id);
 
-      // Add a copy of the article path with the slug
       const params = [{ uri: articlePath.slice() }];
       if (article.metadata?.slug) {
-        // Change the ID in the article path to the slug
         articlePath[articlePath.length - 1] = String(article.metadata.slug);
-
         params.push({ uri: articlePath });
       }
       return params;
     });
 
-    // Next.js 16 with Cache Components requires generateStaticParams to return
-    // at least one result for build-time validation.
+
     if (params.length === 0) {
       return [{ uri: ["placeholder"] }];
     }
@@ -113,7 +118,6 @@ export async function generateStaticParams() {
     return params;
   } catch (e) {
     console.error(e);
-
     return [{ uri: ["placeholder"] }];
   }
 }

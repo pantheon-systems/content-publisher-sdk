@@ -14,7 +14,7 @@ export function HomepageArticleGrid({
   site,
 }: {
   articles: ArticleWithoutContent[];
-  site: Site;
+  site?: Site | null;
 }) {
   return (
     <div
@@ -41,7 +41,7 @@ export function ArticleGrid({
 }: {
   articles: ArticleWithoutContent[];
   basePath?: string;
-  site: Site;
+  site?: Site | null;
 }) {
   return (
     <div className={cn("grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3")}>
@@ -62,7 +62,7 @@ interface ArticleGridCardProps {
   basePath?: string;
   imageAltText?: string;
   isWide?: boolean;
-  site: Site;
+  site?: Site | null;
 }
 
 // Utility to ensure URL include width and height params
@@ -95,7 +95,9 @@ export function ArticleGridCard({
   isWide = false,
   site,
 }: ArticleGridCardProps) {
-  const targetHref = getArticleURLFromSite(article, site, basePath);
+  const targetHref = site
+    ? getArticleURLFromSite(article, site, basePath)
+    : `${basePath}/${article.metadata?.slug || article.id}`;
   const rawImageSrc = (article.metadata?.["image"] as string) || null;
   const imageSrc = withImageSizeParams(rawImageSrc, 400, 400);
 

@@ -61,7 +61,6 @@ export const getStaticProps = async ({ params: { uri } }) => {
 
 export const getStaticPaths = async (uri) => {
   try {
-    // Get all the published articles and the site in parallel
     const [publishedArticles, site] = await Promise.all([
       PCCConvenienceFunctions.getAllArticles(
         {
@@ -75,7 +74,6 @@ export const getStaticPaths = async (uri) => {
     ]);
 
     const pagePaths = publishedArticles.map((article) => {
-      // Generate the article path
       const articlePath = getArticlePathComponentsFromContentStructure(
         article,
         site,
@@ -84,23 +82,18 @@ export const getStaticPaths = async (uri) => {
       const id = article.id;
       const slug = article.metadata.slug;
 
-      // Add the ID to the article path
       articlePath.push(id);
 
-      // Generate both slug and id paths for each article
       const paths = [
         {
           params: {
-            // Add a copy of the articlePath to the uri as we will add the slug to the end of the uri
             uri: articlePath.slice(),
           },
         },
       ];
 
       if (slug) {
-        // Change the id to the slug
         articlePath[articlePath.length - 1] = String(slug);
-        // Add the slug to the uri
         paths.push({
           params: {
             uri: articlePath,

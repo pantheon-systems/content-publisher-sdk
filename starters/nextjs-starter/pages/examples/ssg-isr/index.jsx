@@ -66,7 +66,6 @@ export default function SSGISRExampleTemplate({
 
 export async function getStaticProps() {
   try {
-    // Fetch the articles and site in parallel
     const [{ data: articles, totalCount, cursor }, site] = await Promise.all([
       PCCConvenienceFunctions.getPaginatedArticles({
         pageSize: PAGE_SIZE,

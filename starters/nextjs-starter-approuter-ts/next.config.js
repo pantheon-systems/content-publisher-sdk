@@ -20,13 +20,10 @@ function ensureEnvVariable(name) {
   }
 }
 
-if (process.env.IS_CICD !== "true") {
-  ensureEnvVariable("PCC_SITE_ID");
-  ensureEnvVariable("PCC_TOKEN");
-}
+ensureEnvVariable("PCC_SITE_ID");
+ensureEnvVariable("PCC_TOKEN");
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
   reactStrictMode: true,
   output: "standalone",
   cacheHandler: path.resolve(__dirname, "./cacheHandler.mjs"),
@@ -40,5 +37,3 @@ const nextConfig = {
     NEXT_PUBLIC_PCC_HOST: process.env.PCC_HOST,
   },
 };
-
-module.exports = nextConfig;

@@ -170,9 +170,6 @@ importers:
       '@pantheon-systems/cpub-sdk-core':
         specifier: workspace:*
         version: link:../core
-      axios:
-        specifier: ^1.13.5
-        version: 1.15.2(debug@4.4.3(supports-color@8.1.1))
       bluebird:
         specifier: ^3.7.2
         version: 3.7.2
@@ -297,9 +294,6 @@ importers:
       '@apollo/client':
         specifier: ^3.10.3
         version: 3.14.1(@types/react@19.2.10)(graphql-ws@5.16.2(graphql@16.13.1))(graphql@16.13.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      axios:
-        specifier: ^1.13.5
-        version: 1.15.2(debug@4.4.3(supports-color@8.1.1))
       graphql:
         specifier: ^16.8.1
         version: 16.13.1
@@ -4807,9 +4801,6 @@ packages:
   axe-core@4.11.1:
     resolution: {integrity: sha512-BASOg+YwO2C+346x3LZOeoovTIoTrRqEsqMa6fmfAV0P+U9mFr9NsyOEpiYvFjbc64NMrSswhV50WdXzdb/Z5A==}
     engines: {node: '>=4'}
-
-  axios@1.15.2:
-    resolution: {integrity: sha512-wLrXxPtcrPTsNlJmKjkPnNPK2Ihe0hn0wGSaTEiHRPxwjvJwT3hKmXF4dpqxmPO9SoNb2FsYXj/xEo0gHN+D5A==}
 
   axios@1.16.0:
     resolution: {integrity: sha512-6hp5CwvTPlN2A31g5dxnwAX0orzM7pmCRDLnZSX772mv8WDqICwFjowHuPs04Mc8deIld1+ejhtaMn5vp6b+1w==}
@@ -13978,14 +13969,6 @@ snapshots:
       possible-typed-array-names: 1.1.0
 
   axe-core@4.11.1: {}
-
-  axios@1.15.2(debug@4.4.3(supports-color@8.1.1)):
-    dependencies:
-      follow-redirects: 1.16.0(debug@4.4.3(supports-color@8.1.1))
-      form-data: 4.0.5
-      proxy-from-env: 2.1.0
-    transitivePeerDependencies:
-      - debug
 
   axios@1.16.0(debug@4.4.3(supports-color@8.1.1)):
     dependencies:
