@@ -110,7 +110,6 @@ export async function generateStaticParams() {
       return params;
     });
 
-
     if (params.length === 0) {
       return [{ uri: ["placeholder"] }];
     }

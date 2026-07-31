@@ -119,6 +119,7 @@
   },
   "dependencies": {
     "@types/hast": "^3.0.4",
+    "@types/unist": "^3.0.3",
     "@apollo/client": "^3.10.3",
     "@pantheon-systems/cpub-sdk-core": "workspace:*",
     "graphql": "^16.8.1",

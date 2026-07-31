@@ -428,6 +428,9 @@ importers:
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
+      '@types/unist':
+        specifier: ^3.0.3
+        version: 3.0.3
       graphql:
         specifier: ^16.8.1
         version: 16.13.1
