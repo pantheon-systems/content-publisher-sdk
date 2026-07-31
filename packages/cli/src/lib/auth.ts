@@ -171,6 +171,7 @@ export class Auth0Provider extends BaseAuthProvider {
 
           spinner.start("Waiting for you to complete login in the browser...");
           let credentials: PersistedTokens;
+          let pollInterval = interval || 5;
 
           while (true) {
             const resp = await fetch(
@@ -201,8 +202,14 @@ export class Auth0Provider extends BaseAuthProvider {
                   `Token poll failed (HTTP ${resp.status}): ${raw || resp.statusText}`,
                 );
               }
-              if (parsed?.error === "authorization_pending") {
-                await new Promise((r) => setTimeout(r, (interval || 5) * 1000));
+              if (
+                parsed?.error === "authorization_pending" ||
+                parsed?.error === "slow_down"
+              ) {
+                if (parsed?.error === "slow_down") {
+                  pollInterval += 5;
+                }
+                await new Promise((r) => setTimeout(r, pollInterval * 1000));
                 continue;
               }
               throw new Error(
@@ -212,19 +219,7 @@ export class Auth0Provider extends BaseAuthProvider {
               );
             }
 
-            const data = (await resp.json()) as
-              | PersistedTokens
-              | { error: string; error_description?: string };
-
-            if ("error" in data) {
-              if (data.error === "authorization_pending") {
-                await new Promise((r) => setTimeout(r, (interval || 5) * 1000));
-                continue;
-              }
-              throw new Error(data.error_description || data.error);
-            }
-
-            credentials = data;
+            credentials = (await resp.json()) as PersistedTokens;
             break;
           }
 

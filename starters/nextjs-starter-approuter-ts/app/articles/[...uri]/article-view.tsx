@@ -71,7 +71,8 @@ export async function getServersideArticle({
       }),
       PCCConvenienceFunctions.getSite(),
     ]);
-  } catch {
+  } catch (e) {
+    console.error(e);
     return {
       article: null,
       grant: null,

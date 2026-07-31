@@ -57,7 +57,8 @@ async function AuthorContent({
         },
       }),
     ]);
-  } catch {
+  } catch (e) {
+    console.error(e);
     return (
       <section className="max-w-screen-3xl mx-auto px-4 pt-16 sm:w-4/5 md:w-3/4 lg:w-4/5 2xl:w-3/4">
         <div>Could not find any articles by {author}</div>

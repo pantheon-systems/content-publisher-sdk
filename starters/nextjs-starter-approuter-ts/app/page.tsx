@@ -1,7 +1,4 @@
-import {
-  PCCConvenienceFunctions,
-  type Site,
-} from "@pantheon-systems/cpub-react-sdk/server";
+import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -24,10 +21,11 @@ async function HomeArticles() {
         <HomepageArticleGrid articles={articles} site={site} />
       </section>
     );
-  } catch {
+  } catch (e) {
+    console.error(e);
     return (
       <section className="max-w-screen-3xl mx-auto mt-32 flex justify-center px-4 sm:px-6 lg:px-0">
-        <HomepageArticleGrid articles={[]} site={{} as Site} />
+        <HomepageArticleGrid articles={[]} />
       </section>
     );
   }

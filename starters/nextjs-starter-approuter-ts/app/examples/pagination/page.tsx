@@ -1,7 +1,4 @@
-import {
-  PCCConvenienceFunctions,
-  type Site,
-} from "@pantheon-systems/cpub-react-sdk/server";
+import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
 import { Suspense } from "react";
 import Layout from "../../../components/layout";
 import { SkeletonArticleList } from "../../../components/skeleton-article-list";
@@ -40,7 +37,8 @@ async function PaginationContent() {
         site={site}
       />
     );
-  } catch {
+  } catch (e) {
+    console.error(e);
     return (
       <PaginatedArticleList
         headerText={"Pagination Example"}
@@ -48,7 +46,6 @@ async function PaginationContent() {
         totalCount={0}
         cursor={""}
         fetcher={fetchNextPages}
-        site={{} as Site}
       />
     );
   }

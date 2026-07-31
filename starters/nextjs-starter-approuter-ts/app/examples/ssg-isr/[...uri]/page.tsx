@@ -20,7 +20,8 @@ async function fetchArticle(slug: string) {
   cacheLife({ revalidate: 21600 });
   try {
     return await PCCConvenienceFunctions.getArticleBySlugOrId(slug);
-  } catch {
+  } catch (e) {
+    console.error(e);
     return null;
   }
 }
@@ -69,7 +70,8 @@ export async function generateMetadata(
     );
 
     return getSeoMetadata(article);
-  } catch {
+  } catch (e) {
+    console.error(e);
     return {
       title: "Article",
       description: "Article page",
@@ -113,7 +115,8 @@ export async function generateStaticParams() {
     }
 
     return params;
-  } catch {
+  } catch (e) {
+    console.error(e);
     return [{ uri: ["placeholder"] }];
   }
 }

@@ -34,7 +34,8 @@ async function SearchContent({
         summary={searchResults.summary}
       />
     );
-  } catch {
+  } catch (e) {
+    console.error(e);
     return <SearchResults searchResults={[]} summary={null} />;
   }
 }

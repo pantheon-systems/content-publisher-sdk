@@ -240,7 +240,7 @@ class AddOnApiHelper {
     const publishUrl = data.url;
 
     try {
-      const publishResponse = await fetch(publishUrl);
+      const publishResponse = await fetchWithErrorHandling(publishUrl);
 
       // Get the published URL from the final redirect
       console.log("Published to ", publishResponse.url);

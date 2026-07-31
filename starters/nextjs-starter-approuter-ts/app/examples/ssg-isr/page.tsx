@@ -1,7 +1,4 @@
-import {
-  PCCConvenienceFunctions,
-  type Site,
-} from "@pantheon-systems/cpub-react-sdk/server";
+import { PCCConvenienceFunctions } from "@pantheon-systems/cpub-react-sdk/server";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import ArticleList from "../../../components/article-list";
@@ -61,7 +58,8 @@ async function SSGISRContent() {
         additionalHeader={additionalHeader}
       />
     );
-  } catch {
+  } catch (e) {
+    console.error(e);
     return (
       <ArticleList
         headerText={"SSG and ISR Example"}
@@ -69,7 +67,6 @@ async function SSGISRContent() {
         totalCount={0}
         cursor={""}
         fetcher={fetchNextPages}
-        site={{} as Site}
         additionalHeader={additionalHeader}
       />
     );

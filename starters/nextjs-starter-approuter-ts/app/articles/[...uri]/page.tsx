@@ -63,7 +63,8 @@ export async function generateMetadata(props: ArticleViewProps) {
     });
 
     return getSeoMetadata(article);
-  } catch {
+  } catch (e) {
+    console.error(e);
     return {
       title: "Article",
       description: "Article page",

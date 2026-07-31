@@ -22,7 +22,7 @@ interface Props {
     newCursor: string;
   }>;
   additionalHeader?: React.ReactNode;
-  site: Site;
+  site?: Site | null;
 }
 
 export default function PaginatedArticleList({
