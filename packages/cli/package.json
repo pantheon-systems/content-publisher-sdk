@@ -60,7 +60,7 @@
     "package-json": "^8.1.1",
     "query-string": "^8.2.0",
     "server-destroy": "^1.0.1",
-    "showdown": "^2.1.0",
+    "markdown-it": "^14.1.0",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
@@ -73,7 +73,7 @@
     "@types/node": "^20.11.21",
     "@types/nunjucks": "^3.2.6",
     "@types/server-destroy": "^1.0.3",
-    "@types/showdown": "^2.0.6",
+    "@types/markdown-it": "^14.1.2",
     "@types/tmp": "^0.2.6",
     "@types/yargs": "^17.0.33",
     "babel-jest": "^29.7.0",

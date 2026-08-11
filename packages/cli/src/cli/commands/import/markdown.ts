@@ -4,8 +4,8 @@ import chalk from "chalk";
 import { parseFromString } from "dom-parser";
 import type { GaxiosResponse } from "gaxios";
 import { drive_v3 } from "googleapis";
+import MarkdownIt from "markdown-it";
 import ora from "ora";
-import showdown from "showdown";
 import AddOnApiHelper from "../../../lib/addonApiHelper";
 import { Logger } from "../../../lib/logger";
 import { errorHandler } from "../../exceptions";
@@ -48,8 +48,8 @@ export const importFromMarkdown = errorHandler<MarkdownImportParams>(
 
     const drive = getAuthedDrive(accessToken);
 
-    const converter = new showdown.Converter();
-    const html = converter.makeHtml(content);
+    const md = new MarkdownIt();
+    const html = md.render(content);
     const dom = parseFromString(html);
 
     // Derive document's title
