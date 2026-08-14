@@ -172,7 +172,11 @@ jobs:
             pkg.resolutions = { ...pkg.resolutions, ...sdkOverrides };
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
             // pnpm 11 reads overrides from pnpm-workspace.yaml, not package.json.
-            fs.writeFileSync('pnpm-workspace.yaml', 'overrides:\n' + Object.entries(sdkOverrides)
+            // Generated apps have no build-script allowlist, and this is a smoke
+            // test, so keep an unapproved build script a warning as it was on v10.
+            // This has to be a setting rather than an install flag, because
+            // 'pnpm build' re-runs the install itself to refresh node_modules.
+            fs.writeFileSync('pnpm-workspace.yaml', 'strictDepBuilds: false\noverrides:\n' + Object.entries(sdkOverrides)
               .map(([name, spec]) => '  ' + JSON.stringify(name) + ': ' + JSON.stringify(spec))
               .join('\n') + '\n');
           "
@@ -180,9 +184,7 @@ jobs:
           # Install dependencies with the appropriate package manager
           PM_FLAG="${{ matrix.package_manager.flag }}"
           if [[ "$PM_FLAG" == *"pnpm"* ]]; then
-            # Generated apps have no build-script allowlist, and this is a smoke
-            # test, so keep an unapproved build script a warning as it was on v10.
-            pnpm install --no-frozen-lockfile --config.strictDepBuilds=false
+            pnpm install --no-frozen-lockfile
           elif [[ "$PM_FLAG" == *"yarn"* ]]; then
             yarn install
           else
