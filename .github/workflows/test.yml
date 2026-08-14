@@ -21,16 +21,16 @@ jobs:
         include:
           - os: ubuntu-latest
             shell: bash
-            node-version: 20
+            node-version: 24
           - os: ubuntu-latest
             shell: bash
             node-version: 25
           - os: windows-latest
             shell: powershell
-            node-version: 20
+            node-version: 24
           - os: windows-latest
             shell: cmd
-            node-version: 20
+            node-version: 24
     env:
       PCC_SITE_ID: ${{ secrets.PCC_SITE_ID }}
       PCC_TOKEN: ${{ secrets.PCC_TOKEN }}
@@ -107,7 +107,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
-          node-version: 20
+          node-version: 24
           cache: "pnpm"
 
       - name: Install yarn
@@ -170,15 +170,19 @@ jobs:
             Object.assign(pkg.dependencies, sdkOverrides);
             pkg.overrides = { ...pkg.overrides, ...sdkOverrides };
             pkg.resolutions = { ...pkg.resolutions, ...sdkOverrides };
-            pkg.pnpm = pkg.pnpm || {};
-            pkg.pnpm.overrides = { ...pkg.pnpm.overrides, ...sdkOverrides };
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+            // pnpm 11 reads overrides from pnpm-workspace.yaml, not package.json.
+            fs.writeFileSync('pnpm-workspace.yaml', 'overrides:\n' + Object.entries(sdkOverrides)
+              .map(([name, spec]) => '  ' + JSON.stringify(name) + ': ' + JSON.stringify(spec))
+              .join('\n') + '\n');
           "
 
           # Install dependencies with the appropriate package manager
           PM_FLAG="${{ matrix.package_manager.flag }}"
           if [[ "$PM_FLAG" == *"pnpm"* ]]; then
-            pnpm install --no-frozen-lockfile
+            # Generated apps have no build-script allowlist, and this is a smoke
+            # test, so keep an unapproved build script a warning as it was on v10.
+            pnpm install --no-frozen-lockfile --config.strictDepBuilds=false
           elif [[ "$PM_FLAG" == *"yarn"* ]]; then
             yarn install
           else
