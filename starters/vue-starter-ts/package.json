@@ -10,10 +10,10 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@nuxt/devtools": "3.3.1",
+    "@nuxt/devtools": "2.6.4",
     "@tailwindcss/typography": "0.5.10",
     "autoprefixer": "^10.4.17",
-    "nuxt": "3.21.10",
+    "nuxt": "3.21.7",
     "nuxt-gtag": "1.2.1",
     "postcss": "^8.5.13",
     "tailwindcss": "^3.4.1",

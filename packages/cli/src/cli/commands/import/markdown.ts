@@ -48,7 +48,7 @@ export const importFromMarkdown = errorHandler<MarkdownImportParams>(
 
     const drive = getAuthedDrive(accessToken);
 
-    const md = new MarkdownIt();
+    const md = new MarkdownIt({ html: true });
     const html = md.render(content);
     const dom = parseFromString(html);
 
