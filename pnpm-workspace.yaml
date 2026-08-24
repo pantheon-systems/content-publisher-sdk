@@ -5,3 +5,50 @@ packages:
   - starters/nextjs-starter
   - starters/nextjs-starter-ts
   - starters/nextjs-starter-approuter-ts
+
+shamefullyHoist: true
+saveWorkspaceProtocol: false
+preferWorkspacePackages: true
+linkWorkspacePackages: true
+
+overrides:
+  pbkdf2: ">=3.1.3"
+  "@pantheon-systems/cpub-react-sdk>glob-parent": ">=5.1.2"
+  "@pantheon-systems/cpub-react-sdk>parse-url": ">=8.1.0"
+  "@pantheon-systems/cpub-react-sdk>trim": ">=0.0.3"
+  "@pantheon-systems/cpub-react-sdk>trim-newlines": ">=3.0.1"
+  "@pantheon-systems/cpub-react-sdk>yaml": ">=2.2.2"
+  "@pantheon-systems/cpub-react-sdk>prettier": "^3.0.0"
+  webpack-dev-middleware: "^7.2.1"
+  "@pantheon-systems/pcc-vue-sdk>ufo": "1.5.3"
+  next: "16.2.11"
+  "@babel/core": "7.29.6"
+  path-to-regexp: "0.1.12"
+  serialize-javascript: "^7.0.3"
+  form-data: "4.0.6"
+  image-size: "1.2.1"
+  esbuild: "0.28.1"
+  http-proxy-agent: "^7.0.0"
+  postcss: "8.5.18"
+  qs: ">=6.15.2"
+  uuid: ">=11.1.1"
+  ws: ">=8.20.1"
+  "brace-expansion@1": "1.1.18"
+  "brace-expansion@2": "2.1.4"
+  "brace-expansion@5": "5.0.9"
+  fast-uri: "3.1.5"
+  immutable: "^5.1.8"
+  "js-yaml@3": "3.15.1"
+  "js-yaml@4": "4.3.1"
+  shell-quote: "^1.9.0"
+  sharp: "^0.35.3"
+  axios: "1.18.0"
+  vite: "8.0.16"
+  tmp: "0.2.6"
+
+allowBuilds:
+  "@parcel/watcher": false
+  core-js-pure: false
+  esbuild: false
+  unrs-resolver: false
+  vue-demi: false
