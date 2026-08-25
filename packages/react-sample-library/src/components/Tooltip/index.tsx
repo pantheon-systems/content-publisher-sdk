@@ -16,7 +16,8 @@ export const reactComponent = ({
       content={content}
       triggerIcon={triggerIcon}
       triggerAccessibleText={triggerAccessibleText}
-      triggerText={triggerText}
+      // Renamed from triggerText.
+      customTrigger={triggerText}
       className={className}
     />
   );

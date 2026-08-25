@@ -13,9 +13,12 @@ export const reactComponent = ({
   return (
     <BaseAvatar
       imageSrc={image}
-      avatarSize={size}
+      size={size}
       className={className}
-      fallbackIcon={fallbackIcon}
+      // The PDS component collapsed the single/multiple-user fallback icon
+      // choice into one boolean; both stored field values still render
+      // (the same) fallback icon rather than becoming invalid content.
+      hasUserFallback={fallbackIcon != null}
     />
   );
 };

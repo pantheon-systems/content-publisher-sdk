@@ -17,7 +17,8 @@ export const reactComponent = ({
       message={message}
       type={type}
       isDismissible={isDismissible}
-      id={id}
+      // SectionMessage's id is a string; the field is stored as a number.
+      id={String(id)}
       title={title}
       className={className}
     />

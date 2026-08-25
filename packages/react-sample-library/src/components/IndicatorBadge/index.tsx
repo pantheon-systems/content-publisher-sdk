@@ -1,5 +1,27 @@
 import { IndicatorBadge as BaseIndicatorBadge } from "@pantheon-systems/pds-toolkit-react";
 import { InferSmartComponentProps } from "@pantheon-systems/cpub-sdk-core";
+import { type ComponentProps } from "react";
+
+type IndicatorBadgeColor = ComponentProps<typeof BaseIndicatorBadge>["color"];
+
+// The PDS component collapsed "variant" (which implied both a color and a
+// default label) into a plain "color" + a required "label". This preserves
+// the old per-variant default label and color choice; "early-access" has no
+// literal color equivalent, so it maps to the closest available one.
+const VARIANT_TO_COLOR: Record<string, IndicatorBadgeColor> = {
+  silver: "silver",
+  gold: "gold",
+  platinum: "platinum",
+  diamond: "diamond",
+  "early-access": "priority",
+};
+const VARIANT_DEFAULT_LABEL: Record<string, string> = {
+  silver: "Silver",
+  gold: "Gold",
+  platinum: "Platinum",
+  diamond: "Diamond",
+  "early-access": "Early Access",
+};
 
 /**
  * A visual label to indicate a special status or category
@@ -11,9 +33,9 @@ export const reactComponent = ({
 }: InferSmartComponentProps<typeof smartComponentDefinition>) => {
   return (
     <BaseIndicatorBadge
-      variant={variant}
+      color={VARIANT_TO_COLOR[variant] ?? "default"}
+      label={customLabel ?? VARIANT_DEFAULT_LABEL[variant] ?? variant}
       className={className}
-      customLabel={customLabel}
     />
   );
 };

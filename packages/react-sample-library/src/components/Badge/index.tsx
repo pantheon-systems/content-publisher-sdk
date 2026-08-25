@@ -1,4 +1,4 @@
-import { Badge as BaseBadge } from "@pantheon-systems/pds-toolkit-react";
+import { StatusBadge } from "@pantheon-systems/pds-toolkit-react";
 import { type InferSmartComponentProps } from "@pantheon-systems/cpub-sdk-core";
 
 /**
@@ -9,11 +9,15 @@ export const reactComponent = ({
   label,
   className,
 }: InferSmartComponentProps<typeof smartComponentDefinition>) => {
+  // "neutral" moved from a status type to a background color in the PDS
+  // component; everything else maps straight through to statusType.
+  const isNeutral = statusType === "neutral";
   return (
-    <BaseBadge
+    <StatusBadge
       label={label}
-      statusType={statusType}
-      hasStatusType={statusType != null}
+      statusType={isNeutral ? undefined : statusType}
+      hasStatusIndicator={statusType != null && !isNeutral}
+      color={isNeutral ? "neutral" : undefined}
       className={className}
     />
   );
@@ -32,17 +36,13 @@ export const smartComponentDefinition = {
       required: true,
     },
     /**
-     * Status type for badge. Only renders if `hasStatusType` is true.
+     * Status type for badge. Only renders if `hasStatusIndicator` is true.
      */
     statusType: {
       displayName: "Status Type",
       type: "enum",
       required: false,
       options: [
-        {
-          label: "Status",
-          value: "status",
-        },
         {
           label: "Info",
           value: "info",

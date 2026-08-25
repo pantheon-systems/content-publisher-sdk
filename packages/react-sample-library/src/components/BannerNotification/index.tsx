@@ -8,8 +8,9 @@ export const reactComponent = ({
 }: InferSmartComponentProps<typeof smartComponentDefinition>) => {
   return (
     <BaseBannerNotification
-      message={message}
-      type={type}
+      // This smart component only ever renders one message; the PDS
+      // component now takes an array to support multiple banners.
+      banners={[{ id: "banner-notification", message, type }]}
       className={className}
     />
   );

@@ -21,7 +21,9 @@ export const reactComponent = ({
       siteName={siteName}
       siteImage={siteImage}
       sitePlan={sitePlan}
-      siteStatus={siteStatus}
+      // Field values are stored capitalized ("Active"/"Frozen"); the PDS
+      // component's SiteStatus type is lowercase.
+      siteStatus={siteStatus?.toLowerCase() as "active" | "frozen"}
       gotoText={gotoText}
       headingLevel={headingLevel}
       className={className}
