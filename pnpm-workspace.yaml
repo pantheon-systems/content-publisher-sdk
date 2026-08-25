@@ -45,6 +45,13 @@ overrides:
   axios: "1.18.0"
   vite: "8.0.16"
   tmp: "0.2.6"
+  # pds-toolkit-react@1.0.0-dev.55's own ^6.13.0 range naturally re-resolved to a
+  # newer patch during this PR's lockfile regen (6.30.3 -> 6.30.6), which is still
+  # vulnerable to CVE-2026-53666/53669 (fixed only in 7.18.0 -- no 6.x fix exists).
+  # react-router is out of scope for this PR (deferred to the pds-toolkit-react
+  # 1.18.0 migration, which drops it entirely); pin back to main's exact version
+  # so this PR introduces no incidental drift on a package it isn't fixing.
+  "@pantheon-systems/pds-toolkit-react>react-router-dom": "6.30.3"
 
 allowBuilds:
   "@parcel/watcher": false
