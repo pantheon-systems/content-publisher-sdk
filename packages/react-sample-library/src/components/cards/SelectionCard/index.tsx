@@ -1,5 +1,17 @@
-import { SelectionCard as BaseCard } from "@pantheon-systems/pds-toolkit-react";
+import { NewSiteCard } from "@pantheon-systems/pds-toolkit-react";
 import { InferSmartComponentProps } from "@pantheon-systems/cpub-sdk-core";
+import { type ComponentProps } from "react";
+
+type NewSiteCardIcon = ComponentProps<typeof NewSiteCard>["icon"];
+
+// SelectionCard was replaced by NewSiteCard, which renamed 3 of the platform
+// icon values; the field's stored option values are kept as-is (so existing
+// customer content doesn't need to change) and translated here at render time.
+const ICON_VALUE_MAP: Record<string, NewSiteCardIcon> = {
+  "drupal-next": "next-drupal",
+  "wp-gatsby": "gatsby-wp",
+  "wp-next": "next-wp",
+};
 
 /**
  * Cards for displaying multiple choices that begin a user flow
@@ -15,11 +27,11 @@ export const reactComponent = ({
   className,
 }: InferSmartComponentProps<typeof smartComponentDefinition>) => {
   return (
-    <BaseCard
+    <NewSiteCard
       selectionLink={<a href={selectionLinkURL}>{selectionLinkText}</a>}
       title={title}
       badge={badge}
-      icon={icon}
+      icon={icon ? ICON_VALUE_MAP[icon] ?? (icon as NewSiteCardIcon) : icon}
       subtitle={subtitle}
       summary={summary}
       className={className}

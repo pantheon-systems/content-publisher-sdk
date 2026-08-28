@@ -1,9 +1,30 @@
 import { InferSmartComponentProps } from "@pantheon-systems/cpub-sdk-core/types";
-import { Card as BaseCard } from "@pantheon-systems/pds-toolkit-react";
+import {
+  ButtonLink,
+  Card as BaseCard,
+  CardHeading,
+  Picture,
+} from "@pantheon-systems/pds-toolkit-react";
+import { createElement } from "react";
 
-/**
- * A container to summarize information with a subsequent call to action
- */
+// PDS removed this rich, content-driven Card shape (heading/kicker/image/
+// body/two links) in pds-toolkit-react v1.0.0-dev.187 (2024-11-08),
+// refactoring Card into a generic composable primitive ("base for other card
+// components") and adding CardHeading alongside it -- the same pattern every
+// other card in this library (SiteCard, NewSiteCard, LinksCard, PricingCard,
+// etc.) now builds on top of. There is no successor component that covers
+// this exact shape, so this recomposes it from PDS primitives ourselves,
+// matching how PDS expects consumers to build their own card variants: base
+// Card (container) + CardHeading (reused for both the heading and, at a
+// smaller scale, the kicker label -- PDS has no dedicated "kicker" component)
+// + Picture (image) + ButtonLink (both links). Only the body copy has no PDS
+// equivalent and is a plain paragraph.
+//
+// One capability is dropped rather than reimplemented: the old `elementType`
+// prop rendered the card's OWN root element as div/article/aside. The new
+// Card is hardcoded to a div, so `elementToRender` is instead applied to a
+// wrapping element -- semantically close, but no longer the card's actual
+// root element. Flagging in case that distinction matters to any consumer.
 export const reactComponent = ({
   headingText,
   primaryLinkText,
@@ -18,38 +39,34 @@ export const reactComponent = ({
   secondaryLinkUrl,
   className,
 }: InferSmartComponentProps<typeof smartComponentDefinition>) => {
-  const primaryLink = {
-    text: primaryLinkText,
-    url: primaryLinkUrl,
-    target: "_self" as const,
-  };
-  const secondaryLink =
-    secondaryLinkText && secondaryLinkUrl
-      ? {
-          text: secondaryLinkText,
-          url: secondaryLinkUrl,
-          target: "_self" as const,
-        }
-      : undefined;
-  const imageProp = image
-    ? {
-        src: image,
-        alt: imageAlt ?? "",
-      }
-    : undefined;
-
-  return (
-    <BaseCard
-      headingText={headingText}
-      headingLevel={headingLevel}
-      primaryLink={primaryLink}
-      secondaryLink={secondaryLink}
-      image={imageProp}
-      kickerText={kickerText}
-      bodyText={bodyText}
-      elementType={elementToRender}
-      className={className}
-    />
+  return createElement(
+    elementToRender ?? "div",
+    null,
+    <BaseCard className={className}>
+      {image && (
+        <Picture srcWebp={image} srcFallback={image} alt={imageAlt ?? ""} />
+      )}
+      {kickerText && (
+        <CardHeading
+          text={kickerText}
+          level="span"
+          fontSize="L"
+          fontWeight="semibold"
+        />
+      )}
+      <CardHeading text={headingText} level={headingLevel ?? "h2"} />
+      {bodyText && <p>{bodyText}</p>}
+      <ButtonLink
+        variant="primary"
+        linkContent={<a href={primaryLinkUrl}>{primaryLinkText}</a>}
+      />
+      {secondaryLinkText && secondaryLinkUrl && (
+        <ButtonLink
+          variant="secondary"
+          linkContent={<a href={secondaryLinkUrl}>{secondaryLinkText}</a>}
+        />
+      )}
+    </BaseCard>,
   );
 };
 

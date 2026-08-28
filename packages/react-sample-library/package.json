@@ -82,7 +82,7 @@
   "dependencies": {
     "@pantheon-systems/cpub-react-sdk": "workspace:*",
     "@pantheon-systems/cpub-sdk-core": "workspace:*",
-    "@pantheon-systems/pds-toolkit-react": "1.0.0-dev.55"
+    "@pantheon-systems/pds-toolkit-react": "1.18.0"
   },
   "sideEffects": false
 }

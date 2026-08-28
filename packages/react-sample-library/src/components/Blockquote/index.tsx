@@ -1,4 +1,4 @@
-import { Blockquote as BaseBlockquote } from "@pantheon-systems/pds-toolkit-react";
+import { PullQuote } from "@pantheon-systems/pds-toolkit-react";
 import { type InferSmartComponentProps } from "@pantheon-systems/cpub-sdk-core";
 
 /**
@@ -12,11 +12,13 @@ export const reactComponent = ({
   className,
 }: InferSmartComponentProps<typeof smartComponentDefinition>) => {
   return (
-    <BaseBlockquote
-      type={type}
+    <PullQuote
+      // Blockquote was replaced by PullQuote, which takes a structured
+      // attribution instead of flat person/source strings; there's no
+      // field for a job title, so it's left blank.
+      layoutType={type === "inline" ? "inline" : "stand-alone"}
       quote={quote}
-      person={person}
-      source={source}
+      attribution={{ name: person, org: source, title: "" }}
       className={className}
     />
   );

@@ -13,8 +13,12 @@ export const reactComponent = ({
   return (
     <BaseInlineBannerNotification
       title={title}
-      text={text}
-      type={type}
+      // Renamed from text.
+      message={text}
+      // "discovery" is no longer a valid InlineMessage type; the field
+      // option is kept (so existing stored content stays valid) and mapped
+      // to the closest available type at render time.
+      type={type === "discovery" ? "info" : type}
       className={className}
     />
   );
