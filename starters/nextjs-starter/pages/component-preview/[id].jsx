@@ -17,7 +17,7 @@ export default function SmartComponentPreview() {
   return (
     <div>
       {SmartComponent ? (
-        <div>
+        <div className="h-[100vh]">
           <SmartComponent isSmartComponentPreview {...decodedAttrs} />
         </div>
       ) : (
