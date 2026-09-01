@@ -65,6 +65,7 @@ p:has(span.pull-quote) {
   box-sizing: border-box;
   padding-left: calc(1.5rem + 27px + 1.5rem);
   position: relative;
+  display: block;
 }
 
 .section-message::before {
