@@ -1,16 +1,16 @@
-# https://backstage.io/docs/features/software-catalog/
-# https://backstage.io/docs/features/software-catalog/descriptor-format
+# Managed by github-terraform — do not edit manually
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: content-publisher-sdk
-  description: An SDK to provide a comprehensive set of APIs and tools to facilitate the development of a pcc site using various supported starters
+  name: "content-publisher-sdk"
+  description: "An SDK to provide a comprehensive set of APIs and tools to facilitate the development of a pcc site using various supported starters"
   annotations:
-    pantheon.io/service-catalog/subdir: /
-    github.com/project-slug: pantheon-systems/content-publisher-sdk
-    github.com/team-slug: pantheon-systems/pcc
+    "backstage.io/techdocs-ref": "dir:docs/"
+    "github.com/project-slug": "pantheon-systems/content-publisher-sdk"
+    "github.com/team-slug": "pantheon-systems/pcc"
+    "pantheon.io/service-catalog/subdir": "/"
 spec:
-  type: library
-  lifecycle: Introduction
-  owner: content-cloud
+  type: "library"
+  lifecycle: "experimental"
+  owner: "content-experience"
