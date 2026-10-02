@@ -8,7 +8,7 @@ metadata:
   annotations:
     "backstage.io/techdocs-ref": "dir:docs/"
     "github.com/project-slug": "pantheon-systems/content-publisher-sdk"
-    "github.com/team-slug": "pantheon-systems/pcc"
+    "github.com/team-slug": "pantheon-systems/content-experience"
     "pantheon.io/service-catalog/subdir": "/"
 spec:
   type: "library"
