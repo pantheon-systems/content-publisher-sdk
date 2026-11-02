@@ -56,9 +56,6 @@
       "cache": false,
       "persistent": true,
       "outputs": [
-        "!starters/vue-starter/**",
-        "!starters/vue-starter-ts/**",
-        "!packages/vue-sdk/**",
         "!local_testing/testpages/**"
       ]
     }

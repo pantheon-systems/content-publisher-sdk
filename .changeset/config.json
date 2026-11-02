@@ -16,7 +16,6 @@
   "baseBranch": "main",
   "ignore": [
     "testpages",
-    "@pantheon-systems/pcc-vue-sdk",
     "@pantheon-systems/next-cpub-starter",
     "@pantheon-systems/next-cpub-starter-ts",
     "@pantheon-systems/next-approuter-cpub-starter-ts"
