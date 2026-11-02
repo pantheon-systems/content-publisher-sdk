@@ -60,7 +60,7 @@
     "package-json": "^8.1.1",
     "query-string": "^8.2.0",
     "server-destroy": "^1.0.1",
-    "markdown-it": "^14.1.0",
+    "markdown-it": "^14.3.3",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
