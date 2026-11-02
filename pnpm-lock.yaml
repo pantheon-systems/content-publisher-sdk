@@ -423,7 +423,7 @@ importers:
         specifier: ^5.0.5
         version: 5.0.10
       storybook:
-        specifier: ^8.6.15
+        specifier: ^8.6.19
         version: 8.6.19(prettier@3.2.5)(supports-color@8.1.1)
       tsup:
         specifier: ^8.2.4
