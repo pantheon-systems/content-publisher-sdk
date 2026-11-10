@@ -85,8 +85,8 @@
     "@testing-library/react": "16.3.0",
     "@types/jest": "29.5.1",
     "@types/node": "^20.11.21",
-    "@types/react": "^19.2.10",
-    "@types/react-dom": "^19.2.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "babel-loader": "9.1.2",
     "chalk": "^5.3.0",
     "cli-spinners": "^2.9.2",
@@ -95,11 +95,11 @@
     "eslint-config-pcc-custom": "workspace:*",
     "jest": "29.5.0",
     "jest-environment-jsdom": "^30.0.4",
-    "next": "16.4.1",
+    "next": "16.4.5",
     "octokit": "^3.2.1",
     "ora": "^6.3.1",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "ts-jest": "29.1.0",
     "tsup": "^8.2.4",
     "typescript": "^5.5.4",
@@ -126,6 +126,6 @@
     "react-markdown": "^10.1.0",
     "rehype-raw": "^7.0.0",
     "remark-custom-heading-id": "^2.0.0",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.2.0"
   }
 }
