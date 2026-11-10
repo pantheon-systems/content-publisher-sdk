@@ -11,14 +11,14 @@
   "dependencies": {
     "@pantheon-systems/cpub-browser-sdk": "workspace:*",
     "@pantheon-systems/cpub-react-sample-library": "workspace:*",
-    "next": "16.4.1",
-    "react": "19.1.2",
-    "react-dom": "19.1.2"
+    "next": "16.4.5",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   },
   "devDependencies": {
     "@types/node": "^20.11.21",
-    "@types/react": "19.1.8",
-    "@types/react-dom": "19.1.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
     "autoprefixer": "^10.4.17",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.1.1",
