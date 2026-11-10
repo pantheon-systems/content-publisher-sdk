@@ -54,7 +54,7 @@ jobs:
 
       - name: Create Release Pull Request or Publish
         id: changesets
-        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba
+        uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51
         with:
           title: "Release v${{steps.prep_commit.outputs.NEW_VERSION}}"
           commit: "Release v${{steps.prep_commit.outputs.NEW_VERSION}}"
