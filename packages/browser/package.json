@@ -19,7 +19,7 @@
     "@eslint/js": "^9.39.2",
     "eslint": "^9.39.2",
     "eslint-config-pcc-custom": "workspace:*",
-    "tsup": "^8.2.4",
+    "tsup": "^9.0.0",
     "typescript": "^5.5.4"
   },
   "dependencies": {

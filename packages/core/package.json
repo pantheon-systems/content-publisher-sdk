@@ -63,7 +63,7 @@
     "@vitest/coverage-v8": "^4.1.0",
     "eslint": "^9.39.2",
     "eslint-config-pcc-custom": "workspace:*",
-    "tsup": "^8.2.4",
+    "tsup": "^9.0.0",
     "vitest": "^4.0.0"
   }
 }
